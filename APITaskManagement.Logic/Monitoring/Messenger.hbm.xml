@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping assembly="APITaskManagement.Logic"
+                   namespace="APITaskManagement.Logic.Monitoring"
+                   xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Messenger" table="EEK_API_MESSENGERS" lazy="false">
+    <id name="Id">
+      <generator class="guid.comb"/>
+    </id>
+    <property name="Name"/>
+    <property name="Enabled"/>
+
+    <set name="Monitors" inverse="true" table="EEK_API_MONITOR_MESSENGERS" cascade="all-delete-orphan" lazy="true">
+      <key>
+        <column name="MessengerId"/>
+      </key>
+      <many-to-many class="Monitor" column="MonitorId"/>
+    </set>
+  </class>
+</hibernate-mapping>

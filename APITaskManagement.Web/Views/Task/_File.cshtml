@@ -1,0 +1,39 @@
+﻿@model APITaskManagement.Web.Models.TaskViewModel
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.DiskClassname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DiskClassname, new { htmlAttributes = new { @class = "form-control", @type = "folder" } })
+            @Html.ValidationMessageFor(model => model.DiskClassname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.DiskFormats, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBoxFor(model => model.SelectedDiskFormats, Model.DiskFormats, new { @class = "form-control", @type = "folder" })
+            @Html.ValidationMessageFor(model => model.DiskFormats, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+
+@foreach (var share in Model.Shares)
+{
+    var selected = "";
+    if (Model.SelectedShares.Contains(share))
+    {
+        selected = "checked";
+    }
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="SelectedShares" name="SelectedShares" value="@share.Id" @selected>
+            @share.Name
+        </label>
+    </div>
+}
+

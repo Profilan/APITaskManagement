@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   namespace="APITaskManagement.Logic.Queue" 
+                   assembly="APITaskManagement.Logic">
+  <class name="QueueTableItem" table="EEK_API_QUEUE" lazy="false">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Key" column="`Key`"/>
+    <property name="TryCount"/>
+    
+    <many-to-one name="Task" class="APITaskManagement.Logic.Schedulers.Task">
+      <column name="TaskId" not-null="true" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

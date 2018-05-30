@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="Share" table="EEK_API_SHARES">
+    <id name="Id" column="id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="Name"/>
+    <property name="UNCPath"/>
+
+    <set name="Tasks" table="EEK_API_TASK_SHARES" inverse="true">
+      <key>
+        <column name="ShareId" />
+      </key>
+      <many-to-many class="APITaskManagement.Logic.Schedulers.Task" column="TaskId"/>
+    </set>
+
+
+  </class>
+
+</hibernate-mapping>

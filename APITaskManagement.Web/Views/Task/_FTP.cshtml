@@ -1,0 +1,55 @@
+﻿@model APITaskManagement.Web.Models.TaskViewModel
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.FtpSyncMethod, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.FtpSyncMethod, "Select method", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FtpSyncMethod, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.FtpConnectionType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.FtpConnectionType, "Select type", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FtpConnectionType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <label class="control-label col-md-2">Server Address</label>
+        <div class="col-md-7">
+            @Html.EditorFor(model => model.FTPServerAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FTPServerAddress, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.FtpPort, new { htmlAttributes = new { @Value = "22", @class = "form-control", @type = "text" } })
+            @Html.ValidationMessageFor(model => model.FtpPort, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.FtpLocalFolder, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FtpLocalFolder, new { htmlAttributes = new { @class = "form-control", @type = "folder" } })
+            @Html.ValidationMessageFor(model => model.FtpLocalFolder, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.FtpRemoteFolder, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FtpRemoteFolder, new { htmlAttributes = new { @Value = "/", @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FtpRemoteFolder, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

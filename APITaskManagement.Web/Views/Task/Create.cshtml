@@ -1,0 +1,128 @@
+﻿@model APITaskManagement.Web.Models.TaskViewModel
+
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Task</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- Nav tabs -->
+        <ul id="taskTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab">General</a></li>
+            <li role="presentation" id="apiTab"><a href="#api" aria-controls="api" role="tab">API</a></li>
+            <li role="presentation" id="ftpTab"><a href="#ftp" aria-controls="ftp" role="tab">FTP</a></li>
+            <li role="presentation" id="diskTab"><a href="#disk" aria-controls="disk" role="tab">File</a></li>
+            <li role="presentation"><a href="#authentication" aria-controls="authentication" role="tab">Authentication</a></li>
+            <li role="presentation"><a href="#schedule" aria-controls="schedule" role="tab">Schedule</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="general">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_General", Model); }
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="api">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_API", Model); }
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="ftp">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_FTP", Model); }
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="disk">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_File", Model); }
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="authentication">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_Authentication", Model); }
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="schedule">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_Schedule", Model); }
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function showAuthSection(el) {
+            if (el.val() == 1 || el.val() == 2 || el.val() == 3) {
+                $('#basicSection').show();
+            } else {
+                $('#basicSection').hide();
+            }
+            if (el.val() == 2) {
+                $('#oAuthSection').show();
+            } else {
+                $('#oAuthSection').hide();
+            }
+        };
+
+        function showTab(el) {
+            $('#apiTab').hide();
+            $('#ftpTab').hide();
+            $('#diskTab').hide();
+            if (el.val() == 1) {
+                $('#apiTab').show();
+            } else {
+                $('#apiTab').hide();
+            }
+            if (el.val() == 2) {
+                $('#ftpTab').show();
+            } else {
+                $('#ftpTab').hide();
+            }
+            if (el.val() == 3) {
+                $('#diskTab').show();
+            } else {
+                $('#diskTab').hide();
+            }
+        };
+
+        $(document).ready(function () {
+            showAuthSection($('#AuthenticationType'));
+            showTab($('#TaskType'));
+
+            $('#taskTabs a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            $('#AuthenticationType').change(function (e) {
+                showAuthSection($(this));
+            });
+
+            $('#TaskType').change(function (e) {
+                showTab($(this));
+            });
+        });
+    </script>
+}

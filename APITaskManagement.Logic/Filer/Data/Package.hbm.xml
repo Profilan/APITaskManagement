@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="Package" table="EEK_ARTIKELDATA_PAKKET">
+    <id name="PackageCode" column="ARTCODE_PAKKET">
+      <generator class="identity"/>
+    </id>
+
+    <property name="ProductCode" column="ARTIKELCODE"/>
+    <property name="EANCode" column="EANCode"/>
+    <property name="ProductNameNL" column="NL"/>
+    <property name="ProductNameEN" column="EN"/>
+    <property name="ProductNameDE" column="DE"/>
+    <property name="ProductNameFR" column="FR"/>
+    <property name="WeightKg" column="GEWICHT" precision="18" scale="2"/>
+    <property name="DepthMm" column="VERPAK_DIKTE_mm" precision="18" scale="2"/>
+    <property name="LengthMm" column="VERPAK_LENGTE_mm" precision="18" scale="2"/>
+    <property name="WidthMm" column="VERPAK_BREEDTE_mm" precision="18" scale="2"/>
+    <property name="VolumeM3" column="`VOL_M3/VERP`" precision="18" scale="2"/>
+  </class>
+</hibernate-mapping>

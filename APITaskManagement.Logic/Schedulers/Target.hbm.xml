@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="APITaskManagement.Logic" namespace="APITaskManagement.Logic.Management" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="APITaskManagement.Logic.Schedulers.Target" table="EEK_DISTRIBUTION_TARGETS" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="TargetId" column="Target"/>
+    <property name="CrdCode"/>
+    <property name="Description"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Schedulers"
+                   assembly="APITaskManagement.Logic">
+  <class name="Schedule">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="Title"/>
+    <set name="Tasks" table="EEK_API_SCHEDULE">
+      <key column="ScheduleId"/>
+      <one-to-many class="Task"/>
+    </set>
+  </class>
+</hibernate-mapping>

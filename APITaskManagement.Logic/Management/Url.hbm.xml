@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="APITaskManagement.Logic" namespace="APITaskManagement.Logic.Management" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Url" table="EEK_API_URLS" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="Name"/>
+    <property name="Address"/>
+    <property name="ExternalUrl"/>
+    
+    <component name="InactivityTimeout">
+      <property name="Seconds" column="InactivityTimeout" not-null="true"/>
+    </component>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{86F87F12-357C-4B7F-8190-D7E875F532F7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>APITaskManagement.Logic</RootNamespace>
+    <AssemblyName>APITaskManagement.Logic</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DelegateDecompiler, Version=1.0.0.0, Culture=neutral, PublicKeyToken=93b26a10a04705bd, processorArchitecture=MSIL">
+      <HintPath>..\packages\DelegateDecompiler.0.23.0\lib\net40-client\DelegateDecompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions, Version=5.2.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.5.2.0\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Reflection, Version=1.1.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Reflection.1.1.0.0\lib\Mono.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=5.1.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.5.1.0\lib\net461\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="PCMonitorClient">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Pulseway\PCMonitorClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.1.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StructureMap.4.6.1\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.108.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.108.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList, Version=7.2.4.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.7.2.4\lib\net461\X.PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc, Version=7.2.0.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.7.2.0\lib\net452\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc.Common, Version=7.2.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.7.2.0\lib\net452\X.PagedList.Mvc.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\DomainEvents.cs" />
+    <Compile Include="Common\Entity.cs" />
+    <Compile Include="Common\Enums.cs" />
+    <Compile Include="Common\Interfaces\IApplicationEvent.cs" />
+    <Compile Include="Filer\Data\Share.cs" />
+    <Compile Include="Filer\Data\Image.cs" />
+    <Compile Include="Filer\Data\Package.cs" />
+    <Compile Include="Filer\Data\Product.cs" />
+    <Compile Include="Filer\FilerAbstract.cs" />
+    <Compile Include="Filer\FilerFormatterAbstract.cs" />
+    <Compile Include="Filer\FilerPOS.cs" />
+    <Compile Include="Filer\FilerProductfeed.cs" />
+    <Compile Include="Filer\Interfaces\IFiler.cs" />
+    <Compile Include="Filer\Interfaces\IFilerFormatter.cs" />
+    <Compile Include="Filer\POSFormatter.cs" />
+    <Compile Include="Filer\ProductfeedFormatter.cs" />
+    <Compile Include="Filer\Repositories\ImageRepository.cs" />
+    <Compile Include="Filer\Repositories\PackageRepository.cs" />
+    <Compile Include="Filer\Repositories\ProductRepository.cs" />
+    <Compile Include="Filer\Repositories\ShareRepository.cs" />
+    <Compile Include="Logging\ApplicationLogger.cs" />
+    <Compile Include="Logging\Interfaces\ILogger.cs" />
+    <Compile Include="Logging\SystemLogger.cs" />
+    <Compile Include="Management\Repositories\RoleRepository.cs" />
+    <Compile Include="Management\Repositories\SchedulerRepository.cs" />
+    <Compile Include="Management\Repositories\UrlRepository.cs" />
+    <Compile Include="Management\Repositories\UserRepository.cs" />
+    <Compile Include="Management\Role.cs" />
+    <Compile Include="Management\Url.cs" />
+    <Compile Include="Management\User.cs" />
+    <Compile Include="Management\Log.cs" />
+    <Compile Include="Monitoring\ApplicationEvents\ErrorDetectedEvent.cs" />
+    <Compile Include="Monitoring\AvailabilityMonitor.cs" />
+    <Compile Include="Monitoring\InactivityMonitor.cs" />
+    <Compile Include="Monitoring\EventsMonitor.cs" />
+    <Compile Include="Monitoring\Interfaces\IMessenger.cs" />
+    <Compile Include="Monitoring\Interfaces\IMonitor.cs" />
+    <Compile Include="Monitoring\Mailer.cs" />
+    <Compile Include="Monitoring\Messenger.cs" />
+    <Compile Include="Monitoring\Monitor.cs" />
+    <Compile Include="Monitoring\Pulseway.cs" />
+    <Compile Include="Monitoring\Repositories\MessengerRepository.cs" />
+    <Compile Include="Monitoring\Repositories\MonitorRepository.cs" />
+    <Compile Include="Monitoring\TaskScheduler.cs" />
+    <Compile Include="Monitoring\UrlMonitor.cs" />
+    <Compile Include="Queue\DecimalFormatConverter.cs" />
+    <Compile Include="Queue\DutchNedSalesorderFormatter.cs" />
+    <Compile Include="Queue\HelloDialogEmailFormatter.cs" />
+    <Compile Include="Queue\Interfaces\IContentFormatter.cs" />
+    <Compile Include="Queue\Interfaces\IQueue.cs" />
+    <Compile Include="Queue\Queue.cs" />
+    <Compile Include="Queue\QueueDutchNedSalesorder.cs" />
+    <Compile Include="Queue\QueueGeneric.cs" />
+    <Compile Include="Common\Interfaces\IRepository.cs" />
+    <Compile Include="Common\Interfaces\IDomainEvent.cs" />
+    <Compile Include="Common\Interfaces\IHandle.cs" />
+    <Compile Include="Config\PropertyElement.cs" />
+    <Compile Include="Config\PropertyElementCollection.cs" />
+    <Compile Include="Config\QueueElement.cs" />
+    <Compile Include="Config\QueueElementCollection.cs" />
+    <Compile Include="Config\QueueConfigSection.cs" />
+    <Compile Include="Queue\QueueHelloDialogEmail.cs" />
+    <Compile Include="Queue\QueueTableItem.cs" />
+    <Compile Include="Queue\QueueZwaluwCrossdock.cs" />
+    <Compile Include="Queue\QueueZwaluwSalesorder.cs" />
+    <Compile Include="Queue\Repositories\QueueTableItemRepository.cs" />
+    <Compile Include="Queue\ZwaluwCrossdockFormatter.cs" />
+    <Compile Include="Queue\ZwaluwSalesOrderFormatter.cs" />
+    <Compile Include="Schedulers\ApplicationEvents\TaskFinishedEvent.cs" />
+    <Compile Include="Schedulers\ApplicationEvents\TaskStartedEvent.cs" />
+    <Compile Include="Schedulers\Authentication.cs" />
+    <Compile Include="Schedulers\Data\IScheduleRepository.cs" />
+    <Compile Include="Schedulers\Repositories\TargetRepository.cs" />
+    <Compile Include="Management\Repositories\LogRepository.cs" />
+    <Compile Include="Schedulers\Repositories\ScheduleRepository.cs" />
+    <Compile Include="Common\ValueObject.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedulers\Data\IQueueRepository.cs" />
+    <Compile Include="Schedulers\Data\ITaskRepository.cs" />
+    <Compile Include="Schedulers\Interval.cs" />
+    <Compile Include="Schedulers\Request.cs" />
+    <Compile Include="Schedulers\Repositories\QueueRepository.cs" />
+    <Compile Include="Schedulers\Response.cs" />
+    <Compile Include="Schedulers\Schedule.cs" />
+    <Compile Include="Schedulers\ScheduleInstance.cs" />
+    <Compile Include="Schedulers\Services\FtpService.cs" />
+    <Compile Include="Schedulers\Services\SchedulerService.cs" />
+    <Compile Include="Schedulers\Services\TaskService.cs" />
+    <Compile Include="Schedulers\Status.cs" />
+    <Compile Include="Schedulers\Target.cs" />
+    <Compile Include="Schedulers\Task.cs" />
+    <Compile Include="Schedulers\Repositories\TaskRepository.cs" />
+    <Compile Include="Utils\Config.cs" />
+    <Compile Include="Utils\Initer.cs" />
+    <Compile Include="Utils\SessionFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Schedulers\Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Schedulers\Schedule.hbm.xml" />
+    <EmbeddedResource Include="Schedulers\Task.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Filer\Data\Image.hbm.xml" />
+    <EmbeddedResource Include="Filer\Data\Package.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filer\Data\Product.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Filer\Data\Share.hbm.xml" />
+    <Content Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="Monitoring\Messenger.hbm.xml" />
+    <EmbeddedResource Include="Monitoring\Monitor.hbm.xml" />
+    <EmbeddedResource Include="Queue\QueueTableItem.hbm.xml" />
+    <EmbeddedResource Include="Management\Role.hbm.xml" />
+    <EmbeddedResource Include="Management\Url.hbm.xml" />
+    <EmbeddedResource Include="Management\User.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Schedulers\Target.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Management\Log.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.108.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>

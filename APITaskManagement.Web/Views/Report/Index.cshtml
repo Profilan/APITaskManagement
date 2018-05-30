@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+
+    var startDate = ViewBag.StartDate;
+    var endDate = ViewBag.EndDate;
+}
+
+<h2>Reports</h2>
+
+@using (Html.BeginForm("Index", "Report", FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
+{
+
+    <div class="form-group">
+        <label for="startDate" class="col-md-1">Start Date</label>
+        <div class="col-md-3">
+            <input type="date" class="form-control" id="startDate" name="startDate" value="@startDate" />
+            <span class="field-validation-valid text-danger" data-valmsg-for="startDate" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="endDate" class="col-md-1">End Date</label>
+        <div class="col-md-3">
+            <input type="date" class="form-control" id="endDate" name="endDate" value="@endDate" />
+            <span class="field-validation-valid text-danger" data-valmsg-for="endDate" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+}
+
+<hr />
+
+
+<div class="row">
+    <div class="col-md-12">
+        Total events: @Model.Logs.Count
+    </div>
+    <div class="col-md-4">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="badge">@Model.NumberOfInfoMessages</span>
+                @if (Model.NumberOfInfoMessages > 0)
+                {
+                    @Html.ActionLink("Information", "Index", "Log", new { startDate = startDate, endDate = endDate, errorType = "INFO" }, new { @style = "color: green; text-decoration: underline;" });
+                }
+                else
+                {
+                    <span style="color: green;">Information: </span>
+                }
+            </li>
+            <li class="list-group-item">
+                <span class="badge">@Model.NumberOfWarningMessages</span>
+                @if (Model.NumberOfWarningMessages > 0)
+                {
+                    @Html.ActionLink("Warning", "Index", "Log", new { startDate = startDate, endDate = endDate, errorType = "WARN" }, new { @style = "color: darkorange; text-decoration: underline;" });
+                }
+                else
+                {
+                    <span style="color: darkorange;">Warning</span>
+                }
+            </li>
+            <li class="list-group-item">
+                <span class="badge">@Model.NumberOfErrorMessages</span>
+                @if (Model.NumberOfErrorMessages > 0)
+                {
+                    @Html.ActionLink("Error", "Index", "Log", new { startDate = startDate, endDate = endDate, errorType = "ERR" }, new { @style = "color: red; text-decoration: underline;" });
+                }
+                else
+                {
+                    <span style="color: red;">Error</span>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+
+@section scripts  {
+    <script type="text/javascript">
+        function dateRangeValid() {
+            var startDate = new Date($("#startDate").val());
+            var endDate = new Date($("#endDate").val());
+
+            if (startDate >= endDate) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        $(function () {
+
+            var currentStartDate = $("#startDate").val();
+            var currentEndDate = $("#endDate").val();
+
+            $("#startDate").change(function (e) {
+                if (dateRangeValid()) {
+                    $("form").submit();
+                } else {
+                    $("#startDate").val(currentStartDate);
+                    $("form").find("[data-valmsg-for='startDate']").text("Start Date should be less than End Date");
+                }
+            });
+
+            $("#endDate").change(function (e) {
+                if (dateRangeValid()) {
+                    $("form").submit();
+                } else {
+                    $("#endDate").val(currentEndDate);
+                    $("form").find("[data-valmsg-for='endDate']").text("End Date should be greater than Start Date");
+                }
+            });
+
+        });
+    </script>
+}

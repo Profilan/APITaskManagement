@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="Product" table="EEK_ARTIKELDATA_ALL">
+    <id name="ProductCode" column="ARTIKELCODE">
+      <generator class="identity"/>
+    </id>
+
+    <property name="EANCode" column="EANCode"/>
+    <property name="Assortment" column="ASSORTMENT"/>
+    <property name="Productgroup" column="PRODUCTGROUP"/>
+    <property name="ProductRange" column="RANGE"/>
+    <property name="Brand" column="BRAND"/>
+    <property name="ProductNameNL" column="NL"/>
+    <property name="ProductNameEN" column="EN"/>
+    <property name="ProductNameDE" column="DE"/>
+    <property name="ProductNameFR" column="FR"/>
+    <property name="DescriptionNL" column="NL_LONG_DESC"/>
+    <property name="DescriptionEN" column="EN_LONG_DESC"/>
+    <property name="DescriptionDE" column="DE_LONG_DESC"/>
+    <property name="DescriptionFR" column="FR_LONG_DESC"/>
+    <property name="Material" column="MATERIAL"/>
+    <property name="Color" column="COLOR_FINISH"/>
+    <property name="SizeCm" column="AFMETING_ARTIKEL_HXBXD"/>
+    <property name="FSC" column="FSC"/>
+    <property name="SalesUnit" column="VERKOOPEENHEID"/>
+    <property name="SalesPriceEuro" column="VERKOOPPRIJS" precision="18" scale="2"/>
+    <property name="Status" column="STATUS"/>
+    <property name="NewArrival" column="NEW_ARRIVAL"/>
+    <property name="OnlineActivation" column="ONLINE_ACTIVATIE"/>
+    <property name="QtyPackages" column="AANTAL_PAKKETTEN"/>
+    <property name="OrderingQty" column="COMMERCIELEBE" precision="18" scale="2"/>
+    <property name="FreeStockQty" column="VrijeVoorraad" precision="18" scale="2"/>
+    <property name="AssemblyRequired" column="ASSEMBLY_REQUIRED"/>
+    <property name="CountryOfOrigin" column="COUNTRY_OF_ORIGIN"/>
+    <property name="IntrastatCode" column="INTRASTAT_CODE"/>
+    <property name="Exclusivity" column="EXCLUSIV"/>
+    <property name="ShippingMethod" column="VERZENDWIJZE"/>
+    <property name="WeightKg" column="GEWICHT" precision="18" scale="2"/>
+    <property name="ConsumerPriceNL" column="CONSUMENTENPRIJS" precision="18" scale="2"/>
+    <property name="ConsumerPriceFromNL" column="CONSUMENTENPRIJS_VAN" precision="18" scale="2"/>
+    <property name="ConsumerPriceISE" column="ISE_CONSUMENTENPRIJS" precision="18" scale="2"/>
+    <property name="ConsumerPriceFromISE" column="ISE_CONSUMENTENPRIJS_VAN" precision="18" scale="2"/>
+    <property name="DepthMm" column="VERPAK_DIKTE_mm" precision="18" scale="2"/>
+    <property name="LengthMm" column="VERPAK_LENGTE_mm" precision="18" scale="2"/>
+    <property name="WidthMm" column="VERPAK_BREEDTE_mm" precision="18" scale="2"/>
+    <property name="VolumeM3" column="VOL_M3_VERP" precision="18" scale="2"/>
+    <property name="Condition" column="Condition"/>
+  </class>
+</hibernate-mapping>

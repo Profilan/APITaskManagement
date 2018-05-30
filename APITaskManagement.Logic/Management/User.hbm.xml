@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="APITaskManagement.Logic" 
+                   namespace="APITaskManagement.Logic.Management" 
+                   xmlns="urn:nhibernate-mapping-2.2">
+  <class name="User" table="EEK_API_USERS" lazy="false">
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    <property name="Username"/>
+    <property name="DisplayName"/>
+    <property name="Email"/>
+    <property name="Password"/>
+    <property name="Apikey"/>
+    <property name="Enabled"/>
+    <property name="State"/>
+    <property name="SysCreated"/>
+    <property name="SysCreator"/>
+    <property name="SysModified"/>
+    <property name="SysModifier"/>
+
+    <set name="Roles" table="EEK_API_USER_ROLES">
+      <key column="user_id" />
+      <many-to-many class="Role" column="role_id"/>
+    </set>
+  </class>
+</hibernate-mapping>

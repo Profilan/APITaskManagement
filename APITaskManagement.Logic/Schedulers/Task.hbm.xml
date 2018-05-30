@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   namespace="APITaskManagement.Logic.Schedulers" 
+                   assembly="APITaskManagement.Logic">
+  <class name="Task" table="EEK_API_TASK" lazy="false">
+    <id name="Id">
+      <generator class="guid.comb"/>
+    </id>
+    <property name="Title" not-null="true"/>
+    <property name="ScheduleId" not-null="true"/>
+    <property name="Enabled"/>
+    <property name="LastRunResult"/>
+    <property name="LastRunTime"/>
+    <property name="LastRunDetails"/>
+    <property name="QueueName"/>
+    <property name="HttpMethod" not-null="true"/>
+    <property name="TaskType" not-null="true"/>
+    <property name="MaxErrors"/>
+    <property name="Active"/>
+    <property name="Classname" column="DiskClassname"/>
+    <property name="ContentFormats" column="DiskContentFormats"/>
+
+    <component name="Authentication">
+      <property name="Username"/>
+      <property name="Password"/>
+      <property name="AuthenticationType"/>
+      <property name="Scope"/>
+      <property name="GrantType"/>
+      <property name="OAuthUrl"/>
+    </component>
+    
+
+    <component name="Status">
+      <property name="Code" column="StatusCode"/>
+      <property name="Description" column="StatusDescription"/>
+    </component>
+    
+    <component name="Interval">
+      <property name="Seconds" column="Interval" not-null="true"/>
+    </component>
+    
+    <many-to-one name="Url" class="APITaskManagement.Logic.Management.Url">
+      <column name="UrlId" not-null="true" />
+    </many-to-one>
+
+    <set name="Shares" table="EEK_API_TASK_SHARES" lazy="false" cascade="save-update">
+      <key column="TaskId" />
+      <many-to-many class="APITaskManagement.Logic.Filer.Data.Share" column="ShareId"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+﻿
+using APITaskManagement.Logic.Filer;
+using APITaskManagement.Logic.Filer.Data;
+using APITaskManagement.Logic.Management;
+using APITaskManagement.Logic.Schedulers;
+using System.Collections.Generic;
+
+namespace APITaskManagement.Logic.Logging.Interfaces
+{
+    public interface ILogger
+    {
+        void Log(Request request, Url url, IDictionary<string, string> properties);
+        void Log(Response response, Share share);
+    }
+}

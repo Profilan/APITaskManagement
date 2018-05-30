@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Tasks</h2>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Enabled
+            </th>
+            <th>
+                Last Run Time
+            </th>
+            <th>
+                Last Run Result
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="@item.Id">
+                <td>@item.Title</td>
+                <td>
+                    @if (item.Enabled)
+                    {
+                    <a><img class="enable-task" data-enabled="1" data-id="@item.Id" src="~/images/bullet_green.png" width="24"/></a>
+                    }
+                    else  
+                    {
+                    <a><img class="enable-task" data-enabled="0" data-id="@item.Id" src="~/images/bullet_red.png" width="24" /></a>
+                    }
+                </td>
+                <td>                  
+                    <span class="last-run-time">@item.LastRunTime.ToString("dd-MM-yyyy HH:mm:ss")</span>
+                </td>
+                <td>
+                    @{
+                        var color = "green";
+                        if (!String.IsNullOrEmpty(item.LastRunResult))
+                        {
+                            char[] whitespace = new char[] { ' ', '\t' };
+                            var statusCode = Int32.Parse(item.LastRunResult.Split(whitespace)[0]);
+                            color = "green";
+                            if (statusCode >= 400)
+                            {
+                                color = "red";
+                            }
+                        }
+                    }
+                    <span class="last-run-result" style="color: @color">
+                        @item.LastRunResult
+                        
+                    </span>
+                </td>
+                <td><a href="#" class="btn-details" data-id="@item.Id" data-toggle="modal" data-target="#detailsModal">Details</a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<div id="detailsModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+@section scripts
+{
+    <!-- Bootstrap Notify Plugin -->
+    <script src="~/Scripts/bootstrap-notify.min.js"></script>
+    <!-- jQuery UI Library -->
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <!-- SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <!-- SignalR hub script automatisch gegenereerd door service -->
+    <script src="@System.Configuration.ConfigurationManager.AppSettings["HubConnectionUrl"]/signalr/hubs"></script>
+    <!-- Verbinding met SignalR en bericht update -->
+    <script type="text/javascript">
+        $(function () {
+
+            $('#detailsModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+
+                $.getJSON("/api/task/" + id)
+                    .done(function (data) {
+                        console.log(data);
+                        modal.find('.modal-title').text(data.Title);
+                        modal.find('.modal-body > p').text(data.LastRunDetails);
+                    });
+                
+                
+
+            })
+
+            // De url definieren waar de service wordt uitgevoerd
+            $.connection.hub.url = "@System.Configuration.ConfigurationManager.AppSettings["HubConnectionUrl"]/signalr";
+
+            // Verbinden met Hub
+            var scheduler = $.connection.taskSchedulerHub;
+
+            // Hub taskStatus ontvangen
+            scheduler.client.updateTaskStatus = function (id, title, active, lastRunTime, lastRunResult, enabled) {
+
+                if (active) {
+                    // $("#" + id).effect("highlight", "slow");
+                }
+                var statusCode = parseInt(lastRunResult.split(" ")[0]);
+                var color = "green";
+                var notifyType = 'success';
+                if (statusCode >= 400) {
+                    color = "red";
+                    notifyType = "danger";
+                }
+                $("#" + id).find(".last-run-time").text(lastRunTime);
+                $("#" + id).find(".last-run-result").text(lastRunResult).css("color", color);
+
+                if (enabled) {
+                    $("#" + id).find(".enable-task").attr("src", "/images/bullet_green.png").data("enabled", 1);
+
+                } else {
+                    $("#" + id).find(".enable-task").attr("src", "/images/bullet_red.png").data("enabled", 0);
+                }
+
+                if (active) {
+                    $.notify({
+                        title: '<b>' + lastRunResult + ':</b> ',
+                        message: 'Task <b>' + title + '</b> is completed'
+                    }, {
+                            type: notifyType
+                        });
+                }
+            };
+            
+        
+            // De verbinding starten bij het laden van de pagina
+            $.connection.hub.start().done(function () {
+
+                $(".enable-task").click(function () {
+                    if ($(this).data("enabled")) {
+                        
+                        scheduler.server.disableTask($(this).data("id"));
+                        
+                    } else {
+                        
+                        scheduler.server.enableTask($(this).data("id"));
+                        
+                    }
+                });
+                
+            });
+
+            $.connection.hub.stateChanged(function (state) {
+                var stateConversion = { 0: 'Connecting', 1: 'Connected', 2: 'Reconnecting', 4: 'Disconnected' };
+                
+                $("#service-status").text(stateConversion[state.newState]);
+
+                var notifyType = 'info';
+                
+
+                $.notify({
+                    title: '<b>API Task Scheduler:</b> ',
+                    message: stateConversion[state.newState]
+                }, {
+                        type: notifyType
+                    });
+            });
+
+            
+        });
+    </script>
+}

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
+                   namespace="APITaskManagement.Logic.Management" 
+                   assembly="APITaskManagement.Logic">
+  <class name="Log" table="EEK_API_LOG" lazy="false">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+    <property name="TimeStamp" column="date" not-null="true"/>
+    <property name="Priority" column="type"/>
+    <property name="Message" column="event"/>
+    <property name="PriorityName" column="error_type"/>
+    <property name="Url"/>
+    <property name="Detail" column="trace" type="StringClob"/>
+    <property name="Acknowledged" column="acknowledged"/>
+  </class>
+</hibernate-mapping>
