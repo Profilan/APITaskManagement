@@ -26,7 +26,7 @@ namespace APITaskManagement.Logic.Filer
 
         public override bool savePOSContent()
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

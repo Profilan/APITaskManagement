@@ -1,29 +1,28 @@
 ﻿using System.Collections.Generic;
 using APITaskManagement.Logic.Schedulers;
-using APITaskManagement.Logic.Queue.Repositories;
-using System.Configuration;
 using System;
+using APITaskManagement.Logic.Common.Repositories;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Api
 {
-    public class QueueDutchNedSalesorder : Queue
+    public class ApiDutchNedSalesorder : Api
     {
-        private readonly QueueTableItemRepository _queueTableItemRepository;
+        private readonly QueueRepository _queueRepository;
 
-        public QueueDutchNedSalesorder(string name) : base(name)
+        public ApiDutchNedSalesorder(string name) : base(name)
         {
-            _queueTableItemRepository = new QueueTableItemRepository();
+            _queueRepository = new QueueRepository();
         }
 
-        public QueueDutchNedSalesorder() : base()
+        public ApiDutchNedSalesorder() : base()
         {
-            _queueTableItemRepository = new QueueTableItemRepository();
+            _queueRepository = new QueueRepository();
         }
 
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
             var requests = new List<Request>();
-            var items = _queueTableItemRepository.ListByTask(taskId, 100);
+            var items = _queueRepository.ListByTask(taskId, 100);
 
             var formatter = new DutchNedSalesorderFormatter();
 

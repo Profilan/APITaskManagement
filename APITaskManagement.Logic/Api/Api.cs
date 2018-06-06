@@ -1,4 +1,4 @@
-﻿using APITaskManagement.Logic.Queue.Interfaces;
+﻿using APITaskManagement.Logic.Api.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +14,9 @@ using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Common;
 using Newtonsoft.Json.Linq;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Api
 {
-    public abstract class Queue : IQueue
+    public abstract class Api : IApi
     {
         protected IDictionary<string, string> Properties { get; set; }
 
@@ -24,27 +24,14 @@ namespace APITaskManagement.Logic.Queue
 
         protected IList<ILogger> Loggers { get; set; }
 
-        private string _name;
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
+        public string Name { get; set; }
 
-                GetConfig();
-            }
-        }
-
-        public Queue(string name) : this()
+        public Api(string name) : this()
         {
             Name = name;
         }
 
-        public Queue()
+        public Api()
         {
             Properties = new Dictionary<string, string>();
             Requests = new List<Request>();
@@ -52,7 +39,7 @@ namespace APITaskManagement.Logic.Queue
         }
 
 
-        public void SendRequestsToTarget(Common.HttpMethod httpMethod, Url url, Authentication authentication, Guid taskId)
+        public void SendRequestsToTarget(Common.HttpMethod httpMethod, Url url, Authentication authentication, Task task)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -79,7 +66,7 @@ namespace APITaskManagement.Logic.Queue
                         break;
                 }
 
-                Requests = GetRequestsForTask(taskId);
+                Requests = GetRequestsForTask(task.Id);
 
                 foreach (Request request in Requests)
                 {
@@ -116,7 +103,7 @@ namespace APITaskManagement.Logic.Queue
                         var response = new Response(statusCode, description, result);
                         request.SetResponse(response);
 
-                        LogResponse(request, url, Properties);
+                        LogResponse(request, url, task.SPLogger);
 
                         
                     }
@@ -153,11 +140,11 @@ namespace APITaskManagement.Logic.Queue
             Loggers.Add(logger);
         }
 
-        protected void LogResponse(Request request, Url url, IDictionary<string, string> properties)
+        protected void LogResponse(Request request, Url url, string spLogger)
         {
             foreach (ILogger logger in Loggers)
             {
-                logger.Log(request, url, properties);
+                logger.Log(request, url, spLogger);
             }
         }
 
@@ -166,26 +153,6 @@ namespace APITaskManagement.Logic.Queue
         public int GetNumberOfRequests()
         {
             return Requests.Count();
-        }
-
-        private void GetConfig()
-        {
-            var queueConfigSection = ConfigurationManager.GetSection("queueSection") as QueueConfigSection;
-
-            if (queueConfigSection != null)
-            {
-                foreach (QueueElement queueElement in queueConfigSection.Queues)
-                {
-                    if (queueElement.Name == Name)
-                    {
-                        foreach (PropertyElement property in queueElement.PropertyCollection)
-                        {
-                            Properties.Add(property.Name, property.Value);
-                        }
-                    }
-                }
-
-            }
         }
 
         public virtual Response GetLatestResponse()

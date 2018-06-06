@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 
-namespace APITaskManagement.Logic.Queue.Interfaces
+namespace APITaskManagement.Logic.Api.Interfaces
 {
     public interface IContentFormatter
     {

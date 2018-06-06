@@ -1,8 +1,8 @@
 ﻿using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Filer.Data;
 using APITaskManagement.Logic.Management;
-using APITaskManagement.Logic.Queue;
-using APITaskManagement.Logic.Queue.Interfaces;
+using APITaskManagement.Logic.Api;
+using APITaskManagement.Logic.Api.Interfaces;
 using APITaskManagement.Logic.Schedulers;
 using System;
 using System.Collections.Generic;
@@ -49,10 +49,6 @@ namespace APITaskManagement.Web.Models
         [Display(Name = "Last Run Details")]
         public string LastRunDetails { get; set; }
 
-        [Display(Name = "Queue Name")]
-        public string QueueName { get; set; }
-        public IEnumerable<IQueue> Queues { get; set; }
-
         [Display(Name = "Url")]
         public int UrlId { get; set; }
         public IEnumerable<Url> Urls { get; set; }
@@ -83,11 +79,11 @@ namespace APITaskManagement.Web.Models
         // Disk fields
 
         [Display(Name = "Classname")]
-        public string DiskClassname { get; set; }
+        public string Classname { get; set; }
 
         [Display(Name = "Formats")]
-        public IEnumerable<SelectListItem> DiskFormats { get; set; }
-        public int[] SelectedDiskFormats { get; set; }
+        public IEnumerable<SelectListItem> Formats { get; set; }
+        public int[] SelectedFormats { get; set; }
 
         [Display(Name = "Shares")]
         public virtual IEnumerable<Share> Shares { get; set; }

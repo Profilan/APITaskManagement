@@ -31,6 +31,11 @@ namespace APITaskManagement.Logic.Filer
             throw new NotImplementedException();
         }
 
+        public override bool savePOSContent()
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool saveXMLContent()
         {
             var products = productRepository.List();
@@ -94,7 +99,7 @@ namespace APITaskManagement.Logic.Filer
                         XmlElement xmlPackage = doc.CreateElement(string.Empty, "Package", string.Empty);
                         xmlPackages.AppendChild(xmlPackage);
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "EANCode", string.Empty)).AppendChild(doc.CreateTextNode((package.EANCode)));
-                        xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ProductCode", string.Empty)).AppendChild(doc.CreateTextNode((package.ProductCode)));
+                        xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ProductCode", string.Empty)).AppendChild(doc.CreateTextNode((package.PackageCode)));
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ProductNameNL", string.Empty)).AppendChild(doc.CreateTextNode((package.ProductNameNL)));
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ProductNameEN", string.Empty)).AppendChild(doc.CreateTextNode((package.ProductNameEN)));
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ProductNameDE", string.Empty)).AppendChild(doc.CreateTextNode((package.ProductNameDE)));

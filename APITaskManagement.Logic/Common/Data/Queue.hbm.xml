@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" 
-                   namespace="APITaskManagement.Logic.Queue" 
+                   namespace="APITaskManagement.Logic.Common.Data" 
                    assembly="APITaskManagement.Logic">
-  <class name="QueueTableItem" table="EEK_API_QUEUE" lazy="false">
+  <class name="Queue" table="EEK_API_QUEUE" lazy="false">
     <id name="Id">
       <generator class="identity"/>
     </id>

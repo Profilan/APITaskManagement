@@ -1,14 +1,13 @@
-﻿using APITaskManagement.Logic.Common;
+﻿using APITaskManagement.Logic.Api.Interfaces;
+using APITaskManagement.Logic.Api.Repositories;
+using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Common.Interfaces;
 using APITaskManagement.Logic.Filer.Data;
 using APITaskManagement.Logic.Filer.Repositories;
 using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Management.Repositories;
-using APITaskManagement.Logic.Queue;
 using APITaskManagement.Logic.Schedulers;
-using APITaskManagement.Logic.Schedulers.Data;
 using APITaskManagement.Logic.Schedulers.Repositories;
-using APITaskManagement.Logic.Schedulers.Services;
 using APITaskManagement.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -21,16 +20,12 @@ namespace APITaskManagement.Web.Controllers
     public class TaskController : Controller
     {
         private readonly IRepository<Task, Guid> _taskRepository;
-        private readonly IQueueRepository _queueRepository;
-        private readonly IRepository<Target, int> _targetRepository;
         private readonly IRepository<Url, int> _urlRepository;
         private readonly IRepository<Share, int> _shareRepository;
 
         public TaskController()
         {
             _taskRepository = new TaskRepository();
-            _queueRepository = new QueueRepository();
-            _targetRepository = new TargetRepository();
             _urlRepository = new UrlRepository();
             _shareRepository = new ShareRepository();
         }
@@ -54,21 +49,20 @@ namespace APITaskManagement.Web.Controllers
         // GET: Task/Create
         public ActionResult Create()
         {
-            var queues = _queueRepository.List();
             var urls = _urlRepository.List();
             var shares = _shareRepository.List();
 
-            var diskFormats = new[]
+            var formats = new[]
             {
                 new SelectListItem { Value = "1", Text = "JSON" },
                 new SelectListItem { Value = "2", Text = "XML" },
+                new SelectListItem { Value = "3", Text = "POS" },
             };
 
             var taskViewModel = new TaskViewModel
             {
-                Queues = queues,
                 Urls = urls,
-                DiskFormats = diskFormats,
+                Formats = formats,
                 Shares = shares
             };
 
@@ -92,7 +86,6 @@ namespace APITaskManagement.Web.Controllers
                     collection["GrantType"],
                     collection["OAuthUrl"]);
 
-                var target = _targetRepository.GetById(Convert.ToInt32(collection["TargetId"]));
                 var url = _urlRepository.GetById(Convert.ToInt32(collection["UrlId"]));
 
                 var task = new Logic.Schedulers.Task(collection["Title"],
@@ -104,10 +97,8 @@ namespace APITaskManagement.Web.Controllers
                 task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);
                 task.TaskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
                 
-                // task.Disk.UNCPath = collection["DiskUNCPath"];
-                task.Classname = collection["DiskClassname"];
-                task.ContentFormats = String.Join(";", collection["SelectedDiskFormats"]);
-                task.QueueName = collection["QueueName"];
+                task.Classname = collection["Classname"];
+                task.ContentFormats = String.Join(";", collection["SelectedfFormats"]);
                 task.Url = url;
 
                 var selectedShares = collection["SelectedShares"].Split(',');
@@ -131,39 +122,29 @@ namespace APITaskManagement.Web.Controllers
         public ActionResult Edit(Guid id)
         {
             var task = _taskRepository.GetById(id);
-            var queues = _queueRepository.List();
-            var targets = _targetRepository.List();
             var urls = _urlRepository.List();
             var shares = _shareRepository.List();
 
-            var diskFormats = new[]
+            var formats = new[]
             {
                 new SelectListItem { Value = "1", Text = "JSON" },
                 new SelectListItem { Value = "2", Text = "XML" },
+                new SelectListItem { Value = "3", Text = "POS" }
             };
 
-            List<int> selectedDiskFormats = new List<int>();
+            List<int> selectedfFormats = new List<int>();
             try
             {
                 var selectedFormats = task.ContentFormats.Split(';');
 
                 foreach (var selectedFormat in selectedFormats)
                 {
-                    selectedDiskFormats.Add(Convert.ToInt32(selectedFormat));
+                    selectedfFormats.Add(Convert.ToInt32(selectedFormat));
                 }
             }
             catch (Exception)
             {
                 
-            }
-            string uncPath;
-            try
-            {
-                // uncPath = task.Disk.UNCPath;
-            }
-            catch (Exception)
-            {
-                uncPath = "";
             }
             string classname;
             try
@@ -179,7 +160,6 @@ namespace APITaskManagement.Web.Controllers
             {
                 Id = task.Id,
                 Title = task.Title,
-                QueueName = task.QueueName,
                 Url = task.Url.Address,
                 HttpMethod = task.HttpMethod,
                 Username = task.Authentication.Username,
@@ -191,14 +171,12 @@ namespace APITaskManagement.Web.Controllers
                 Scope = task.Authentication.Scope,
                 Amount = task.Interval.Amount,
                 Unit = task.Interval.Unit,
-                Queues = queues,
                 Urls = urls,
                 UrlId = task.Url.Id,
                 MaxErrors = task.MaxErrors,
-                // DiskUNCPath = uncPath,
-                DiskClassname = classname,
-                DiskFormats = diskFormats,
-                SelectedDiskFormats = selectedDiskFormats.ToArray(),
+                Classname = classname,
+                Formats = formats,
+                SelectedFormats = selectedfFormats.ToArray(),
                 Shares = shares,
                 SelectedShares = task.Shares
             };
@@ -215,7 +193,6 @@ namespace APITaskManagement.Web.Controllers
                 var task = _taskRepository.GetById(id);
                 var url = _urlRepository.GetById(Convert.ToInt32(collection["UrlId"]));
 
-                task.QueueName = collection["QueueName"];
                 task.Title = collection["Title"];
 
                 task.HttpMethod = (HttpMethod)Enum.Parse(typeof(HttpMethod), collection["HttpMethod"]);
@@ -238,8 +215,8 @@ namespace APITaskManagement.Web.Controllers
                 task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);
                 task.TaskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
                 // task.Disk.UNCPath = collection["DiskUNCPath"];
-                task.Classname = collection["DiskClassname"];
-                task.ContentFormats = String.Join(";", collection["SelectedDiskFormats"]);
+                task.Classname = collection["Classname"];
+                task.ContentFormats = String.Join(";", collection["SelectedFormats"]);
 
                 task.Shares.Clear();
                 var selectedShares = collection["SelectedShares"].Split(',');

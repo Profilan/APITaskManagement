@@ -16,7 +16,7 @@ namespace APITaskManagement.Logic.Logging
 {
     public class SystemLogger : ILogger
     {
-        public void Log(Request request, Url url, IDictionary<string, string> properties)
+        public void Log(Request request, Url url, string spLogger)
         {
             var _logRepository = new LogRepository();
 

@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using APITaskManagement.Logic.Queue.Repositories;
+using APITaskManagement.Logic.Common.Repositories;
 using APITaskManagement.Logic.Schedulers;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Api
 {
-    public class QueueHelloDialogEmail : Queue
+    public class ApiZwaluwCrossdock : Api
     {
-        private readonly QueueTableItemRepository _queueTableItemRepository;
+        private readonly QueueRepository _queueRepository;
 
-        public QueueHelloDialogEmail(string name) : base(name)
+        public ApiZwaluwCrossdock(string name) : base(name)
         {
-            _queueTableItemRepository = new QueueTableItemRepository();
+            _queueRepository = new QueueRepository();
         }
 
-        public QueueHelloDialogEmail() : base()
+        public ApiZwaluwCrossdock() : base()
         {
-            _queueTableItemRepository = new QueueTableItemRepository();
+            _queueRepository = new QueueRepository();
         }
 
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
             var requests = new List<Request>();
-            var items = _queueTableItemRepository.ListByTask(taskId, 100);
+            var items = _queueRepository.ListByTask(taskId, 100);
 
-            var formatter = new HelloDialogEmailFormatter();
+            var formatter = new ZwaluwCrossdockFormatter();
 
             foreach (var item in items)
             {

@@ -19,6 +19,7 @@
     <property name="Active"/>
     <property name="Classname" column="DiskClassname"/>
     <property name="ContentFormats" column="DiskContentFormats"/>
+    <property name="SPLogger"/>
 
     <component name="Authentication">
       <property name="Username"/>

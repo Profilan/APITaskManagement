@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using APITaskManagement.Logic.Common.Interfaces;
 using System.Configuration;
 using APITaskManagement.Logic.Config;
-using APITaskManagement.Logic.Queue.Interfaces;
-using APITaskManagement.Logic.Schedulers.Data;
+using APITaskManagement.Logic.Api.Interfaces;
 
-namespace APITaskManagement.Logic.Schedulers.Repositories
+namespace APITaskManagement.Logic.Api.Repositories
 {
-    public class QueueRepository : IQueueRepository
+    public class ApiRepository : IApiRepository
     {
-        public IEnumerable<IQueue> List()
+        public IEnumerable<IApi> List()
         {
-            List<IQueue> items = new List<IQueue>();
+            List<IApi> items = new List<IApi>();
 
             var queueConfigSection = ConfigurationManager.GetSection("queueSection") as QueueConfigSection;
 
@@ -29,7 +27,7 @@ namespace APITaskManagement.Logic.Schedulers.Repositories
             return items;
         }
 
-        public IQueue GetByName(string name)
+        public IApi GetByName(string name)
         {
             var queueConfigSection = ConfigurationManager.GetSection("queueSection") as QueueConfigSection;
 
@@ -39,8 +37,8 @@ namespace APITaskManagement.Logic.Schedulers.Repositories
                 {
                     if (queueElement.Name == name)
                     {
-                        Type t = Type.GetType("APITaskManagement.Logic.Queue." + queueElement.Type);
-                        return (IQueue)Activator.CreateInstance(t, queueElement.Name);
+                        Type t = Type.GetType("APITaskManagement.Logic.Api." + queueElement.Type);
+                        return (IApi)Activator.CreateInstance(t, queueElement.Name);
                     }
                 }
 

@@ -1,20 +1,20 @@
 ﻿using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Schedulers;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Common.Data
 {
-    public class QueueTableItem : Entity<int>
+    public class Queue : Entity<int>
     {
         public virtual int Key { get; set; }
         public virtual int TryCount { get; set; }
         public virtual Task Task { get; set; }
 
-        protected QueueTableItem()
+        protected Queue()
         {
 
         }
 
-        public QueueTableItem(int key,
+        public Queue(int key,
             int tryCount,
             Task task) : this()
         {

@@ -1,12 +1,12 @@
 ﻿
 using System.Collections.Generic;
 using APITaskManagement.Logic.Schedulers;
-using APITaskManagement.Logic.Queue.Interfaces;
+using APITaskManagement.Logic.Api.Interfaces;
 using System;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Api
 {
-    public class QueueGeneric : Queue
+    public class ApiGeneric : Api
     {
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {

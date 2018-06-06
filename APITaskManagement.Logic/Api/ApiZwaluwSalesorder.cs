@@ -1,29 +1,29 @@
 ﻿using System.Collections.Generic;
 using APITaskManagement.Logic.Schedulers;
-using APITaskManagement.Logic.Queue.Repositories;
 using System.Configuration;
 using System;
+using APITaskManagement.Logic.Common.Repositories;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Api
 {
-    public class QueueZwaluwSalesorder : Queue
+    public class ApiZwaluwSalesorder : Api
     {
-        private readonly QueueTableItemRepository _queueTableItemRepository;
+        private readonly QueueRepository _queueRepository;
 
-        public QueueZwaluwSalesorder(string name) : base(name)
+        public ApiZwaluwSalesorder(string name) : base(name)
         {
-            _queueTableItemRepository = new QueueTableItemRepository();
+            _queueRepository = new QueueRepository();
         }
 
-        public QueueZwaluwSalesorder() : base()
+        public ApiZwaluwSalesorder() : base()
         {
-            _queueTableItemRepository = new QueueTableItemRepository();
+            _queueRepository = new QueueRepository();
         }
 
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
             var requests = new List<Request>();
-            var items = _queueTableItemRepository.ListByTask(taskId, 100);
+            var items = _queueRepository.ListByTask(taskId, 100);
 
             var formatter = new ZwaluwSalesOrderFormatter();
 

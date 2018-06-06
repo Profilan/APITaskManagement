@@ -1,4 +1,4 @@
-﻿using APITaskManagement.Logic.Queue.Interfaces;
+﻿using APITaskManagement.Logic.Api.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
-namespace APITaskManagement.Logic.Queue
+namespace APITaskManagement.Logic.Api
 {
     public class ZwaluwCrossdockCollection
     {

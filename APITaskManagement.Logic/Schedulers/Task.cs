@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Common;
+﻿using APITaskManagement.Logic.Api.Repositories;
+using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Filer;
 using APITaskManagement.Logic.Filer.Data;
 using APITaskManagement.Logic.Filer.Interfaces;
@@ -30,6 +31,7 @@ namespace APITaskManagement.Logic.Schedulers
 
         public virtual string ContentFormats { get; set; }
         public virtual string Classname { get; set; }
+        public virtual string SPLogger { get; set; }
 
         public virtual string LastRunResult { get; protected set; }
         public virtual DateTime LastRunTime { get; protected set; }
@@ -82,11 +84,11 @@ namespace APITaskManagement.Logic.Schedulers
             {
                 case TaskType.API:
                     
-                    var rep = new QueueRepository();
+                    var rep = new ApiRepository();
                     var queue = rep.GetByName(QueueName);
                     queue.AddLogger(new ApplicationLogger());
                     queue.AddLogger(new SystemLogger());
-                    queue.SendRequestsToTarget(HttpMethod, Url, Authentication, this.Id);
+                    queue.SendRequestsToTarget(HttpMethod, Url, Authentication, this);
                     latestResponse = queue.GetLatestResponse();
                     break;
                 case TaskType.FTP:

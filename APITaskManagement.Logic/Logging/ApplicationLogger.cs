@@ -12,7 +12,7 @@ namespace APITaskManagement.Logic.Logging
 {
     public class ApplicationLogger : ILogger
     {
-        public void Log(Request request, Url url, IDictionary<string, string> properties)
+        public void Log(Request request, Url url, string spLogger)
         {
             bool isOk = true;
             if (request.Response.Code >= 300)
@@ -23,25 +23,14 @@ namespace APITaskManagement.Logic.Logging
             var detail = "{\"request\": " + request.Body + ",\"response\":" + request.Response.Detail + "}";
             var message = request.Response.Code + " " + request.Response.Description;
 
-            string connectionstring;
-            if (!properties.TryGetValue("connectionstring", out connectionstring))
-            {
-                if (properties.TryGetValue("connection_string_name", out connectionstring))
-                {
-                    connectionstring = ConfigurationManager.ConnectionStrings[properties["connection_string_name"]].ConnectionString;
-                }
-            }
-            else
-            {
-                connectionstring = properties["connectionstring"];
-            }
-
+            string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+            
             var requests = new List<Request>();
 
             using (SqlConnection connection = new SqlConnection(connectionstring))
             {
                 DataSet dataSet = new DataSet();
-                SqlCommand command = new SqlCommand(properties["splogger"], connection);
+                SqlCommand command = new SqlCommand(spLogger, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("@id", SqlDbType.Int).Value = request.Id;
                 command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
