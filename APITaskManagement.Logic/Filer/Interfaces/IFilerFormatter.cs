@@ -15,5 +15,10 @@ namespace APITaskManagement.Logic.Filer.Interfaces
         bool saveXMLContent();
         bool saveJSONContent();
         bool savePOSContent();
+
+        IList<string> getContent(int key = -1);
+        IList<string> getXMLContent(int key = -1);
+        IList<string> getJSONContent(int key = -1);
+        IList<string> getPOSContent(int key = -1);
     }
 }

@@ -40,6 +40,26 @@ namespace APITaskManagement.Test
         }
 
         [TestMethod]
+        public void GetPosList()
+        {
+            var rep = new PosRepository();
+
+            var orders = rep.List();
+
+            orders.Should().NotBeNullOrEmpty();
+        }
+
+        [TestMethod]
+        public void GetPostById()
+        {
+            var rep = new PosRepository();
+
+            var order = rep.GetById(70005);
+
+            order.Should().NotBeNull();
+        }
+
+        [TestMethod]
         public void getImagesByProductCode()
         {
             HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
@@ -53,6 +73,14 @@ namespace APITaskManagement.Test
         public void getPackagesByProductCode()
         {
             var packages = packageRepository.ListByProductCode("360311-BET");
+        }
+
+        [TestMethod]
+        public void SavePOS()
+        {
+            var formatter = new POSFormatter(ContentFormat.POS);
+
+            var result = formatter.getContent(70005);
         }
     }
 }

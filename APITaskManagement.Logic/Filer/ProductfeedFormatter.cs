@@ -26,6 +26,21 @@ namespace APITaskManagement.Logic.Filer
             packageRepository = new PackageRepository();
         }
 
+        public override IList<string> getJSONContent(int key = -1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<string> getPOSContent(int key = -1)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<string> getXMLContent(int key = -1)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool saveJSONContent()
         {
             throw new NotImplementedException();

@@ -63,8 +63,9 @@ namespace APITaskManagement.Web.Controllers
             {
                 Urls = urls,
                 Formats = formats,
-                Shares = shares
-            };
+                Shares = shares,
+                SelectedShares = new HashSet<Share>()
+        };
 
             return View(taskViewModel);
         }

@@ -17,12 +17,12 @@ namespace APITaskManagement.Logic.Filer
             
         }
 
-        public override void SaveDocuments(Share share)
+        public override void SaveDocuments(Share share, Guid taskId)
         {
             foreach (var format in Formats)
             {
-               var response = new Response();
-               var UNC = share.UNCPath + "." + Enum.GetName(typeof(ContentFormat), format);
+                var response = new Response();
+                var UNC = share.UNCPath + "." + Enum.GetName(typeof(ContentFormat), format);
 
                 var formatter = new ProductfeedFormatter(format);
 

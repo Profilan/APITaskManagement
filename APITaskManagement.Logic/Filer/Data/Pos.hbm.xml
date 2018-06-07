@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="Pos" table="SERVICE_vw_POS">
+    <id name="AI1" column="AI1_Id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="KNA" column="KNA_Customer_Name"/>
+    <property name="KVN" column="KVN_ContactPerson"/>
+    <property name="KST" column="KST_Customer_Address"/>
+    <property name="KPL" column="KPL_Customer_Pc"/>
+    <property name="KOR" column="KOR_Customer_City"/>
+    <property name="KLA" column="KLA_Customer_Country"/>
+    <property name="KTM" column="KTM_Customer_Phone"/>
+    <property name="KEM" column="KEM_Customer_Email"/>
+    <property name="KRD" column="KRD_EntryDate"/>
+    <property name="PSD" column="PSD_Complaint"/>
+    <property name="KLD" column="KLD_PurchaseDate"/>
+    <property name="AI2" column="AI2_Reference"/>
+    <property name="PMA" column="PMA_ItemCode"/>
+    <property name="PTL" column="PTL_ItemDescription"/>
+    <property name="PBA" column="PBA_Material"/>
+    
+  </class>
+
+</hibernate-mapping>

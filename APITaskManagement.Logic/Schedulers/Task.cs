@@ -105,7 +105,7 @@ namespace APITaskManagement.Logic.Schedulers
                     Type t = Type.GetType("APITaskManagement.Logic.Filer." + Classname);
                     var filer = (IFiler)Activator.CreateInstance(t, contentFormats);
                     filer.AddLogger(new SystemLogger());
-                    filer.Send(Shares);
+                    filer.Send(Shares, this.Id);
                     latestResponse = filer.GetLatestResponse();
                     break;
                 default:

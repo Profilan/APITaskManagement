@@ -38,13 +38,13 @@ namespace APITaskManagement.Logic.Filer
             Loggers = new List<ILogger>();
         }
 
-        public abstract void SaveDocuments(Share share);
+        public abstract void SaveDocuments(Share share, Guid TaskId);
 
-        public void Send(ISet<Share> shares)
+        public void Send(ISet<Share> shares, Guid taskId)
         {
             foreach (var share in shares)
             {
-                SaveDocuments(share);
+                SaveDocuments(share, taskId);
 
                 foreach (var response in Responses)
                 {

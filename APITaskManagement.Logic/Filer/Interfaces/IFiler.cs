@@ -15,8 +15,8 @@ namespace APITaskManagement.Logic.Filer.Interfaces
         IList<ContentFormat> Formats { get; set; }
         IList<Response> Responses { get; set; }
 
-        void SaveDocuments(Share share);
-        void Send(ISet<Share> shares);
+        void SaveDocuments(Share share, Guid taskId);
+        void Send(ISet<Share> shares, Guid taskId);
         void AddLogger(ILogger logger);
         Response GetLatestResponse();
     }
