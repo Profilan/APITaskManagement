@@ -82,18 +82,7 @@ namespace APITaskManagement.Logic.Api
     {
         public string GetJsonContent(int key, IDictionary<string, string> properties)
         {
-            string connectionstring;
-            if (!properties.TryGetValue("connectionstring", out connectionstring))
-            {
-                if (properties.TryGetValue("connection_string_name", out connectionstring))
-                {
-                    connectionstring = ConfigurationManager.ConnectionStrings[properties["connection_string_name"]].ConnectionString;
-                }
-            }
-            else
-            {
-                connectionstring = properties["connectionstring"];
-            }
+            string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionstring))
             {
@@ -114,6 +103,16 @@ namespace APITaskManagement.Logic.Api
 
                 var salesOrder = new ZwaluwSalesOrder();
 
+                string delZip;
+                try
+                {
+                    delZip = (string)salesOrderHeader["DelZip"];
+                }
+                catch (Exception)
+                {
+                    delZip = "Unknown";
+                }
+
                 var orderHeader = new ZwaluwSalesOrderHeader
                 {
                     CustomerId = Convert.ToInt32(salesOrderHeader["CustomerId"]),
@@ -123,7 +122,7 @@ namespace APITaskManagement.Logic.Api
                     DelCity = (string)salesOrderHeader["DelCity"],
                     Carrier = (string)salesOrderHeader["Carrier"],
                     DelCountryCode = (string)salesOrderHeader["DelCountryCode"],
-                    DelZip = (string)salesOrderHeader["DelZip"],
+                    DelZip = delZip,
                     Description = (string)salesOrderHeader["Description"],
                     OrderNumber = (string)salesOrderHeader["OrderNumber"],
                     Reference = (string)salesOrderHeader["Reference"],

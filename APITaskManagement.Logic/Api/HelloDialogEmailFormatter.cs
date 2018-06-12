@@ -52,18 +52,7 @@ namespace APITaskManagement.Logic.Api
     {
         public string GetJsonContent(int key, IDictionary<string, string> properties)
         {
-            string connectionstring;
-            if (!properties.TryGetValue("connectionstring", out connectionstring))
-            {
-                if (properties.TryGetValue("connection_string_name", out connectionstring))
-                {
-                    connectionstring = ConfigurationManager.ConnectionStrings[properties["connection_string_name"]].ConnectionString;
-                }
-            }
-            else
-            {
-                connectionstring = properties["connectionstring"];
-            }
+            string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionstring))
             {

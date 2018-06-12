@@ -1,0 +1,43 @@
+﻿@model IEnumerable<APITaskManagement.Logic.Common.Data.Queue>
+
+@{
+    ViewBag.Title = "Queue";
+}
+
+<h2>Queue</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Key)
+        </th>
+        <th>
+            Task
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TryCount)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Task.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TryCount)
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts
+{
+
+}
+

@@ -46,7 +46,7 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void TaskShouldSendRequests()
         {
-            var task = _taskRepository.GetById(new Guid("09cd8b22-0fd3-41d1-9480-a8ef00e8226b"));
+            var task = _taskRepository.GetById(new Guid("8B0DF4EE-A851-46F5-9DEA-163136D024E5"));
 
             task.Start();
 

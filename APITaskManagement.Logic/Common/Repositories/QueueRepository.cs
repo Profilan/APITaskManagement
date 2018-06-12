@@ -33,7 +33,15 @@ namespace APITaskManagement.Logic.Common.Repositories
 
         public IEnumerable<Queue> List()
         {
-            throw new NotImplementedException();
+            using (ISession session = SessionFactory.GetNewSession())
+            {
+                var query = from l in session.Query<Queue>()
+                            select l;
+
+                query = query.OrderByDescending(l => l.Id);
+
+                return query.ToList();
+            }
         }
 
         public IEnumerable<Queue> ListByTask(Guid taskId, int count)

@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Api.Repositories;
+﻿using APITaskManagement.Logic.Api.Interfaces;
+using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Filer;
 using APITaskManagement.Logic.Filer.Data;
@@ -84,8 +85,8 @@ namespace APITaskManagement.Logic.Schedulers
             {
                 case TaskType.API:
                     
-                    var rep = new ApiRepository();
-                    var queue = rep.GetByName(QueueName);
+                    Type t = Type.GetType("APITaskManagement.Logic.Api." + Classname);
+                    var queue = (IApi)Activator.CreateInstance(t, Classname);
                     queue.AddLogger(new ApplicationLogger());
                     queue.AddLogger(new SystemLogger());
                     queue.SendRequestsToTarget(HttpMethod, Url, Authentication, this);
@@ -102,7 +103,7 @@ namespace APITaskManagement.Logic.Schedulers
                     {
                         contentFormats.Add((ContentFormat)Enum.Parse(typeof(ContentFormat), format));
                     }
-                    Type t = Type.GetType("APITaskManagement.Logic.Filer." + Classname);
+                    t = Type.GetType("APITaskManagement.Logic.Filer." + Classname);
                     var filer = (IFiler)Activator.CreateInstance(t, contentFormats);
                     filer.AddLogger(new SystemLogger());
                     filer.Send(Shares, this.Id);

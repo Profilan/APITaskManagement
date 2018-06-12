@@ -204,11 +204,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\LogController.cs" />
+    <Compile Include="Controllers\Api\QueueController.cs" />
     <Compile Include="Controllers\Api\TaskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MessengerController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
+    <Compile Include="Controllers\QueueController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ShareController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Models\LogViewModel.cs" />
     <Compile Include="Models\MessengerViewModel.cs" />
     <Compile Include="Models\MonitorViewModel.cs" />
+    <Compile Include="Models\QueueViewModel.cs" />
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\SortAndPage.cs" />
@@ -395,6 +398,7 @@
     <Content Include="Views\Share\Index.cshtml" />
     <Content Include="Views\Share\Create.cshtml" />
     <Content Include="Views\Share\Edit.cshtml" />
+    <Content Include="Views\Queue\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
