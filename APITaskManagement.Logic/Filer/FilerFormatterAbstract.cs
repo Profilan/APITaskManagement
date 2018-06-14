@@ -29,8 +29,8 @@ namespace APITaskManagement.Logic.Filer
                         return saveJSONContent();
                     case ContentFormat.XML:
                         return saveXMLContent();
-                    case ContentFormat.POS:
-                        return savePOSContent();
+                    case ContentFormat.TXT:
+                        return saveTXTContent();
                 }
 
                 return false;
@@ -41,7 +41,7 @@ namespace APITaskManagement.Logic.Filer
 
         public abstract bool saveXMLContent();
 
-        public abstract bool savePOSContent();
+        public abstract bool saveTXTContent();
 
         public IList<string> getContent(int key = -1)
         {
@@ -51,8 +51,8 @@ namespace APITaskManagement.Logic.Filer
                     return getJSONContent(key);
                 case ContentFormat.XML:
                     return getXMLContent(key);
-                case ContentFormat.POS:
-                    return getPOSContent(key);
+                case ContentFormat.TXT:
+                    return getTXTContent(key);
             }
 
             return null;
@@ -62,6 +62,6 @@ namespace APITaskManagement.Logic.Filer
 
         public abstract IList<string> getJSONContent(int key = -1);
 
-        public abstract IList<string> getPOSContent(int key = -1);
+        public abstract IList<string> getTXTContent(int key = -1);
     }
 }

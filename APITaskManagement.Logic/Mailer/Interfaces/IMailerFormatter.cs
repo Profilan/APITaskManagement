@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APITaskManagement.Logic.Filer.Interfaces
+namespace APITaskManagement.Logic.Mailer.Interfaces
 {
-    public interface IFilerFormatter
+    public interface IMailerFormatter
     {
         ContentFormat Format { get; set; }
 
-        bool saveContent(string destination);
+        bool saveContent();
         bool saveXMLContent();
         bool saveJSONContent();
         bool saveTXTContent();

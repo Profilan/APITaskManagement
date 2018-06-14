@@ -1,47 +1,53 @@
 ﻿using APITaskManagement.Logic.Common.Interfaces;
+using APITaskManagement.Logic.Mailer.Data;
 using APITaskManagement.Logic.Utils;
 using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace APITaskManagement.Logic.Schedulers.Repositories
+namespace APITaskManagement.Logic.Mailer.Repositories
 {
-    public class TargetRepository : IRepository<Target, int>
+    public class PosRepository : IRepository<Pos, int>
     {
         public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Target GetById(int id)
+        public Pos GetById(int id)
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var target = session.Get<Target>(id);
-                return target;
+                var order = session.Get<Pos>(id);
+                return order;
             }
         }
 
-        public void Insert(Target entity)
+        public void Insert(Pos entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Target> List(string sortOrder, string searchString, int pageSize, int pageNumber)
+        public IEnumerable<Pos> List(string sortOrder, string searchString, int pageSize, int pageNumber)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Target> List()
+        public IEnumerable<Pos> List()
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                return session.Query<Target>().ToList();
+                var query = from p in session.Query<Pos>()
+                            select p;
+
+                return query.ToList();
             }
         }
 
-        public void Update(Target entity)
+        public void Update(Pos entity)
         {
             throw new NotImplementedException();
         }

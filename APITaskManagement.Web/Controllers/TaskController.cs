@@ -109,6 +109,9 @@ namespace APITaskManagement.Web.Controllers
                     task.Shares.Add(share);
                 }
 
+                task.MailSender = collection["MailSender"];
+                task.MailRecipient = collection["MailRecipient"];
+
                 _taskRepository.Insert(task);
 
                 return RedirectToAction("Index");
@@ -130,7 +133,7 @@ namespace APITaskManagement.Web.Controllers
             {
                 new SelectListItem { Value = "1", Text = "JSON" },
                 new SelectListItem { Value = "2", Text = "XML" },
-                new SelectListItem { Value = "3", Text = "POS" }
+                new SelectListItem { Value = "3", Text = "TXT" }
             };
 
             List<int> selectedfFormats = new List<int>();
@@ -161,7 +164,6 @@ namespace APITaskManagement.Web.Controllers
             {
                 Id = task.Id,
                 Title = task.Title,
-                Url = task.Url.Address,
                 HttpMethod = task.HttpMethod,
                 Username = task.Authentication.Username,
                 Password = task.Authentication.Password,
@@ -173,7 +175,6 @@ namespace APITaskManagement.Web.Controllers
                 Amount = task.Interval.Amount,
                 Unit = task.Interval.Unit,
                 Urls = urls,
-                UrlId = task.Url.Id,
                 MaxErrors = task.MaxErrors,
                 Classname = classname,
                 Formats = formats,
@@ -181,6 +182,38 @@ namespace APITaskManagement.Web.Controllers
                 Shares = shares,
                 SelectedShares = task.Shares
             };
+            try
+            {
+                taskViewModel.UrlId = task.Url.Id;
+            }
+            catch (Exception)
+            {
+
+            }
+            try
+            {
+                taskViewModel.Url = task.Url.Address;
+            }
+            catch (Exception)
+            {
+
+            }
+            try
+            {
+                taskViewModel.MailSender = task.MailSender;
+            }
+            catch (Exception)
+            {
+                taskViewModel.MailRecipient = "";
+            }
+            try
+            {
+                taskViewModel.MailRecipient = task.MailRecipient;
+            }
+            catch (Exception)
+            {
+                taskViewModel.MailRecipient = "";
+            }
 
             return View(taskViewModel);
         }
@@ -219,13 +252,23 @@ namespace APITaskManagement.Web.Controllers
                 task.Classname = collection["Classname"];
                 task.ContentFormats = String.Join(";", collection["SelectedFormats"]);
 
-                task.Shares.Clear();
-                var selectedShares = collection["SelectedShares"].Split(',');
-                foreach (var shareId in selectedShares)
+                try
                 {
-                    var share = _shareRepository.GetById(Convert.ToInt32(shareId));
-                    task.Shares.Add(share);
+                    task.Shares.Clear();
+                    var selectedShares = collection["SelectedShares"].Split(',');
+                    foreach (var shareId in selectedShares)
+                    {
+                        var share = _shareRepository.GetById(Convert.ToInt32(shareId));
+                        task.Shares.Add(share);
+                    }
                 }
+                catch (Exception)
+                {
+
+                }
+
+                task.MailSender = collection["MailSender"];
+                task.MailRecipient = collection["MailRecipient"];
 
                 _taskRepository.Update(task);
 

@@ -31,7 +31,7 @@ namespace APITaskManagement.Logic.Filer
             throw new NotImplementedException();
         }
 
-        public override IList<string> getPOSContent(int key = -1)
+        public override IList<string> getTXTContent(int key = -1)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace APITaskManagement.Logic.Filer
             throw new NotImplementedException();
         }
 
-        public override bool savePOSContent()
+        public override bool saveTXTContent()
         {
             throw new NotImplementedException();
         }

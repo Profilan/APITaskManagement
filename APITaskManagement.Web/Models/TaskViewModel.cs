@@ -88,5 +88,13 @@ namespace APITaskManagement.Web.Models
         [Display(Name = "Shares")]
         public virtual IEnumerable<Share> Shares { get; set; }
         public ISet<Share> SelectedShares { get; set; }
+
+        // Mail fields
+
+        [Display(Name = "Mail From")]
+        public string MailSender { get; set; }
+
+        [Display(Name = "Mail To")]
+        public string MailRecipient { get; set; }
     }
 }

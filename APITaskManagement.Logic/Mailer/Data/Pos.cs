@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APITaskManagement.Logic.Filer.Data
+namespace APITaskManagement.Logic.Mailer.Data
 {
     public class Pos
     {

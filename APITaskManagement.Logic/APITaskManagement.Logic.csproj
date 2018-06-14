@@ -139,27 +139,31 @@
     <Compile Include="Common\Entity.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\Interfaces\IApplicationEvent.cs" />
-    <Compile Include="Filer\Data\Pos.cs" />
     <Compile Include="Filer\Data\Share.cs" />
     <Compile Include="Filer\Data\Image.cs" />
     <Compile Include="Filer\Data\Package.cs" />
     <Compile Include="Filer\Data\Product.cs" />
     <Compile Include="Filer\FilerAbstract.cs" />
     <Compile Include="Filer\FilerFormatterAbstract.cs" />
-    <Compile Include="Filer\FilerPOS.cs" />
     <Compile Include="Filer\FilerProductfeed.cs" />
     <Compile Include="Filer\Interfaces\IFiler.cs" />
     <Compile Include="Filer\Interfaces\IFilerFormatter.cs" />
-    <Compile Include="Filer\POSFormatter.cs" />
     <Compile Include="Filer\ProductfeedFormatter.cs" />
     <Compile Include="Filer\Repositories\ImageRepository.cs" />
     <Compile Include="Filer\Repositories\PackageRepository.cs" />
-    <Compile Include="Filer\Repositories\PosRepository.cs" />
     <Compile Include="Filer\Repositories\ProductRepository.cs" />
     <Compile Include="Filer\Repositories\ShareRepository.cs" />
     <Compile Include="Logging\ApplicationLogger.cs" />
     <Compile Include="Logging\Interfaces\ILogger.cs" />
     <Compile Include="Logging\SystemLogger.cs" />
+    <Compile Include="Mailer\Data\Pos.cs" />
+    <Compile Include="Mailer\Interfaces\IMailer.cs" />
+    <Compile Include="Mailer\Interfaces\IMailerFormatter.cs" />
+    <Compile Include="Mailer\MailerAbstract.cs" />
+    <Compile Include="Mailer\MailerFormatterAbstract.cs" />
+    <Compile Include="Mailer\MailerPOS.cs" />
+    <Compile Include="Mailer\POSFormatter.cs" />
+    <Compile Include="Mailer\Repositories\PosRepository.cs" />
     <Compile Include="Management\Repositories\RoleRepository.cs" />
     <Compile Include="Management\Repositories\SchedulerRepository.cs" />
     <Compile Include="Management\Repositories\UrlRepository.cs" />
@@ -205,11 +209,14 @@
     <Compile Include="Api\ZwaluwCrossdockFormatter.cs" />
     <Compile Include="Api\ZwaluwSalesOrderFormatter.cs" />
     <Compile Include="Common\Repositories\QueueRepository.cs" />
+    <Compile Include="Schedulers\APITask.cs" />
     <Compile Include="Schedulers\ApplicationEvents\TaskFinishedEvent.cs" />
     <Compile Include="Schedulers\ApplicationEvents\TaskStartedEvent.cs" />
     <Compile Include="Schedulers\Authentication.cs" />
     <Compile Include="Schedulers\Data\IScheduleRepository.cs" />
-    <Compile Include="Schedulers\Repositories\TargetRepository.cs" />
+    <Compile Include="Schedulers\FILETask.cs" />
+    <Compile Include="Schedulers\Interfaces\ITask.cs" />
+    <Compile Include="Schedulers\MAILTask.cs" />
     <Compile Include="Management\Repositories\LogRepository.cs" />
     <Compile Include="Schedulers\Repositories\ScheduleRepository.cs" />
     <Compile Include="Common\ValueObject.cs" />
@@ -226,7 +233,6 @@
     <Compile Include="Schedulers\Services\SchedulerService.cs" />
     <Compile Include="Schedulers\Services\TaskService.cs" />
     <Compile Include="Schedulers\Status.cs" />
-    <Compile Include="Schedulers\Target.cs" />
     <Compile Include="Schedulers\Task.cs" />
     <Compile Include="Schedulers\Repositories\TaskRepository.cs" />
     <Compile Include="Utils\Config.cs" />
@@ -249,6 +255,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mailer\Data\Pos.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\Image.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\Package.hbm.xml">
       <SubType>Designer</SubType>
@@ -257,7 +264,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Filer\Data\Share.hbm.xml" />
-    <EmbeddedResource Include="Filer\Data\Pos.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -270,7 +276,6 @@
     <EmbeddedResource Include="Management\User.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Schedulers\Target.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Management\Log.hbm.xml">

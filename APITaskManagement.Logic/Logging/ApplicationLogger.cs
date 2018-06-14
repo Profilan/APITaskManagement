@@ -50,5 +50,10 @@ namespace APITaskManagement.Logic.Logging
         {
             throw new System.NotImplementedException();
         }
+
+        public void Log(Response response, string recipient)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

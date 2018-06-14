@@ -16,6 +16,7 @@ using APITaskManagement.Logic.Schedulers;
 using APITaskManagement.Logic.Schedulers.Data;
 using APITaskManagement.Service.Config;
 using System.Configuration;
+using APITaskManagement.Logic.Schedulers.Interfaces;
 
 [assembly: OwinStartup(typeof(APITaskManagement.Service.Startup))]
 namespace APITaskManagement.Service

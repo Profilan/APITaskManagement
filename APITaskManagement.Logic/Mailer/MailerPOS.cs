@@ -1,33 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APITaskManagement.Logic.Filer.Data;
-using APITaskManagement.Logic.Common;
+﻿using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Common.Repositories;
 using APITaskManagement.Logic.Schedulers;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Net.Mail;
+using System.Text;
 
-namespace APITaskManagement.Logic.Filer
+namespace APITaskManagement.Logic.Mailer
 {
-    public class FilerPOS : FilerAbstract
+    public class MailerPOS : MailerAbstract
     {
         private readonly QueueRepository _queueRepository;
 
-        public FilerPOS(IList<ContentFormat> formats) : base(formats)
+        public MailerPOS(IList<ContentFormat> formats) : base(formats)
         {
             _queueRepository = new QueueRepository();
         }
 
-        public override void SaveDocuments(Share share, Guid taskId)
+        public override void Prepare(Task task)
         {
             var dateNow = DateTime.Now;
-            var items = _queueRepository.ListByTask(taskId, 100);
+            var items = _queueRepository.ListByTask(task.Id, 100);
 
             foreach (var format in Formats)
             {
                 var formatter = new POSFormatter(format);
-                var UNC = share.UNCPath + "." + Enum.GetName(typeof(ContentFormat), format);
+                var contentFormat = Enum.GetName(typeof(ContentFormat), format);
+                var UNC = Path.GetTempPath() + @"\EEK_ORDER." + contentFormat;
+                //var UNC = Path.GetTempFileName();
 
                 var lines = new List<string>();
                 lines.Add("DDA:" + dateNow.ToString("ddMMyyyy"));
@@ -38,7 +41,7 @@ namespace APITaskManagement.Logic.Filer
                 foreach (var item in items)
                 {
                     var response = new Response();
-                    
+
                     try
                     {
                         var result = formatter.getContent(item.Key);
@@ -51,13 +54,13 @@ namespace APITaskManagement.Logic.Filer
 
                         response.Code = 201;
                         response.Description = "Created";
-                        response.Detail = UNC + " was saved succesfully";
+                        response.Detail = "POS order " + item.Key + " was sent succesfully";
                     }
                     catch (Exception)
                     {
                         response.Code = 400;
                         response.Description = "Bad Request";
-                        response.Detail = "There was an error when saving " + UNC;
+                        response.Detail = "There was an error when sending POS order " + item.Key;
                     }
 
                     Responses.Add(response);
@@ -67,8 +70,14 @@ namespace APITaskManagement.Logic.Filer
                 lines.CopyTo(array, 0);
 
                 System.IO.File.WriteAllLines(UNC, lines);
+
+                var subject = "De Eekhoorn Order";
+                var body = "De inhoud van dit bericht is afkomstig van De Eekhoorn Woodworkings B.V";
+
+                SendMail(task.MailSender, task.MailRecipient, subject, body, UNC);
+                
             }
-            
+
         }
     }
 }

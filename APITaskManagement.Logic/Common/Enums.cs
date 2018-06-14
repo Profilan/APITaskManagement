@@ -41,7 +41,8 @@
     {
         API = 1,
         FTP = 2,
-        FILE = 3
+        FILE = 3,
+        MAIL = 4
     }
 
     public enum FtpSyncMethod
@@ -61,6 +62,6 @@
     {
         JSON = 1,
         XML = 2,
-        POS = 3
+        TXT = 3
     }
 }

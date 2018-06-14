@@ -22,6 +22,7 @@
             <li role="presentation" id="apiTab"><a href="#api" aria-controls="api" role="tab">API</a></li>
             <li role="presentation" id="ftpTab"><a href="#ftp" aria-controls="ftp" role="tab">FTP</a></li>
             <li role="presentation" id="diskTab"><a href="#disk" aria-controls="disk" role="tab">File</a></li>
+            <li role="presentation" id="mailTab"><a href="#mail" aria-controls="mail" role="tab">Mail</a></li>
             <li role="presentation"><a href="#authentication" aria-controls="authentication" role="tab">Authentication</a></li>
             <li role="presentation"><a href="#schedule" aria-controls="schedule" role="tab">Schedule</a></li>
         </ul>
@@ -46,6 +47,11 @@
             <div role="tabpanel" class="tab-pane" id="disk">
                 <div class="col-md-6">
                     @{Html.RenderPartial("_File", Model); }
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="mail">
+                <div class="col-md-6">
+                    @{Html.RenderPartial("_Mail", Model); }
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="authentication">
@@ -90,6 +96,7 @@
             $('#apiTab').hide();
             $('#ftpTab').hide();
             $('#diskTab').hide();
+            $('#mailTab').hide();
             if (el.val() == 1) {
                 $('#apiTab').show();
             } else {
@@ -104,6 +111,11 @@
                 $('#diskTab').show();
             } else {
                 $('#diskTab').hide();
+            }
+            if (el.val() == 4) {
+                $('#mailTab').show();
+            } else {
+                $('#mailTab').hide();
             }
         };
 

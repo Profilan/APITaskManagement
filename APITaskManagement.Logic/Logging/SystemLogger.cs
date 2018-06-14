@@ -50,5 +50,23 @@ namespace APITaskManagement.Logic.Logging
 
             _logRepository.Insert(log);
         }
+
+        public void Log(Response response, string recipient)
+        {
+            var _logRepository = new LogRepository();
+
+            var priority = ErrorType.INFO;
+            if (response.Code >= 400)
+            {
+                priority = ErrorType.ERR;
+            }
+
+            var detail = response.Detail;
+            var message = response.Code + " " + response.Description;
+
+            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), recipient, detail, false);
+
+            _logRepository.Insert(log);
+        }
     }
 }

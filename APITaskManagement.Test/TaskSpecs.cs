@@ -10,6 +10,7 @@ using APITaskManagement.Logic.Schedulers.ApplicationEvents;
 using System.Linq;
 using APITaskManagement.Logic.Api;
 using APITaskManagement.Logic.Management;
+using APITaskManagement.Logic.Schedulers.Interfaces;
 
 namespace APITaskManagement.Test
 {
@@ -46,7 +47,7 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void TaskShouldSendRequests()
         {
-            var task = _taskRepository.GetById(new Guid("8B0DF4EE-A851-46F5-9DEA-163136D024E5"));
+            var task = _taskRepository.GetById(new Guid("d0c86125-588e-46c0-8721-d49612af219f"));
 
             task.Start();
 

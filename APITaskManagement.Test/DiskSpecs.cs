@@ -6,6 +6,8 @@ using APITaskManagement.Logic.Filer;
 using APITaskManagement.Logic.Common;
 using System.Collections.Generic;
 using APITaskManagement.Logic.Filer.Interfaces;
+using APITaskManagement.Logic.Mailer.Repositories;
+using APITaskManagement.Logic.Mailer;
 
 namespace APITaskManagement.Test
 {
@@ -78,7 +80,7 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void SavePOS()
         {
-            var formatter = new POSFormatter(ContentFormat.POS);
+            var formatter = new POSFormatter(ContentFormat.TXT);
 
             var result = formatter.getContent(70005);
         }

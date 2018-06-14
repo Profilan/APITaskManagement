@@ -1,14 +1,14 @@
 ﻿using APITaskManagement.Logic.Common;
-using APITaskManagement.Logic.Filer.Repositories;
+using APITaskManagement.Logic.Mailer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APITaskManagement.Logic.Filer
+namespace APITaskManagement.Logic.Mailer
 {
-    public class POSFormatter : FilerFormatterAbstract
+    public class POSFormatter : MailerFormatterAbstract
     {
         private readonly PosRepository posRepository;
 
@@ -27,7 +27,7 @@ namespace APITaskManagement.Logic.Filer
             throw new NotImplementedException();
         }
 
-        public override bool savePOSContent()
+        public override bool saveTXTContent()
         {
             throw new NotImplementedException();
         }
@@ -42,14 +42,15 @@ namespace APITaskManagement.Logic.Filer
             throw new NotImplementedException();
         }
 
-        public override IList<string> getPOSContent(int key = -1)
+        public override IList<string> getTXTContent(int key = -1)
         {
-            
+
             var lines = new List<string>();
 
             var order = posRepository.GetById(key);
 
             lines.Add("AI1:" + order.AI1);
+            lines.Add("AI2:" + order.AI2);
             lines.Add("AKN:24372");
             lines.Add("KVN:" + order.KVN);
             lines.Add("KNA:" + order.KNA);

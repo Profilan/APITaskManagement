@@ -7,6 +7,7 @@ using APITaskManagement.Logic.Filer.Interfaces;
 using APITaskManagement.Logic.Logging;
 using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers.ApplicationEvents;
+using APITaskManagement.Logic.Schedulers.Interfaces;
 using APITaskManagement.Logic.Schedulers.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace APITaskManagement.Logic.Schedulers
 {
-    public class Task : Entity<Guid>
+    public class Task : Entity<Guid>, ITask
     {
         [Required]
         public virtual string Title { get; set; }
@@ -38,6 +39,9 @@ namespace APITaskManagement.Logic.Schedulers
         public virtual DateTime LastRunTime { get; protected set; }
         public virtual string LastRunDetails { get; protected set; }
 
+        public virtual string MailSender { get; set; }
+        public virtual string MailRecipient { get; set; }
+
         public virtual int MaxErrors { get; set; }
         public virtual bool Active { get; set; }
 
@@ -46,7 +50,7 @@ namespace APITaskManagement.Logic.Schedulers
         #region More Properties
 
         // Not persisted
-
+        public virtual Response LatestResponse { get; set; }
 
         #endregion
 
@@ -76,47 +80,17 @@ namespace APITaskManagement.Logic.Schedulers
             Shares = new HashSet<Share>();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             Active = true;
 
-            Response latestResponse = null;
-            switch (TaskType)
-            {
-                case TaskType.API:
-                    
-                    Type t = Type.GetType("APITaskManagement.Logic.Api." + Classname);
-                    var queue = (IApi)Activator.CreateInstance(t, Classname);
-                    queue.AddLogger(new ApplicationLogger());
-                    queue.AddLogger(new SystemLogger());
-                    queue.SendRequestsToTarget(HttpMethod, Url, Authentication, this);
-                    latestResponse = queue.GetLatestResponse();
-                    break;
-                case TaskType.FTP:
+            Send();
 
-                    break;
-                case TaskType.FILE:
-                    
-                    var formats = ContentFormats.Split(';');
-                    List<ContentFormat> contentFormats = new List<ContentFormat>();
-                    foreach (var format in formats)
-                    {
-                        contentFormats.Add((ContentFormat)Enum.Parse(typeof(ContentFormat), format));
-                    }
-                    t = Type.GetType("APITaskManagement.Logic.Filer." + Classname);
-                    var filer = (IFiler)Activator.CreateInstance(t, contentFormats);
-                    filer.AddLogger(new SystemLogger());
-                    filer.Send(Shares, this.Id);
-                    latestResponse = filer.GetLatestResponse();
-                    break;
-                default:
-                    break;
-            }
-            if (latestResponse != null)
+            if (LatestResponse != null)
             {
-                LastRunResult = latestResponse.Code + " " + latestResponse.Description;
+                LastRunResult = LatestResponse.Code + " " + LatestResponse.Description;
                 LastRunTime = DateTime.Now;
-                LastRunDetails = latestResponse.Detail;
+                LastRunDetails = LatestResponse.Detail;
             }
 
             var taskFinishedEvent = new TaskFinishedEvent(this);
@@ -126,36 +100,36 @@ namespace APITaskManagement.Logic.Schedulers
 
         }
 
-        private void OnFinish()
-        {
-            
-        }
-
         public virtual void Stop()
         {
             Active = false;
         }
 
-        public bool IsActive()
+        public virtual bool IsActive()
         {
             return Active;
         }
 
-        public void ChangeLastRun(string lastRunResult, DateTime lastRunTime, string lastRunDetails)
+        public virtual void ChangeLastRun(string lastRunResult, DateTime lastRunTime, string lastRunDetails)
         {
             LastRunResult = lastRunResult;
             LastRunTime = lastRunTime;
             LastRunDetails = lastRunDetails;
         }
 
-        public void EnableTask()
+        public virtual void EnableTask()
         {
             Enabled = true;
         }
 
-        public void DisableTask()
+        public virtual void DisableTask()
         {
             Enabled = false;
+        }
+
+        public virtual void Send()
+        {
+
         }
     }
 }

@@ -11,5 +11,6 @@ namespace APITaskManagement.Logic.Logging.Interfaces
     {
         void Log(Request request, Url url, string spLogger);
         void Log(Response response, Share share);
+        void Log(Response response, string recipient);
     }
 }
