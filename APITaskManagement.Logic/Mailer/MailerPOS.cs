@@ -55,12 +55,14 @@ namespace APITaskManagement.Logic.Mailer
                         response.Code = 201;
                         response.Description = "Created";
                         response.Detail = "POS order " + item.Key + " was sent succesfully";
+                        response.Id = item.Id;
                     }
                     catch (Exception)
                     {
                         response.Code = 400;
                         response.Description = "Bad Request";
                         response.Detail = "There was an error when sending POS order " + item.Key;
+                        response.Id = item.Id;
                     }
 
                     Responses.Add(response);

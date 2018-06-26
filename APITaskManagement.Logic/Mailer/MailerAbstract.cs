@@ -75,16 +75,16 @@ namespace APITaskManagement.Logic.Mailer
 
             foreach (var response in Responses)
             {
-                LogResponse(response, task.MailRecipient);
+                LogResponse(response, task.MailRecipient, task.SPLogger);
             }
         }
 
 
-        protected void LogResponse(Response response, string recipient)
+        protected void LogResponse(Response response, string recipient, string spLogger)
         {
             foreach (ILogger logger in Loggers)
             {
-                logger.Log(response, recipient);
+                logger.Log(response, recipient, spLogger);
             }
         }
 

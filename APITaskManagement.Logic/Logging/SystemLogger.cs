@@ -51,7 +51,7 @@ namespace APITaskManagement.Logic.Logging
             _logRepository.Insert(log);
         }
 
-        public void Log(Response response, string recipient)
+        public void Log(Response response, string recipient, string spLogger)
         {
             var _logRepository = new LogRepository();
 

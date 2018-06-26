@@ -51,9 +51,39 @@ namespace APITaskManagement.Logic.Logging
             throw new System.NotImplementedException();
         }
 
-        public void Log(Response response, string recipient)
+        public void Log(Response response, string recipient, string spLogger)
         {
-            throw new System.NotImplementedException();
+            bool isOk = true;
+            if (response.Code >= 300)
+            {
+                isOk = false;
+            }
+
+
+
+            var detail = "{\"response\":" + response.Detail + "}";
+            var message = response.Code + " " + response.Description;
+
+            string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+
+            var requests = new List<Request>();
+
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                DataSet dataSet = new DataSet();
+                SqlCommand command = new SqlCommand(spLogger, connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@id", SqlDbType.Int).Value = response.Id;
+                command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
+                command.Parameters.Add("@json", SqlDbType.VarChar).Value = detail;
+                command.Parameters.Add("@msg", SqlDbType.VarChar).Value = message;
+                // command.Parameters.Add("@target", SqlDbType.Int).Value = target.Id;
+                command.Parameters.Add("@IsSuccess", SqlDbType.Bit).Value = isOk;
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                adapter.Fill(dataSet);
+            }
         }
     }
 }
