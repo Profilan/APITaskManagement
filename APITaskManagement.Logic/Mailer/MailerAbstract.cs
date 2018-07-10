@@ -2,6 +2,7 @@
 using APITaskManagement.Logic.Logging.Interfaces;
 using APITaskManagement.Logic.Mailer.Interfaces;
 using APITaskManagement.Logic.Schedulers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,31 +13,27 @@ using System.Text;
 
 namespace APITaskManagement.Logic.Mailer
 {
-    public class Document : ValueObject<Document>
+    public class RequestBody
     {
-        public int Code { get; set; }
-        public string Description { get; set; }
-        public string Detail { get; set; }
-        public ContentFormat ContentFormat { get; set; }
-        public string UNC { get; set; }
-
-        protected override bool EqualsCore(Document other)
-        {
-            return other.Code == Code && other.ContentFormat == ContentFormat;
-        }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public IList<int> Ids { get; set; }
+        public IList<int> Keys { get; set; }
+        public IList<string> Attachment { get; set; }
+        public string Path { get; set; }
     }
 
     public abstract class MailerAbstract : IMailer
     {
         public IList<ContentFormat> Formats { get; set; }
-        public IList<Response> Responses { get; set; }
+        public IList<Request> Requests { get; set; }
         protected IList<ILogger> Loggers { get; set; }
         protected SmtpClient client { get; set; }
 
         public MailerAbstract(IList<ContentFormat> formats)
         {
             Formats = formats;
-            Responses = new List<Response>();
+            Requests = new List<Request>();
             Loggers = new List<ILogger>();
 
             var username = ConfigurationManager.AppSettings["MailUsername"];
@@ -59,32 +56,58 @@ namespace APITaskManagement.Logic.Mailer
 
         public Response GetLatestResponse()
         {
-            if (Responses.Count > 0)
+            if (Requests.Count > 0)
             {
-                return Responses.Last();
+                return Requests.Last().Response;
             }
 
             return null;
         }
 
-        public abstract void Prepare(Task task);
+        public abstract IList<Request> Prepare(Task task);
 
         public void Send(Task task)
         {
-            Prepare(task);
+            Requests = Prepare(task);
 
-            foreach (var response in Responses)
+            foreach (var request in Requests)
             {
-                LogResponse(response, task.MailRecipient, task.SPLogger);
-            }
+                // LogResponse(response, task.MailRecipient, task.SPLogger);
+
+                var requestBody = JsonConvert.DeserializeObject<RequestBody>(request.Body);
+
+                try
+                {
+                    System.IO.File.WriteAllLines(requestBody.Path, requestBody.Attachment);
+                    SendMail(task.MailSender, task.MailRecipient, requestBody.Subject, requestBody.Body, requestBody.Path);
+
+                    var response = new Response(201, "Created", "Mail was sent succesfully");
+                    request.SetResponse(response);
+
+                    LogResponse(response, task.MailRecipient, requestBody, task.SPLogger);
+                }
+                catch (Exception e)
+                {
+                    var response = new Response(400, "Bad Request", "Mail was not sent succesfully: " + e.Message);
+
+                    LogResponse(response, task.MailRecipient, requestBody, task.SPLogger);
+                }
+             }
         }
 
 
-        protected void LogResponse(Response response, string recipient, string spLogger)
+        protected void LogResponse(Response response, string recipient, RequestBody body, string spLogger)
         {
             foreach (ILogger logger in Loggers)
             {
-                logger.Log(response, recipient, spLogger);
+                var originalDetail = response.Detail;
+                foreach (var id in body.Ids)
+                {
+                    response.Id = id;
+                    response.Detail = originalDetail + " with id: [" + id + "]";
+                    logger.Log(response, recipient, spLogger);
+                }
+                
             }
         }
 
@@ -112,9 +135,9 @@ namespace APITaskManagement.Logic.Mailer
                     client.Send(mm);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                throw new Exception(e.Message);
             }
         }
     }

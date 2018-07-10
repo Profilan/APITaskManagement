@@ -59,9 +59,7 @@ namespace APITaskManagement.Logic.Logging
                 isOk = false;
             }
 
-
-
-            var detail = "{\"response\":" + response.Detail + "}";
+            var detail = response.Detail;
             var message = response.Code + " " + response.Description;
 
             string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;

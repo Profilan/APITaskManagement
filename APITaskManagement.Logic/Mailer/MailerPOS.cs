@@ -1,6 +1,7 @@
 ﻿using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Common.Repositories;
 using APITaskManagement.Logic.Schedulers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,30 +21,31 @@ namespace APITaskManagement.Logic.Mailer
             _queueRepository = new QueueRepository();
         }
 
-        public override void Prepare(Task task)
+        public override IList<Request> Prepare(Task task)
         {
             var dateNow = DateTime.Now;
             var items = _queueRepository.ListByTask(task.Id, 100);
+            var requests = new List<Request>();
 
-            foreach (var format in Formats)
+            if (items.Count() > 0)
             {
-                var formatter = new POSFormatter(format);
-                var contentFormat = Enum.GetName(typeof(ContentFormat), format);
-                var UNC = Path.GetTempPath() + @"\EEK_ORDER." + contentFormat;
-                //var UNC = Path.GetTempFileName();
-
-                var lines = new List<string>();
-                lines.Add("DDA:" + dateNow.ToString("ddMMyyyy"));
-                lines.Add("DTI:" + dateNow.ToString("HHmm"));
-                lines.Add("DTO:" + items.Count());
-
-                var nbg = 1;
-                foreach (var item in items)
+                int id = 0;
+                foreach (var format in Formats)
                 {
-                    var response = new Response();
+                    var formatter = new POSFormatter(format);
 
-                    try
+                    var lines = new List<string>();
+                    lines.Add("DDA:" + dateNow.ToString("ddMMyyyy"));
+                    lines.Add("DTI:" + dateNow.ToString("HHmm"));
+                    lines.Add("DTO:" + items.Count());
+
+                    var nbg = 1;
+                    var ids = new List<int>();
+                    var keys = new List<int>();
+                    foreach (var item in items)
                     {
+                        var response = new Response();
+
                         var result = formatter.getContent(item.Key);
 
                         lines.Add("");
@@ -52,34 +54,32 @@ namespace APITaskManagement.Logic.Mailer
                         lines.AddRange(result);
                         lines.Add("FEN:" + nbg++);
 
-                        response.Code = 201;
-                        response.Description = "Created";
-                        response.Detail = "POS order " + item.Key + " was sent succesfully";
-                        response.Id = item.Id;
+                        ids.Add(item.Id);
+                        keys.Add(item.Key);
+
                     }
-                    catch (Exception)
+
+                    var contentFormat = Enum.GetName(typeof(ContentFormat), format);
+                    var path = Path.GetTempPath() + @"\EEK_ORDER." + contentFormat;
+
+                    var body = new RequestBody()
                     {
-                        response.Code = 400;
-                        response.Description = "Bad Request";
-                        response.Detail = "There was an error when sending POS order " + item.Key;
-                        response.Id = item.Id;
-                    }
+                        Subject = "De Eekhoorn Order",
+                        Body = "De inhoud van dit bericht is afkomstig van De Eekhoorn Woodworkings B.V",
+                        Ids = ids,
+                        Keys = keys,
+                        Attachment = lines,
+                        Path = path
+                    };
 
-                    Responses.Add(response);
+                    id++;
+                    var request = new Request(id, id, JsonConvert.SerializeObject(body));
+
+                    requests.Add(request);
                 }
-
-                var array = new string[lines.Count];
-                lines.CopyTo(array, 0);
-
-                System.IO.File.WriteAllLines(UNC, lines);
-
-                var subject = "De Eekhoorn Order";
-                var body = "De inhoud van dit bericht is afkomstig van De Eekhoorn Woodworkings B.V";
-
-                SendMail(task.MailSender, task.MailRecipient, subject, body, UNC);
-                
             }
 
+            return requests;
         }
     }
 }

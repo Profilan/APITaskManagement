@@ -11,9 +11,9 @@ namespace APITaskManagement.Logic.Mailer.Interfaces
     public interface IMailer
     {
         IList<ContentFormat> Formats { get; set; }
-        IList<Response> Responses { get; set; }
+        IList<Request> Requests { get; set; }
 
-        void Prepare(Task task);
+        IList<Request> Prepare(Task task);
         void Send(Task task);
         void AddLogger(ILogger logger);
         Response GetLatestResponse();

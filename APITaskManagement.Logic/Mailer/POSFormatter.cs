@@ -74,6 +74,14 @@ namespace APITaskManagement.Logic.Mailer
                     lines.Add("KRD:" + krd);
                 }
             }
+            if (order.KEM != null)
+            {
+                lines.Add("KEM:" + order.KEM);
+            }
+            if (order.KTM != null)
+            {
+                lines.Add("KTM:" + order.KTM);
+            }
             lines.Add("PZA:1");
             lines.Add("PAN:1");
             lines.Add("PMA:" + order.PMA);
