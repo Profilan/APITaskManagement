@@ -25,5 +25,7 @@ namespace APITaskManagement.Logic.Mailer.Data
         public virtual string PTL { get; set; }     // ItemDescription
         public virtual string PBA { get; set; }     // Material
         public virtual string AKN { get; set; }     // Client's POS Customer Number
+        public virtual string MNA { get; set; }     // Store
+        public virtual string ENA { get; set; }     // Manufacturer
     }
 }

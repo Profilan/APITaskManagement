@@ -11,6 +11,20 @@ namespace APITaskManagement.Logic.Schedulers
 {
     public class MAILTask : Task
     {
+        protected MAILTask()
+        {
+
+        }
+
+        public MAILTask(string title,
+            int scheduleId,
+            Interval interval,
+            Authentication authentication,
+            bool enabled
+            ) : base(title, scheduleId, interval, authentication, enabled)
+        {
+
+        }
         public override void Send()
         {
             var formats = ContentFormats.Split(';');

@@ -64,7 +64,13 @@ namespace APITaskManagement.Logic.Schedulers.Repositories
             
             using (ISession session = SessionFactory.GetNewSession())
             {
-                return session.Query<Task>().ToList();
+                var query = from l in session.Query<Task>()
+                            select l;
+
+                query = query.OrderBy(l => l.Title);
+
+                return query.ToList();
+               
             }
         }
     }

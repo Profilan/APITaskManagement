@@ -64,8 +64,6 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void getImagesByProductCode()
         {
-            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
-
             var images = imageRepository.ListByEANCode("8714713057887");
 
             

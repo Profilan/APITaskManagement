@@ -81,6 +81,9 @@ namespace APITaskManagement.Web.Models
         [Display(Name = "Classname")]
         public string Classname { get; set; }
 
+        [Display(Name = "Stored Procedure Logger")]
+        public string SPLogger { get; set; }
+
         [Display(Name = "Formats")]
         public IEnumerable<SelectListItem> Formats { get; set; }
         public int[] SelectedFormats { get; set; }

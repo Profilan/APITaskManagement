@@ -19,14 +19,14 @@ namespace APITaskManagement.Logic.Schedulers
     {
         [Required]
         public virtual string Title { get; set; }
-        public virtual int ScheduleId { get; protected set; }
+        public virtual int ScheduleId { get; set; }
 
         public virtual Status Status { get; protected set; }
         public virtual Interval Interval { get; set; }
         public virtual Authentication Authentication { get; set; }
 
         public virtual Url Url { get; set; }
-        public virtual bool Enabled { get; protected set; }
+        public virtual bool Enabled { get; set; }
         public virtual string QueueName { get; set; }
         public virtual HttpMethod HttpMethod { get; set; }
         public virtual TaskType TaskType { get; set; }

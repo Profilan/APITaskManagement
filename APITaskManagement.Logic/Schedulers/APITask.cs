@@ -10,6 +10,21 @@ namespace APITaskManagement.Logic.Schedulers
 {
     public class APITask : Task
     {
+        protected APITask()
+        {
+
+        }
+
+        public APITask(string title,
+            int scheduleId,
+            Interval interval,
+            Authentication authentication,
+            bool enabled
+            ) : base(title, scheduleId, interval, authentication, enabled)
+        {
+
+        }
+
         public override void Send()
         {
             Type t = Type.GetType("APITaskManagement.Logic.Api." + Classname);

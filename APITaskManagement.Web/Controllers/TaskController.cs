@@ -76,6 +76,7 @@ namespace APITaskManagement.Web.Controllers
         {
             try
             {
+
                 Interval interval = new Interval(
                     Convert.ToInt32(collection["Amount"]),
                     (Unit)Enum.Parse(typeof(Unit), collection["Unit"]));
@@ -89,11 +90,33 @@ namespace APITaskManagement.Web.Controllers
 
                 var url = _urlRepository.GetById(Convert.ToInt32(collection["UrlId"]));
 
-                var task = new Logic.Schedulers.Task(collection["Title"],
-                    1,
-                    interval,
-                    authentication,
-                    false);
+                var taskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
+                Task task = new Task();
+                switch (taskType)
+                {
+                    case TaskType.API:
+                        task = new Logic.Schedulers.APITask(collection["Title"],
+                                            1,
+                                            interval,
+                                            authentication,
+                                            false);
+                        break;
+                    case TaskType.FILE:
+                        task = new Logic.Schedulers.FILETask(collection["Title"],
+                                            1,
+                                            interval,
+                                            authentication,
+                                            false);
+                        break;
+                    case TaskType.MAIL:
+                        task = new Logic.Schedulers.MAILTask(collection["Title"],
+                                            1,
+                                            interval,
+                                            authentication,
+                                            false);
+                        break;
+
+                }
 
                 task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);
                 task.TaskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
@@ -102,13 +125,22 @@ namespace APITaskManagement.Web.Controllers
                 task.ContentFormats = String.Join(";", collection["SelectedfFormats"]);
                 task.Url = url;
 
-                var selectedShares = collection["SelectedShares"].Split(',');
-                foreach (var shareId in selectedShares)
+                try
                 {
-                    var share = _shareRepository.GetById(Convert.ToInt32(shareId));
-                    task.Shares.Add(share);
+                    var selectedShares = collection["SelectedShares"].Split(',');
+                    foreach (var shareId in selectedShares)
+                    {
+                        var share = _shareRepository.GetById(Convert.ToInt32(shareId));
+                        task.Shares.Add(share);
+                    }
+                }
+                catch (Exception)
+                {
+
                 }
 
+                task.SPLogger = collection["SPLogger"];
+ 
                 task.MailSender = collection["MailSender"];
                 task.MailRecipient = collection["MailRecipient"];
 
@@ -159,6 +191,15 @@ namespace APITaskManagement.Web.Controllers
             {
                 classname = "";
             }
+            string spLogger;
+            try
+            {
+                spLogger = task.SPLogger;
+            }
+            catch (Exception)
+            {
+                spLogger = "";
+            }
 
             var taskViewModel = new TaskViewModel
             {
@@ -180,7 +221,8 @@ namespace APITaskManagement.Web.Controllers
                 Formats = formats,
                 SelectedFormats = selectedfFormats.ToArray(),
                 Shares = shares,
-                SelectedShares = task.Shares
+                SelectedShares = task.Shares,
+                SPLogger = task.SPLogger
             };
             try
             {
@@ -251,6 +293,16 @@ namespace APITaskManagement.Web.Controllers
                 // task.Disk.UNCPath = collection["DiskUNCPath"];
                 task.Classname = collection["Classname"];
                 task.ContentFormats = String.Join(";", collection["SelectedFormats"]);
+
+                string spLogger;
+                try
+                {
+                    spLogger = task.SPLogger;
+                }
+                catch (Exception)
+                {
+                    spLogger = "";
+                }
 
                 try
                 {

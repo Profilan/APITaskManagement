@@ -23,6 +23,17 @@
 
 <div class="form-group">
     <div class="row">
+        @Html.LabelFor(model => model.SPLogger, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SPLogger, new { htmlAttributes = new { @class = "form-control", @type = "folder" } })
+            @Html.ValidationMessageFor(model => model.SPLogger, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="row">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
@@ -37,6 +48,16 @@
         <div class="col-md-10">
             @Html.ListBoxFor(model => model.SelectedFormats, Model.Formats, new { @class = "form-control", @type = "folder" })
             @Html.ValidationMessageFor(model => model.Formats, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        @Html.LabelFor(model => model.MaxErrors, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MaxErrors, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MaxErrors, "", new { @class = "text-danger" })
         </div>
     </div>
 </div>

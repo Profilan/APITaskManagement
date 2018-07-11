@@ -22,6 +22,8 @@
     <property name="PMA" column="PMA_ItemCode"/>
     <property name="PTL" column="PTL_ItemDescription"/>
     <property name="PBA" column="PBA_Material"/>
+    <property name="MNA" column="MNA_Store"/>
+    <property name="ENA" column="ENA_Manufacturer"/>
 
   </class>
 

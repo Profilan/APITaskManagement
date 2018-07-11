@@ -52,6 +52,14 @@ namespace APITaskManagement.Logic.Mailer
             lines.Add("AI1:" + order.AI1);
             lines.Add("AI2:" + order.AI2);
             lines.Add("AKN:24372");
+            if (order.MNA != null)
+            {
+                lines.Add("MNA:" + order.MNA);
+            }
+            if (order.ENA != null)
+            {
+                lines.Add("ENA:" + order.ENA);
+            }
             lines.Add("KVN:" + order.KVN);
             lines.Add("KNA:" + order.KNA);
             lines.Add("KST:" + order.KST);

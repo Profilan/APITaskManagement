@@ -6,12 +6,31 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using APITaskManagement.Web;
 using APITaskManagement.Web.Controllers;
+using APITaskManagement.Logic.Common.Interfaces;
+using APITaskManagement.Logic.Schedulers;
+using APITaskManagement.Logic.Management;
+using APITaskManagement.Logic.Schedulers.Repositories;
+using APITaskManagement.Logic.Management.Repositories;
+using APITaskManagement.Logic.Filer.Repositories;
+using APITaskManagement.Logic.Filer.Data;
 
 namespace APITaskManagement.Web.Tests.Controllers
 {
     [TestClass]
     public class TaskControllerTest
     {
+        private readonly IRepository<Task, Guid> _taskRepository;
+        private readonly IRepository<Url, int> _urlRepository;
+        private readonly IRepository<Share, int> _shareRepository;
+
+        public TaskControllerTest()
+        {
+            _taskRepository = new TaskRepository();
+            _urlRepository = new UrlRepository();
+            _shareRepository = new ShareRepository();
+        }
+
+
         [TestMethod]
         public void Index()
         {
@@ -24,5 +43,49 @@ namespace APITaskManagement.Web.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
+
+        [TestMethod]
+        public void Create()
+        {
+            
+
+            Interval interval = new Interval(
+                    2,
+                    Logic.Common.Unit.Minutes);
+
+                Authentication authentication = new Authentication("",
+                    "",
+                    Logic.Common.AuthenticationType.None,
+                    null,
+                    null,
+                    null);
+
+                var url = _urlRepository.GetById(21);
+
+                var task = new Logic.Schedulers.APITask("Test",
+                    1,
+                    interval,
+                    authentication,
+                    false);
+
+
+                task.MaxErrors = 4;
+                task.TaskType = Logic.Common.TaskType.API;
+
+                task.Classname = "ApiPostNLShipment";
+                task.ContentFormats = "1";
+                task.Url = url;
+
+                
+
+                task.SPLogger = "EEK_sp_APIQUEUE";
+
+                task.MailSender = "";
+                task.MailRecipient = "";
+
+                _taskRepository.Insert(task);
+
+         }
+
     }
 }
