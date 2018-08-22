@@ -135,6 +135,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiPostNLShipment.cs" />
+    <Compile Include="Api\Data\PostNLContact.cs" />
+    <Compile Include="Api\Data\PostNLCustomerAddress.cs" />
+    <Compile Include="Api\Data\PostNLCustomer.cs" />
+    <Compile Include="Api\Data\PostNLDimension.cs" />
+    <Compile Include="Api\Data\PostNLGroup.cs" />
+    <Compile Include="Api\Data\PostNLHeader.cs" />
+    <Compile Include="Api\Data\PostNLLabel.cs" />
+    <Compile Include="Api\Data\PostNLLine.cs" />
+    <Compile Include="Api\Data\PostNLShipment.cs" />
+    <Compile Include="Api\Data\PostNLMessage.cs" />
+    <Compile Include="Api\Data\PostNLShipmentAddress.cs" />
+    <Compile Include="Api\PostNLShipmentFormatter.cs" />
+    <Compile Include="Api\Repositories\PostNLRepository.cs" />
     <Compile Include="Common\DomainEvents.cs" />
     <Compile Include="Common\Entity.cs" />
     <Compile Include="Common\Enums.cs" />
@@ -264,6 +278,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Filer\Data\Share.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\PostNLHeader.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Data\PostNLLine.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

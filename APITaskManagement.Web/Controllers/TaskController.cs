@@ -201,6 +201,16 @@ namespace APITaskManagement.Web.Controllers
                 spLogger = "";
             }
 
+            string apiKey;
+            try
+            {
+                apiKey = task.Authentication.ApiKey;
+            }
+            catch (Exception)
+            {
+                apiKey = "";
+            }
+
             var taskViewModel = new TaskViewModel
             {
                 Id = task.Id,
@@ -222,7 +232,8 @@ namespace APITaskManagement.Web.Controllers
                 SelectedFormats = selectedfFormats.ToArray(),
                 Shares = shares,
                 SelectedShares = task.Shares,
-                SPLogger = task.SPLogger
+                SPLogger = task.SPLogger,
+                ApiKey = apiKey
             };
             try
             {
@@ -286,6 +297,7 @@ namespace APITaskManagement.Web.Controllers
                     collection["Scope"],
                     collection["GrantType"],
                     collection["OAuthUrl"]);
+                authentication.ApiKey = collection["ApiKey"];
 
                 task.Authentication = authentication;
                 task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);

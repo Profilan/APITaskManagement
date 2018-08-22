@@ -64,6 +64,9 @@ namespace APITaskManagement.Logic.Api
                         var accessToken = (string)token.SelectToken("access_token");
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                         break;
+                    case AuthenticationType.ApiKey:
+                        client.DefaultRequestHeaders.Add("apikey", task.Authentication.ApiKey);
+                        break;
                 }
 
                 Requests = GetRequestsForTask(task.Id);

@@ -29,6 +29,7 @@
       <property name="Scope"/>
       <property name="GrantType"/>
       <property name="OAuthUrl"/>
+      <property name="ApiKey"/>
     </component>
 
     <component name="Status">

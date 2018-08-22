@@ -80,7 +80,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         function showAuthSection(el) {
-            if (el.val() == 1 || el.val() == 2 || el.val() == 3) {
+            if (el.val() == 1 || el.val() == 2 || el.val() == 3 || el.val() == 4) {
                 $('#basicSection').show();
             } else {
                 $('#basicSection').hide();
@@ -89,6 +89,11 @@
                 $('#oAuthSection').show();
             } else {
                 $('#oAuthSection').hide();
+            }
+            if (el.val() == 4) {
+                $('#apiKeySection').show();
+            } else {
+                $('#apiKeySection').hide();
             }
         };
 

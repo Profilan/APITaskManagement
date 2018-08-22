@@ -93,6 +93,7 @@
     <Compile Include="TaskSpecs.cs" />
     <Compile Include="ManagementSpecs.cs" />
     <Compile Include="DiskSpecs.cs" />
+    <Compile Include="DataSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

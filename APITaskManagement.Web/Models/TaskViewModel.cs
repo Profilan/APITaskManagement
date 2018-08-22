@@ -35,6 +35,9 @@ namespace APITaskManagement.Web.Models
         public string GrantType { get; set; }
         public string OAuthUrl { get; set; }
 
+        [Display(Name = "Api Key")]
+        public string ApiKey { get; set; }
+
         [Required]
         public int Amount { get; set; }
 

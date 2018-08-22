@@ -40,7 +40,7 @@ namespace APITaskManagement.Logic.Api
         public int WarehouseId;
         public string DeliveryNote;
         public bool TestIndicator;
-        
+        public string MainDebtorNumber;
 
         public ZwaluwSalesOrderHeader()
         {
@@ -112,6 +112,15 @@ namespace APITaskManagement.Logic.Api
                 {
                     delZip = "Unknown";
                 }
+                string mainDebtorNumber;
+                try
+                {
+                    mainDebtorNumber = (string)salesOrderHeader["MainDebtorNumber"];
+                }
+                catch
+                {
+                    mainDebtorNumber = null;
+                }
 
                 var orderHeader = new ZwaluwSalesOrderHeader
                 {
@@ -129,6 +138,7 @@ namespace APITaskManagement.Logic.Api
                     WarehouseId = Convert.ToInt32(salesOrderHeader["WarehouseId"]),
                     DeliveryNote = (string)salesOrderHeader["DeliveryNote"],
                     TestIndicator = Convert.ToBoolean(salesOrderHeader["TestIndicator"]),
+                    MainDebtorNumber = mainDebtorNumber,
                 };
 
                 // Add the header to the salesorder
@@ -201,10 +211,19 @@ namespace APITaskManagement.Logic.Api
                     {
                         itemSalesUnitsPerColli = 1;
                     }
+                    string orderLineDescription;
+                    try
+                    {
+                        orderLineDescription = (string)salesOrderLine["OrderLineDescription"];
+                    }
+                    catch (Exception)
+                    {
+                        orderLineDescription = (string)salesOrderLine["ItemMainItemDescription"];
+                    }
                     var orderLine = new ZwaluwSalesOrderLine
                     {
                         OrderNumber = (string)salesOrderLine["OrderNumber"],
-                        OrderLineDescription = (string)salesOrderLine["OrderLineDescription"],
+                        OrderLineDescription = orderLineDescription,
                         MainItemQuantity = Convert.ToInt32(salesOrderLine["MainItemQuantity"]),
                         Quantity = Convert.ToInt32(salesOrderLine["Quantity"]),
                         DeliveryDate = (string)salesOrderLine["DeliveryDate"],

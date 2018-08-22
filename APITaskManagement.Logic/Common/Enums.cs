@@ -34,7 +34,8 @@
         None = 0,
         Basic = 1,
         OAuth2 = 2,
-        Windows = 3
+        Windows = 3,
+        ApiKey = 4
     }
 
     public enum TaskType

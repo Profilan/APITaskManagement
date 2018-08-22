@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="PostNLLine" table="EEK_vw_PostNL_Lines">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="AddressType"/>
+    <property name="City"/>
+    <property name="CountryCode"/>
+    <property name="HouseNumber"/>
+    <property name="HouseNrExt"/>
+    <property name="Name"/>
+    <property name="Street"/>
+    <property name="Zipcode"/>
+    <property name="Barcode"/>
+    <property name="Weight"/>
+    <property name="GroupCount"/>
+    <property name="GroupSequence"/>
+    <property name="GroupType"/>
+    <property name="MainBarcode"/>
+    <property name="ProductCodeDelivery"/>
+    <property name="Reference"/>
+    <property name="Content"/>
+    <property name="Volume"/>
+    
+    <many-to-one name="Header" class="PostNLHeader" column="Reference" property-ref="Reference" foreign-key="none"/>
+
+  </class>
+
+</hibernate-mapping>

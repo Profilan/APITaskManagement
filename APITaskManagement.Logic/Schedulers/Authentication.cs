@@ -15,6 +15,7 @@ namespace APITaskManagement.Logic.Schedulers
         public string Scope { get; set; }
         public string GrantType { get; set; }
         public string OAuthUrl { get; set; }
+        public string ApiKey { get; set; }
 
         protected Authentication()
         {
