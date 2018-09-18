@@ -53,7 +53,8 @@ namespace APITaskManagement.Logic.Api
 
             var shipments = new List<PostNLShipment>();
 
-            foreach (var line in item.Lines)
+            var lines = postNLRepository.ListLinesById(item.MainBarcode);
+            foreach (var line in lines)
             {
                 var addresses = new List<PostNLShipmentAddress>();
 
@@ -90,7 +91,8 @@ namespace APITaskManagement.Logic.Api
                     groups,
                     line.ProductCodeDelivery,
                     line.Reference,
-                    item.Remark);
+                    item.Remark,
+                    line.DeliveryDate.ToString("dd-MM-yyyy HH:mm:ss"));
 
                 shipments.Add(shipment);
             }

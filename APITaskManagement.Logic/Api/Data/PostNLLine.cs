@@ -27,6 +27,7 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string Reference { get; set; }
         public virtual string Content { get; set; }
         public virtual string Volume { get; set; }
+        public virtual DateTime DeliveryDate { get; set; }
 
         public virtual PostNLHeader Header { get; set; }
     }

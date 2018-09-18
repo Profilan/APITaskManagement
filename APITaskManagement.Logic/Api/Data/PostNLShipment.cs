@@ -18,6 +18,7 @@ namespace APITaskManagement.Logic.Api.Data
         public string ProductCodeDelivery { get; set; }
         public string Reference { get; set; }
         public string Remark { get; set; }
+        public string DeliveryDate { get; set; }
 
         public PostNLShipment(IList<PostNLShipmentAddress> addresses,
             string barcode,
@@ -27,7 +28,8 @@ namespace APITaskManagement.Logic.Api.Data
             IList<PostNLGroup> groups,
             string productCodeDelivery,
             string reference,
-            string remark)
+            string remark,
+            string deliveryDate)
         {
             Addresses = addresses;
             Barcode = barcode;
@@ -38,6 +40,7 @@ namespace APITaskManagement.Logic.Api.Data
             ProductCodeDelivery = productCodeDelivery;
             Reference = reference;
             Remark = remark;
+            DeliveryDate = deliveryDate;
         }
 
         protected override bool EqualsCore(PostNLShipment other)

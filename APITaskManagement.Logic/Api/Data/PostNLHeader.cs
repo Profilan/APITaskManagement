@@ -28,6 +28,7 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string ContactType { get; set; }
         public virtual string Email { get; set; }
         public virtual string TelNr { get; set; }
+        public virtual string MainBarcode { get; set; }
 
         public virtual ISet<PostNLLine> Lines { get; set; }
 

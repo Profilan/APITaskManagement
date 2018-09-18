@@ -16,17 +16,9 @@ namespace APITaskManagement.Test
         }
 
         [TestMethod]
-        public void ListPostNL()
-        {
-            var items = postNLRepository.List();
-
-            items.Should().NotBeNullOrEmpty();
-        }
-
-        [TestMethod]
         public void GetByIdPostNL()
         {
-            var item = postNLRepository.GetById(8);
+            var item = postNLRepository.GetById(5);
 
             item.Should().NotBeNull();
         }

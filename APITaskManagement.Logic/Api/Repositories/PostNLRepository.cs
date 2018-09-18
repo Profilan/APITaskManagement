@@ -23,8 +23,7 @@ namespace APITaskManagement.Logic.Api.Repositories
             using (ISession session = SessionFactory.GetNewSession())
             {
                 var query = session.Query<PostNLHeader>()
-                    .Where(h => h.Id == id)
-                    .Fetch(h => h.Lines).ToList();
+                    .Where(h => h.Id == id).ToList();
 
                 return query.First();
             }
@@ -44,7 +43,18 @@ namespace APITaskManagement.Logic.Api.Repositories
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var query = session.Query<PostNLHeader>().Fetch(h => h.Lines);
+                var query = session.Query<PostNLHeader>();
+
+                return query.ToList();
+            }
+        }
+
+        public IEnumerable<PostNLLine> ListLinesById(string mainBarcode)
+        {
+            using (ISession session = SessionFactory.GetNewSession())
+            {
+                var query = session.Query<PostNLLine>()
+                    .Where(h => h.MainBarcode == mainBarcode);
 
                 return query.ToList();
             }

@@ -26,11 +26,7 @@
     <property name="Email"/>
     <property name="TelNr"/>
     <property name="ContactType"/>
-
-    <set name="Lines" table="EEK_vw_PostNL_Lines" cascade="all-delete-orphan">
-      <key column="Reference" property-ref="Reference"/>
-      <one-to-many class="PostNLLine"/>
-    </set>
+    <property name="MainBarcode"/>
 
   </class>
 
