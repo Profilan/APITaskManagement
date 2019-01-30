@@ -8,12 +8,5 @@
     </id>
     <property name="Name"/>
     <property name="Enabled"/>
-
-    <set name="Monitors" inverse="true" table="EEK_API_MONITOR_MESSENGERS" cascade="all-delete-orphan" lazy="true">
-      <key>
-        <column name="MessengerId"/>
-      </key>
-      <many-to-many class="Monitor" column="MonitorId"/>
-    </set>
   </class>
 </hibernate-mapping>

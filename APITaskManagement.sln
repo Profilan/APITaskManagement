@@ -17,6 +17,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "APITaskManagementServiceSet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskMonitor", "APITaskMonitor\APITaskMonitor.csproj", "{C5404F44-802B-422F-8C66-DE0BDE15B4D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskScheduler.Logic", "APITaskScheduler.Logic\APITaskScheduler.Logic.csproj", "{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{C5404F44-802B-422F-8C66-DE0BDE15B4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5404F44-802B-422F-8C66-DE0BDE15B4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5404F44-802B-422F-8C66-DE0BDE15B4D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

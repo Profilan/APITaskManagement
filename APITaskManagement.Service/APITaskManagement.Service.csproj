@@ -170,6 +170,10 @@
       <Project>{86f87f12-357c-4b7f-8190-d7e875f532f7}</Project>
       <Name>APITaskManagement.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\APITaskScheduler.Logic\APITaskScheduler.Logic.csproj">
+      <Project>{bad5ea97-e17d-4dec-897e-59976d89fe9a}</Project>
+      <Name>APITaskScheduler.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.3.1.intellisense.js" />

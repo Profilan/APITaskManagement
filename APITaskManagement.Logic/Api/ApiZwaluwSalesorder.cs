@@ -38,5 +38,10 @@ namespace APITaskManagement.Logic.Api
 
             return requests;
         }
+
+        protected override void ExecutePost(Request request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

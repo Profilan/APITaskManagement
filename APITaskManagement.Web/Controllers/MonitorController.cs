@@ -120,6 +120,7 @@ namespace APITaskManagement.Web.Controllers
                     monitor.Enabled = false;
                 }
                 var messengers = collection["Messengers"].Split(',').ToList();
+                monitor.Messengers.Clear();
                 foreach (var messenger in messengers)
                 {
                     var item = _messengerRepository.GetById(new Guid(messenger));

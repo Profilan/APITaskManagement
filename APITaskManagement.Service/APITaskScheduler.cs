@@ -27,11 +27,16 @@ namespace APITaskManagement.Service
         private IDictionary<string, System.Timers.Timer> _timers { get; set; }
         public IHubProxy _hub { get; private set; }
 
+        // Stack for checking if a task is already active
+        public IDictionary<Guid, bool> RunningTasks { get; set; }
+
         private string _url;
 
         public APITaskScheduler()
         {
             InitializeComponent();
+
+            RunningTasks = new Dictionary<Guid, bool>();
 
             eventLog1 = new System.Diagnostics.EventLog();
             _timers = new Dictionary<string, System.Timers.Timer>();
@@ -54,28 +59,36 @@ namespace APITaskManagement.Service
 
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("API Task Scheduler started", System.Diagnostics.EventLogEntryType.Information, 0);
-
-            WebApp.Start(_url);
-
-            var connection = new HubConnection(_url);
-            _hub = connection.CreateHubProxy("taskSchedulerHub");
-            _hub.On<string>("disableTask", taskId => DisableTask(taskId));
-            _hub.On<string>("enableTask", taskId => EnableTask(taskId));
-            connection.Start().Wait();
-
-            eventLog1.WriteEntry("Getting tasks", System.Diagnostics.EventLogEntryType.Information, 1);
-            var tasks = _taskRepository.List();
-            eventLog1.WriteEntry("Number of tasks " + tasks.Count(), System.Diagnostics.EventLogEntryType.Information, 1);
-            foreach (var task in tasks)
+            try
             {
-                System.Timers.Timer timer = new System.Timers.Timer();
-                timer.Interval = 1000 * task.Interval.Seconds;
-                timer.Elapsed += (sender, e) => this.OnTimer(sender, e, task.Id);
-                timer.Start();
+                eventLog1.WriteEntry("API Task Scheduler started", System.Diagnostics.EventLogEntryType.Information, 0);
 
-                _timers.Add(task.Id.ToString(), timer);
+                WebApp.Start(_url);
+
+                var connection = new HubConnection(_url);
+                _hub = connection.CreateHubProxy("taskSchedulerHub");
+                _hub.On<string>("disableTask", taskId => DisableTask(taskId));
+                _hub.On<string>("enableTask", taskId => EnableTask(taskId));
+                connection.Start().Wait();
+
+                eventLog1.WriteEntry("Getting tasks", System.Diagnostics.EventLogEntryType.Information, 1);
+                var tasks = _taskRepository.List();
+                eventLog1.WriteEntry("Number of tasks " + tasks.Count(), System.Diagnostics.EventLogEntryType.Information, 1);
+                foreach (var task in tasks)
+                {
+                    System.Timers.Timer timer = new System.Timers.Timer();
+                    timer.Interval = 1000 * task.Interval.Seconds;
+                    timer.Elapsed += (sender, e) => this.OnTimer(sender, e, task.Id);
+
+                    _timers.Add(task.Id.ToString(), timer);
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public void DisableTask(string taskId)
@@ -110,18 +123,32 @@ namespace APITaskManagement.Service
 
         protected void OnTimer(object sender, System.Timers.ElapsedEventArgs args, Guid id)
         {
-            var task    = _taskRepository.GetById(id);
-
-            DomainEvents.Register<TaskFinishedEvent>(OnTaskFinished);
-            // DomainEvents.Register<TaskStartedEvent>(OnTaskStarted);
-
-            if (task.Enabled && !task.Active)
+            try
             {
-                eventLog1.WriteEntry("Starting task " + task.Title + "," + task.QueueName, System.Diagnostics.EventLogEntryType.Information, 1003);
+                var task = _taskRepository.GetById(id);
 
-                task.Start();
+                DomainEvents.Register<TaskFinishedEvent>(OnTaskFinished);
+                // DomainEvents.Register<TaskStartedEvent>(OnTaskStarted);
 
-                eventLog1.WriteEntry("Finishing task " + task.Title + "," + task.QueueName, System.Diagnostics.EventLogEntryType.Information, 1007);
+                if (task.Enabled && !task.Active)
+                {
+                    eventLog1.WriteEntry("Starting task " + task.Title + "," + task.QueueName, System.Diagnostics.EventLogEntryType.Information, 1003);
+
+#if DEBUG
+                    System.Threading.Thread.Sleep(5000);
+#else
+                    task.Start();
+#endif
+                    eventLog1.WriteEntry("Finishing task " + task.Title + "," + task.QueueName, System.Diagnostics.EventLogEntryType.Information, 1007);
+                }
+            }
+            catch (Exception e)
+            {
+                eventLog1.WriteEntry("Error in executing task: " + e.Message, System.Diagnostics.EventLogEntryType.Error, 1010);
+            }
+            finally
+            {
+                _timers[id.ToString()].Start();
             }
         }
 

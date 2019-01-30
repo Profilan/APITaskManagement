@@ -39,6 +39,7 @@ namespace APITaskManagement.Logic.Api
         public string SKUType { get; set; }
         public string SKUId { get; set; }
         public bool TestIndicator { get; set; }
+        public string Note { get; set; }
     }
 
     public class ZwaluwCrossdockFormatter : IContentFormatter
@@ -67,7 +68,15 @@ namespace APITaskManagement.Logic.Api
 
                 foreach (DataRow shipment in shipments.Tables[0].Rows)
                 {
-
+                    string note;
+                    try
+                    {
+                        note = (string)shipment["Note"];
+                    }
+                    catch
+                    {
+                        note = "";
+                    }
                     var deliveryDate = Convert.ToDateTime(shipment["DeliveryDate"]).ToString("yyyy-MM-dd HH:mm:ss");
                     var crossdock = new ZwaluwCrossdock()
                     {
@@ -86,7 +95,8 @@ namespace APITaskManagement.Logic.Api
                         DelEmail = (string)shipment["DelEmail"],
                         SKUType = (string)shipment["SKUType"],
                         SKUId = (string)shipment["SKUId"],
-                        TestIndicator = Convert.ToBoolean(shipment["TestIndicator"])
+                        TestIndicator = Convert.ToBoolean(shipment["TestIndicator"]),
+                        Note = note
                     };
 
                     // Add the crossdock to the crossdock list

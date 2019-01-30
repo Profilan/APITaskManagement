@@ -1,4 +1,5 @@
 ﻿using System;
+using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Repositories;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +10,7 @@ namespace APITaskManagement.Test
     public class DataSpecs
     {
         private readonly PostNLRepository postNLRepository;
+        
 
         public DataSpecs()
         {
@@ -22,5 +24,38 @@ namespace APITaskManagement.Test
 
             item.Should().NotBeNull();
         }
+
+        [TestMethod]
+        public void DutchNedSalesOrderList()
+        {
+            var rep = new DutchNedSalesOrderRepository();
+
+            var items = rep.List();
+
+            items.Should().BeNullOrEmpty();
+        }
+
+        [TestMethod]
+        public void DutchNedSalesOrderGetById()
+        {
+            var rep = new DutchNedSalesOrderRepository();
+
+            var item = rep.GetById(1);
+        }
+
+        [TestMethod]
+        public void InsertDutchNedInsertedOrderlinestatus()
+        {
+            DutchNedInsertedOrderlinestatusRepository dnRepo = new DutchNedInsertedOrderlinestatusRepository();
+
+            var item = new DutchNedInsertedOrderlinestatus()
+            {
+                Status = 201,
+                Description = "Dit is een test",
+                OrderLineId = 999
+            };
+
+            dnRepo.Insert(item);
+    }
     }
 }

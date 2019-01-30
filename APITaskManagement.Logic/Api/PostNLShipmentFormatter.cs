@@ -24,85 +24,90 @@ namespace APITaskManagement.Logic.Api
         {
             var item = postNLRepository.GetById(key);
 
-            var customerAddress = new PostNLCustomerAddress(
-                item.cAddressType,
-                item.cName,
-                item.cAddress,
-                item.cHousenumber,
-                item.cCity,
-                item.cCountry.Trim(),
-                Regex.Replace(item.cZipcode.ToUpper(), @"\s+", ""));
-
-            var customer = new PostNLCustomer(
-                customerAddress,
-                item.CollectionLocation.ToString(),
-                item.CustomerCode,
-                item.CustomerNumber.ToString());
-
-            var contacts = new List<PostNLContact>();
-            var contact = new PostNLContact(
-                item.ContactType,
-                item.Email,
-                item.TelNr);
-            contacts.Add(contact);
-
-            var message = new PostNLMessage(
-                item.MessageID,
-                item.MessageTimeStamp.ToString("dd-MM-yyyy HH:mm:ss"),
-                "GraphicFile|PDF");
-
-            var shipments = new List<PostNLShipment>();
-
-            var lines = postNLRepository.ListLinesById(item.MainBarcode);
-            foreach (var line in lines)
+            if (item != null)
             {
-                var addresses = new List<PostNLShipmentAddress>();
+                var customerAddress = new PostNLCustomerAddress(
+                    item.cAddressType,
+                    item.cName,
+                    item.cAddress,
+                    item.cHousenumber,
+                    item.cCity,
+                    item.cCountry.Trim(),
+                    Regex.Replace(item.cZipcode.ToUpper(), @"\s+", ""));
 
-                var address = new PostNLShipmentAddress(
-                    line.AddressType,
-                    line.Name,
-                    line.Street,
-                    line.HouseNumber,
-                    line.HouseNrExt,
-                    line.City,
-                    line.CountryCode.Trim(),
-                    Regex.Replace(line.Zipcode.ToUpper(), @"\s+", ""));
+                var customer = new PostNLCustomer(
+                    customerAddress,
+                    item.CollectionLocation.ToString(),
+                    item.CustomerCode,
+                    item.CustomerNumber.ToString());
 
-                addresses.Add(address);
+                var contacts = new List<PostNLContact>();
+                var contact = new PostNLContact(
+                    item.ContactType,
+                    item.Email,
+                    item.TelNr);
+                contacts.Add(contact);
 
-                var dimension = new PostNLDimension(line.Weight.ToString(), Convert.ToString(line.Volume));
+                var message = new PostNLMessage(
+                    item.MessageID,
+                    item.MessageTimeStamp.ToString("dd-MM-yyyy HH:mm:ss"),
+                    "GraphicFile|PDF");
 
-                var groups = new List<PostNLGroup>();
+                var shipments = new List<PostNLShipment>();
 
-                var group = new PostNLGroup(
-                    line.GroupCount.ToString(),
-                    line.GroupSequence.ToString(),
-                    line.GroupType,
-                    line.MainBarcode);
+                var lines = postNLRepository.ListLinesById(item.MainBarcode);
+                foreach (var line in lines)
+                {
+                    var addresses = new List<PostNLShipmentAddress>();
 
-                groups.Add(group);
+                    var address = new PostNLShipmentAddress(
+                        line.AddressType,
+                        line.Name,
+                        line.Street,
+                        line.HouseNumber,
+                        line.HouseNrExt,
+                        line.City,
+                        line.CountryCode.Trim(),
+                        Regex.Replace(line.Zipcode.ToUpper(), @"\s+", ""));
 
-                var shipment = new PostNLShipment(
-                    addresses,
-                    line.Barcode,
-                    contacts,
-                    line.Content,
-                    dimension,
-                    groups,
-                    line.ProductCodeDelivery,
-                    line.Reference,
-                    item.Remark,
-                    line.DeliveryDate.ToString("dd-MM-yyyy HH:mm:ss"));
+                    addresses.Add(address);
 
-                shipments.Add(shipment);
+                    var dimension = new PostNLDimension(line.Weight.ToString(), Convert.ToString(line.Volume));
+
+                    var groups = new List<PostNLGroup>();
+
+                    var group = new PostNLGroup(
+                        line.GroupCount.ToString(),
+                        line.GroupSequence.ToString(),
+                        line.GroupType,
+                        line.MainBarcode);
+
+                    groups.Add(group);
+
+                    var shipment = new PostNLShipment(
+                        addresses,
+                        line.Barcode,
+                        contacts,
+                        line.Content,
+                        dimension,
+                        groups,
+                        line.ProductCodeDelivery,
+                        line.Reference,
+                        item.Remark,
+                        line.DeliveryDate.ToString("dd-MM-yyyy HH:mm:ss"));
+
+                    shipments.Add(shipment);
+                }
+
+                var label = new PostNLLabel(
+                    customer,
+                    message,
+                    shipments);
+
+                return new JavaScriptSerializer().Serialize(label);
             }
 
-            var label = new PostNLLabel(
-                customer,
-                message,
-                shipments);
-
-            return new JavaScriptSerializer().Serialize(label);
+            return null;
         }
     }
 }

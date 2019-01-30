@@ -33,12 +33,19 @@ namespace APITaskManagement.Logic.Api
             {
                 var content = formatter.GetJsonContent(item.Key, Properties);
 
-                var request = new Request(item.Id, (int)item.Key, content);
-
-                requests.Add(request);
+                if (content !=null)
+                {
+                    var request = new Request(item.Id, (int)item.Key, content);
+                    requests.Add(request);
+                }
             }
 
             return requests;
+        }
+
+        protected override void ExecutePost(Request request)
+        {
+            throw new NotImplementedException();
         }
     }
 }

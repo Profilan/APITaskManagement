@@ -86,6 +86,17 @@ namespace APITaskManagement.Test
         }
 
         [TestMethod]
+        public void RunMonitor()
+        {
+            var rep = new MonitorRepository();
+
+            var monitor = rep.GetById(new Guid("EB67F08C-BB86-4890-BF9D-A97B00D3B903"));
+            var monitorToRun = rep.GetByName(monitor.Name);
+
+            monitorToRun.Run(monitor.Messengers);
+        }
+
+        [TestMethod]
         public void GetMonitorList()
         {
             var rep = new MonitorRepository();

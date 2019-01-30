@@ -9,9 +9,9 @@
     <property name="Name"/>
     <property name="Enabled"/>
 
-    <set name="Messengers" table="EEK_API_MONITOR_MESSENGERS" cascade="all-delete-orphan" lazy="false">
+    <set name="Messengers" table="EEK_API_MONITOR_MESSENGERS" cascade="save-update" lazy="false">
       <key>
-        <column name="MonitorId"/>
+        <column name="MonitorId" not-null="true"/>
       </key>
       <many-to-many class="Messenger" column="MessengerId"/>
     </set>

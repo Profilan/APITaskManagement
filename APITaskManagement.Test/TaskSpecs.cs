@@ -11,6 +11,7 @@ using System.Linq;
 using APITaskManagement.Logic.Api;
 using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers.Interfaces;
+using HibernatingRhinos.Profiler.Appender.NHibernate;
 
 namespace APITaskManagement.Test
 {
@@ -24,6 +25,8 @@ namespace APITaskManagement.Test
         {
             
             _taskRepository = new TaskRepository();
+
+            NHibernateProfiler.Initialize();
 
         }
 
@@ -47,7 +50,7 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void TaskShouldSendRequests()
         {
-            var task = _taskRepository.GetById(new Guid("C33590CB-A145-43A1-920D-FD6B4778F2A1"));
+            var task = _taskRepository.GetById(new Guid("8B0DF4EE-A851-46F5-9DEA-163136D024E5"));
 
             task.Start();
 
@@ -93,5 +96,19 @@ namespace APITaskManagement.Test
         {
             Console.WriteLine("Task stopped");
         }
+
+        [TestMethod]
+        public void TestResponseCreation()
+        {
+            var api = new ApiDNSalesOrder("DutchNed test");
+
+            var request = new Request(999, 999, "{\"Lorem\":\"Ipsum\"", true);
+            var response = new Response(200, "200 OK", "{\"status\":\"success\",\"results\":[{\"id\":\"172430\",\"status\":603},{\"id\":\"175188\",\"status\":602}]}");
+            request.SetResponse(response);
+
+            api.TestExecutePost(request);
+        }
+
+
     }
 }

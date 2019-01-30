@@ -25,7 +25,14 @@ namespace APITaskManagement.Logic.Api.Repositories
                 var query = session.Query<PostNLHeader>()
                     .Where(h => h.Id == id).ToList();
 
-                return query.First();
+                if (query.Count > 0)
+                {
+                    return query.First();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

@@ -58,6 +58,20 @@ namespace APITaskManagement.Logic.Common.Repositories
             }
         }
 
+        public IEnumerable<Queue> ListTasksBeforeDate(Guid taskId, DateTime sysCreated)
+        {
+            using (ISession session = SessionFactory.GetNewSession())
+            {
+                var query = from l in session.Query<Queue>()
+                            select l;
+
+                query = query.Where(l => l.Task.Id == taskId)
+                    .Where(l => l.SysCreated <= sysCreated);
+
+                return query.ToList();
+            }
+        }
+
         public void Update(Queue entity)
         {
             throw new NotImplementedException();

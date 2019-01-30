@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="DutchNedSalesOrderLine" table="EEK_vw_DISTRIBUTION_DUTCHNED_SALESORDERLINES">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="CollectionDate"/>
+    <property name="Description" not-null="true"/>
+    <property name="EANCode"/>
+    <property name="Identifier"/>
+    <property name="MainPackageIdentifier"/>
+    <property name="Volume"/>
+    <property name="Warehouse"/>
+    <property name="CashOnDelivery"/>
+    <property name="IsReturn"/>
+    <property name="PlanFromDate"/>
+  </class>
+
+</hibernate-mapping>

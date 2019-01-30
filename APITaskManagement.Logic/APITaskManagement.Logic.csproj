@@ -135,7 +135,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiDNSalesOrder.cs" />
     <Compile Include="Api\ApiPostNLShipment.cs" />
+    <Compile Include="Api\Data\DutchNedCustomer.cs" />
+    <Compile Include="Api\Data\DutchNedInsertedOrderlinestatus.cs" />
+    <Compile Include="Api\Data\DutchNedSalesOrder.cs" />
+    <Compile Include="Api\Data\DutchNedSalesOrderLine.cs" />
+    <Compile Include="Api\Data\DutchNedSender.cs" />
     <Compile Include="Api\Data\PostNLContact.cs" />
     <Compile Include="Api\Data\PostNLCustomerAddress.cs" />
     <Compile Include="Api\Data\PostNLCustomer.cs" />
@@ -147,7 +153,13 @@
     <Compile Include="Api\Data\PostNLShipment.cs" />
     <Compile Include="Api\Data\PostNLMessage.cs" />
     <Compile Include="Api\Data\PostNLShipmentAddress.cs" />
+    <Compile Include="Api\DNSalesOrderFormatter.cs" />
+    <Compile Include="Api\Models\DutchNedSalesOrder.cs" />
+    <Compile Include="Api\Models\DutchNedSalesOrderLine.cs" />
+    <Compile Include="Api\Models\DutchNedSender.cs" />
     <Compile Include="Api\PostNLShipmentFormatter.cs" />
+    <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
+    <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
     <Compile Include="Api\Repositories\PostNLRepository.cs" />
     <Compile Include="Common\DomainEvents.cs" />
     <Compile Include="Common\Entity.cs" />
@@ -196,6 +208,7 @@
     <Compile Include="Monitoring\Messenger.cs" />
     <Compile Include="Monitoring\Monitor.cs" />
     <Compile Include="Monitoring\Pulseway.cs" />
+    <Compile Include="Monitoring\QueueMonitor.cs" />
     <Compile Include="Monitoring\Repositories\MessengerRepository.cs" />
     <Compile Include="Monitoring\Repositories\MonitorRepository.cs" />
     <Compile Include="Monitoring\TaskScheduler.cs" />
@@ -282,6 +295,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Api\Data\PostNLLine.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DutchNedSalesOrder.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DutchNedSalesOrderLine.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Api\Data\DutchNedInsertedOrderlinestatus.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
