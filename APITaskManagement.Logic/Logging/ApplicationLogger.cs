@@ -31,6 +31,7 @@ namespace APITaskManagement.Logic.Logging
             {
                 DataSet dataSet = new DataSet();
                 SqlCommand command = new SqlCommand(spLogger, connection);
+                command.CommandTimeout = 300;
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("@id", SqlDbType.Int).Value = request.Id;
                 command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;

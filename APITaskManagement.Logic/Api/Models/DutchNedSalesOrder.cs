@@ -20,8 +20,8 @@ namespace APITaskManagement.Logic.Api.Models
         [JsonProperty("is_comby_order")]
         public bool IsCombyOrder { get; set; }
 
-        // [JsonProperty("mail_customer")]
-        // public bool MailCustomer { get; set; }
+        [JsonProperty("mail_customer")]
+        public bool MailCustomer { get; set; }
 
         [JsonProperty("customer_name")]
         public string CustomerName { get; set; }

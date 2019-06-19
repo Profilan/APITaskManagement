@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<APITaskManagement.Logic.Schedulers.Task>
+
+@{
     ViewBag.Title = "Dashboard";
 }
 
@@ -32,14 +34,14 @@
                 <td>
                     @if (item.Enabled)
                     {
-                    <a><img class="enable-task" data-enabled="1" data-id="@item.Id" src="~/images/bullet_green.png" width="24"/></a>
+                        <a><img class="enable-task" data-enabled="1" data-id="@item.Id" src="~/images/bullet_green.png" width="24" /></a>
                     }
-                    else  
+                    else
                     {
-                    <a><img class="enable-task" data-enabled="0" data-id="@item.Id" src="~/images/bullet_red.png" width="24" /></a>
+                        <a><img class="enable-task" data-enabled="0" data-id="@item.Id" src="~/images/bullet_red.png" width="24" /></a>
                     }
                 </td>
-                <td>                  
+                <td>
                     <span class="last-run-time">@item.LastRunTime.ToString("dd-MM-yyyy HH:mm:ss")</span>
                 </td>
                 <td>
@@ -58,10 +60,15 @@
                     }
                     <span class="last-run-result" style="color: @color">
                         @item.LastRunResult
-                        
+
                     </span>
                 </td>
-                <td><a href="#" class="btn-details" data-id="@item.Id" data-toggle="modal" data-target="#detailsModal">Details</a></td>
+                <td>
+                    <a id="runnowButton-@item.Id" class="btn btn-default btn-sm btn-runnow" data-id="@item.Id" @(item.Active == true ? "disabled" : "")>Run Now</a>
+                    <a href="#" class="btn btn-default btn-sm btn-reset" data-id="@item.Id">Reset</a>
+                    <a href="#" class="btn btn-link btn-sm btn-details" data-id="@item.Id" data-toggle="modal" data-target="#detailsModal">Details</a>
+
+                </td>
             </tr>
         }
 
@@ -80,7 +87,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                
+
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -112,10 +119,10 @@
                         modal.find('.modal-title').text(data.Title);
                         modal.find('.modal-body > p').text(data.LastRunDetails);
                     });
-                
-                
 
-            })
+
+
+            });
 
             // De url definieren waar de service wordt uitgevoerd
             $.connection.hub.url = "@System.Configuration.ConfigurationManager.AppSettings["HubConnectionUrl"]/signalr";
@@ -123,11 +130,35 @@
             // Verbinden met Hub
             var scheduler = $.connection.taskSchedulerHub;
 
+            scheduler.client.updateTaskStatus = function (id, title, enabled) {
+
+                if (enabled) {
+                    $("#" + id).find(".enable-task").attr("src", "/images/bullet_green.png").data("enabled", 1);
+
+                    $.notify({
+                        title: '<b>API Task Scheduler:</b> ',
+                        message: 'Task <b>' + title + '</b> is enabled'
+                    }, {
+                            type: 'info'
+                        });
+
+                } else {
+                    $("#" + id).find(".enable-task").attr("src", "/images/bullet_red.png").data("enabled", 0);
+                    $.notify({
+                        title: '<b>API Task Scheduler:</b> ',
+                        message: 'Task <b>' + title + '</b> is disabled'
+                    }, {
+                            type: 'info'
+                        });
+                }
+
+            };
+
             // Hub taskStatus ontvangen
-            scheduler.client.updateTaskStatus = function (id, title, active, lastRunTime, lastRunResult, enabled) {
+            scheduler.client.updateTask = function (id, title, active, lastRunTime, lastRunResult, enabled) {
 
                 if (active) {
-                    // $("#" + id).effect("highlight", "slow");
+
                 }
                 var statusCode = parseInt(lastRunResult.split(" ")[0]);
                 var color = "green";
@@ -139,48 +170,80 @@
                 $("#" + id).find(".last-run-time").text(lastRunTime);
                 $("#" + id).find(".last-run-result").text(lastRunResult).css("color", color);
 
-                if (enabled) {
-                    $("#" + id).find(".enable-task").attr("src", "/images/bullet_green.png").data("enabled", 1);
-
-                } else {
-                    $("#" + id).find(".enable-task").attr("src", "/images/bullet_red.png").data("enabled", 0);
-                }
-
-                if (active) {
+                if (!active) {
+                    // $('#runnowButton-' + id).removeAttr('disabled');
+                    $('#runnowButton-' + id).removeAttr('disabled');
                     $.notify({
                         title: '<b>' + lastRunResult + ':</b> ',
-                        message: 'Task <b>' + title + '</b> is completed'
+                        message: 'Task <b>' + title + '</b> has completed'
+                    }, {
+                            type: notifyType
+                        });
+                } else {
+                    // document.getElementById("runnowButton-" + id).disabled = true;
+                    $('#runnowButton-' + id).attr('disabled', 'disabled');
+                    $.notify({
+                        title: '<b>' + lastRunResult + ':</b> ',
+                        message: 'Task <b>' + title + '</b> has started'
                     }, {
                             type: notifyType
                         });
                 }
             };
-            
-        
+
+
             // De verbinding starten bij het laden van de pagina
             $.connection.hub.start().done(function () {
 
                 $(".enable-task").click(function () {
                     if ($(this).data("enabled")) {
-                        
+
                         scheduler.server.disableTask($(this).data("id"));
-                        
+
                     } else {
-                        
+
                         scheduler.server.enableTask($(this).data("id"));
-                        
+
                     }
                 });
-                
+
+                $(".btn-runnow").click(function (e) {
+                    e.preventDefault();
+
+                    var id = $(this).data("id");
+
+                    if (!$("#runnowButton-" + id).attr('disabled')) {
+                        scheduler.server.runTask($(this).data("id"));
+                    }
+                });
+
+                $('.btn-reset').click(function (e) {
+                    e.preventDefault();
+                    console.log('reset');
+                    var $this = $(this);
+                    $(this).attr("disabled", "disabled");
+                    $.post('/api/task/reset/' + $(this).data("id"), function (result) {
+
+                        $.notify({
+                            title: '<b>API Task Scheduler:</b> ',
+                            message: result.message
+                        }, {
+                                type: 'info'
+                            });
+
+                        $this.removeAttr("disabled");
+                    });
+                });
+
             });
 
             $.connection.hub.stateChanged(function (state) {
                 var stateConversion = { 0: 'Connecting', 1: 'Connected', 2: 'Reconnecting', 4: 'Disconnected' };
-                
+
                 $("#service-status").text(stateConversion[state.newState]);
 
                 var notifyType = 'info';
-                
+
 
                 $.notify({
                     title: '<b>API Task Scheduler:</b> ',
@@ -190,7 +253,7 @@
                     });
             });
 
-            
+
         });
     </script>
 }

@@ -30,7 +30,7 @@ namespace APITaskManagement.Logic.Api
     {
         private readonly QueueRepository _queueRepository;
         private readonly DutchNedInsertedOrderlinestatusRepository _statusRepository = new DutchNedInsertedOrderlinestatusRepository();
-        
+        private readonly CashOnDeliveryOrderlineRepository _cashOnDeliveryOrderlineRepository = new CashOnDeliveryOrderlineRepository();
 
         public ApiDNSalesOrder(string name) : base(name)
         {
@@ -45,7 +45,7 @@ namespace APITaskManagement.Logic.Api
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
             var requests = new List<Request>();
-            var items = _queueRepository.ListByTask(taskId, 100);
+            var items = _queueRepository.ListByTask(taskId, 200);
 
             var formatter = new DNSalesOrderFormatter();
 
@@ -102,6 +102,29 @@ namespace APITaskManagement.Logic.Api
                     };
 
                     _statusRepository.Insert(status);
+
+                }
+                try
+                {
+                    if (request.Response.Code == 200)
+                    {
+                        APITaskManagement.Logic.Api.Models.DutchNedSalesOrder salesOrder = JsonConvert.DeserializeObject<APITaskManagement.Logic.Api.Models.DutchNedSalesOrder>(request.Body);
+
+                        foreach (var line in salesOrder.Lines)
+                        {
+                            var cashOnDelivery = new CashOnDeliveryOrderline()
+                            {
+                                OrderlineId = Convert.ToInt32(line.Id),
+                                CashOnDelivery = line.CashOnDelivery
+                            };
+
+                            _cashOnDeliveryOrderlineRepository.Insert(cashOnDelivery);
+                        }
+                    }
+                }
+                catch
+                {
+
                 }
             }
             catch

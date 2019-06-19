@@ -26,6 +26,7 @@ namespace APITaskManagement.Logic.Api
                         OrderReference = salesOrder.OrderReference,
                         DeliveryInstructions = salesOrder.DeliveryInstructions,
                         IsCombyOrder = salesOrder.IsCombyOrder,
+                        MailCustomer = salesOrder.MailCustomer,
                         CustomerName = salesOrder.Customer.Name,
                         CustomerStreet = salesOrder.Customer.Street,
                         CustomerHouseNumber = salesOrder.Customer.HouseNumber,

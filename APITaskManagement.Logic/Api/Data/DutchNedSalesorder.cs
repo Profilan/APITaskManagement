@@ -12,7 +12,7 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string OrderReference { get; set; }
         public virtual string DeliveryInstructions { get; set; }
         public virtual bool IsCombyOrder { get; set; }
-        // public virtual bool MailCustomer { get; set; }
+        public virtual bool MailCustomer { get; set; }
         public virtual DutchNedCustomer Customer { get; set; }
         public virtual DutchNedSender Sender { get; set; }
 

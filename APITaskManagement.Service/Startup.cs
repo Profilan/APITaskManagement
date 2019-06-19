@@ -38,6 +38,8 @@ namespace APITaskManagement.Service
 
                 map.RunSignalR(hubConfiguration);
             });
+
+
         }
     }
 }

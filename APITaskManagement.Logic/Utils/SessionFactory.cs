@@ -15,8 +15,7 @@ namespace APITaskManagement.Logic.Utils
         {
             Configuration config = new Configuration();
             config.Configure();
-            
-
+            // config.SetProperty("connection.connection_string_name", "default");
 
             _factory = config.BuildSessionFactory();
         }

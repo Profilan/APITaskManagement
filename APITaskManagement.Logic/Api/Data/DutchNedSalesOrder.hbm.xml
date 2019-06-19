@@ -12,6 +12,7 @@
     <property name="OrderReference"/>
     <property name="DeliveryInstructions"/>
     <property name="IsCombyOrder"/>
+    <property name="MailCustomer"/>
     <component name="Customer">
       <property name="Name" column="CustomerName" not-null="true"/>
       <property name="Street" column="CustomerStreet" not-null="true"/>

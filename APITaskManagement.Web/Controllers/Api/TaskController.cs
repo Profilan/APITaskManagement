@@ -52,5 +52,23 @@ namespace APITaskManagement.Web.Controllers.Api
         public void Delete(int id)
         {
         }
+
+        [HttpPost]
+        [Route("api/task/reset/{id}")]
+        public IHttpActionResult Reset(Guid id)
+        {
+            var task = _taskRepository.GetById(id);
+            if (task != null)
+            {
+                task.Active = false;
+                _taskRepository.Update(task);
+            }
+            else
+            {
+                return NotFound();
+            }
+ 
+            return Ok(new { message = task.Title + " succesfully reset" });
+        }
     }
 }

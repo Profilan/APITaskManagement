@@ -137,6 +137,7 @@
   <ItemGroup>
     <Compile Include="Api\ApiDNSalesOrder.cs" />
     <Compile Include="Api\ApiPostNLShipment.cs" />
+    <Compile Include="Api\Data\CashOnDeliveryOrderline.cs" />
     <Compile Include="Api\Data\DutchNedCustomer.cs" />
     <Compile Include="Api\Data\DutchNedInsertedOrderlinestatus.cs" />
     <Compile Include="Api\Data\DutchNedSalesOrder.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Api\Models\DutchNedSalesOrderLine.cs" />
     <Compile Include="Api\Models\DutchNedSender.cs" />
     <Compile Include="Api\PostNLShipmentFormatter.cs" />
+    <Compile Include="Api\Repositories\CashOnDeliveryOrderlineRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
     <Compile Include="Api\Repositories\PostNLRepository.cs" />
@@ -179,6 +181,8 @@
     <Compile Include="Filer\Repositories\PackageRepository.cs" />
     <Compile Include="Filer\Repositories\ProductRepository.cs" />
     <Compile Include="Filer\Repositories\ShareRepository.cs" />
+    <Compile Include="Helpers\HibernateStoredProcedureExecutor.cs" />
+    <Compile Include="Helpers\Interfaces\IExecuteStoredProcedure.cs" />
     <Compile Include="Logging\ApplicationLogger.cs" />
     <Compile Include="Logging\Interfaces\ILogger.cs" />
     <Compile Include="Logging\SystemLogger.cs" />
@@ -295,13 +299,15 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Api\Data\PostNLLine.hbm.xml" />
-    <EmbeddedResource Include="Api\Data\DutchNedSalesOrder.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DutchNedSalesOrder.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Api\Data\DutchNedSalesOrderLine.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Api\Data\DutchNedInsertedOrderlinestatus.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Monitoring\Messenger.hbm.xml" />

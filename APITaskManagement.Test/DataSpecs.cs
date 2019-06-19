@@ -56,6 +56,20 @@ namespace APITaskManagement.Test
             };
 
             dnRepo.Insert(item);
-    }
+        }
+
+        [TestMethod]
+        public void InsertCashOnDelivery()
+        {
+            var rep = new CashOnDeliveryOrderlineRepository();
+
+            var item = new CashOnDeliveryOrderline()
+            {
+                OrderlineId = 9997,
+                CashOnDelivery = 550
+            };
+
+            rep.Insert(item);
+        }
     }
 }

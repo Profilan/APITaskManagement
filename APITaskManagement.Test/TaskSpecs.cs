@@ -12,6 +12,8 @@ using APITaskManagement.Logic.Api;
 using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers.Interfaces;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
+using StructureMap;
+using APITaskManagement.Test.DependencyResolution;
 
 namespace APITaskManagement.Test
 {
@@ -26,7 +28,10 @@ namespace APITaskManagement.Test
             
             _taskRepository = new TaskRepository();
 
-            NHibernateProfiler.Initialize();
+            // NHibernateProfiler.Initialize();
+
+            IContainer container = IoC.Initialize();
+            DomainEvents.Container = container;
 
         }
 
@@ -50,7 +55,7 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void TaskShouldSendRequests()
         {
-            var task = _taskRepository.GetById(new Guid("8B0DF4EE-A851-46F5-9DEA-163136D024E5"));
+            var task = _taskRepository.GetById(new Guid("40402739-879E-40CB-9109-A99E008EB4CC"));
 
             task.Start();
 

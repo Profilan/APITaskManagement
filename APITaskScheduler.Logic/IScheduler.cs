@@ -10,9 +10,10 @@ namespace APITaskScheduler.Logic
 {
     public interface IScheduler
     {
-        event EventHandler<ElapsedEventArgs> Timer;
-        
         void Start();
         void Stop();
+        void DisableTask(string taskId);
+        void EnableTask(string taskId);
+        void Run(Guid taskId);
     }
 }

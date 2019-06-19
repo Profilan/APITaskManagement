@@ -13,11 +13,6 @@ namespace APITaskManagement.Logic.Common
         [ThreadStatic]
         private static List<Delegate> actions;
 
-        static DomainEvents()
-        {
-            Container = new Container();
-        }
-
         public static IContainer Container { get; set; }
         public static void Register<T>(Action<T> callback) where T : IDomainEvent
         {

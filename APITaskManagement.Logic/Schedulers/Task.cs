@@ -84,6 +84,9 @@ namespace APITaskManagement.Logic.Schedulers
         {
             Active = true;
 
+            var taskStartedEvent = new TaskStartedEvent(this);
+            DomainEvents.Raise(taskStartedEvent);
+
             Send();
 
             if (LatestResponse != null)
@@ -98,6 +101,21 @@ namespace APITaskManagement.Logic.Schedulers
 
             Active = false;
 
+        }
+
+        public virtual void Test(int ticks)
+        {
+            Active = true;
+
+            var taskStartedEvent = new TaskStartedEvent(this);
+            DomainEvents.Raise(taskStartedEvent);
+
+            System.Threading.Thread.Sleep(ticks);
+
+            var taskFinishedEvent = new TaskFinishedEvent(this);
+            DomainEvents.Raise(taskFinishedEvent);
+
+            Active = false;
         }
 
         public virtual void Stop()

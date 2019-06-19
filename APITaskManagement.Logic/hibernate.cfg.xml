@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
   <session-factory>
-    <property name="connection.connection_string">data source=SRV-EEK-ZWD-05;initial catalog=MAATWERK;persist security info=True;user id=SAAPI;password=SA32api</property>
+    <property name="connection.connection_string_name">default</property>
     <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
     <property name="dialect">NHibernate.Dialect.MsSql2012Dialect</property>
     <property name="adonet.batch_size">100</property>
     <property name="show_sql">True</property>
     <property name="format_sql">True</property>
+    <property name="command_timeout">300</property>
     <mapping assembly="APITaskManagement.Logic"/>
   </session-factory>
 </hibernate-configuration>

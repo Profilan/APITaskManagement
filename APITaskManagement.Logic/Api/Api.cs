@@ -46,6 +46,7 @@ namespace APITaskManagement.Logic.Api
             {
                 HttpResponseMessage responseMessage = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.Timeout = new TimeSpan(0, 5, 0);
 
                 switch (authentication.AuthenticationType)
                 {
