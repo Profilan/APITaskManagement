@@ -10,6 +10,8 @@ namespace APITaskManagement.Logic.Api.Interfaces
     {
         string Name { get; set; }
 
+        int TotalItems { get; set; }
+
         IList<Request> Requests { get; }
 
         void SendRequestsToTarget(Common.HttpMethod httpMethod, Url url, Authentication authentication, Task task);

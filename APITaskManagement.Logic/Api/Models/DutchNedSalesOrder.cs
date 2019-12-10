@@ -14,8 +14,14 @@ namespace APITaskManagement.Logic.Api.Models
         [JsonProperty("order_reference")]
         public string OrderReference { get; set; }
 
+        [JsonProperty("delivery_date")]
+        public string DeliveryDate { get; set; }
+
         [JsonProperty("delivery_instructions")]
         public string DeliveryInstructions { get; set; }
+
+        [JsonProperty("preferred_delivery_time_slot")]
+        public string PreferredDeliveryTimeSlot { get; set; }
 
         [JsonProperty("is_comby_order")]
         public bool IsCombyOrder { get; set; }
@@ -37,6 +43,7 @@ namespace APITaskManagement.Logic.Api.Models
 
         [JsonProperty("customer_zip_code")]
         public string CustomerZipCode { get; set; }
+
 
         [JsonProperty("customer_city")]
         public string CustomerCity { get; set; }

@@ -1,6 +1,8 @@
-﻿using APITaskManagement.Logic.Common.Interfaces;
+﻿using APITaskManagement.Logic.Common;
+using APITaskManagement.Logic.Common.Interfaces;
 using APITaskManagement.Logic.Filer.Data;
 using APITaskManagement.Logic.Filer.Repositories;
+using APITaskManagement.Logic.Schedulers;
 using APITaskManagement.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -45,9 +47,13 @@ namespace APITaskManagement.Web.Controllers
         {
             try
             {
+                var inactivityTimeout = new Interval(Convert.ToInt32(collection["Amount"]),
+                   (Unit)Enum.Parse(typeof(Unit), collection["Unit"]));
+
                 var share = new Share();
                 share.Name = collection["Name"];
                 share.UNCPath = collection["UNCPath"];
+                share.InactivityTimeout = inactivityTimeout;
 
                 _shareRepository.Insert(share);
 
@@ -68,7 +74,10 @@ namespace APITaskManagement.Web.Controllers
             var shareViewModel = new ShareViewModel()
             {
                 Name = share.Name,
-                UNCPath = share.UNCPath
+                UNCPath = share.UNCPath,
+                Amount = share.InactivityTimeout.Amount,
+                Unit = share.InactivityTimeout.Unit,
+                MonitorInactivity = share.MonitorInactivity
             };
 
             return View(shareViewModel);
@@ -80,10 +89,14 @@ namespace APITaskManagement.Web.Controllers
         {
             try
             {
+                var inactivityTimeout = new Interval(Convert.ToInt32(collection["Amount"]),
+                   (Unit)Enum.Parse(typeof(Unit), collection["Unit"]));
+
                 var share = _shareRepository.GetById(id);
                 
                 share.Name = collection["Name"];
                 share.UNCPath = collection["UNCPath"];
+                share.InactivityTimeout = inactivityTimeout;
 
                 _shareRepository.Update(share);
 

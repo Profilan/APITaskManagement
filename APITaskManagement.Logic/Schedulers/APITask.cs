@@ -19,8 +19,9 @@ namespace APITaskManagement.Logic.Schedulers
             int scheduleId,
             Interval interval,
             Authentication authentication,
-            bool enabled
-            ) : base(title, scheduleId, interval, authentication, enabled)
+            bool enabled,
+            int totalProcesseditems = 100
+            ) : base(title, scheduleId, interval, authentication, enabled, totalProcesseditems)
         {
 
         }
@@ -29,6 +30,7 @@ namespace APITaskManagement.Logic.Schedulers
         {
             Type t = Type.GetType("APITaskManagement.Logic.Api." + Classname);
             var api = (IApi)Activator.CreateInstance(t, Classname);
+            api.TotalItems = TotalProcessedItems;
             api.AddLogger(new ApplicationLogger());
             api.AddLogger(new SystemLogger());
             api.SendRequestsToTarget(HttpMethod, Url, Authentication, this);

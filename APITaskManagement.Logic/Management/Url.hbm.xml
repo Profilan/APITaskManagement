@@ -11,5 +11,7 @@
     <component name="InactivityTimeout">
       <property name="Seconds" column="InactivityTimeout" not-null="true"/>
     </component>
+
+    <property name="MonitorInactivity"/>
   </class>
 </hibernate-mapping>

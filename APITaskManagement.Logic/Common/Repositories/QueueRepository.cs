@@ -13,7 +13,16 @@ namespace APITaskManagement.Logic.Common.Repositories
     {
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (ISession session = SessionFactory.GetNewSession())
+            {
+                var item = session.Load<Queue>(id);
+
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Delete(item);
+                    transaction.Commit();
+                }
+            }
         }
 
         public Queue GetById(int id)

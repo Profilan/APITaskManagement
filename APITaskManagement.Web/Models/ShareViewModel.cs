@@ -14,5 +14,11 @@ namespace APITaskManagement.Web.Models
         public string Name { get; set; }
 
         public string UNCPath { get; set; }
+
+        public int Amount { get; set; }
+
+        public Unit Unit { get; set; }
+        [Display(Name = "Monitor Inactivity")]
+        public bool MonitorInactivity { get; set; }
     }
 }

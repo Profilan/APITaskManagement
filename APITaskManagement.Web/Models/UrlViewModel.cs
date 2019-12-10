@@ -21,5 +21,7 @@ namespace APITaskManagement.Web.Models
         public int Amount { get; set; }
 
         public Unit Unit { get; set; }
+        [Display(Name = "Monitor Inactivity")]
+        public bool MonitorInactivity { get; set; }
     }
 }

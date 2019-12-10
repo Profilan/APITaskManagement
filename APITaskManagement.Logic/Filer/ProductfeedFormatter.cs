@@ -99,11 +99,13 @@ namespace APITaskManagement.Logic.Filer
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "IntrastatCode", string.Empty)).AppendChild(doc.CreateTextNode((product.IntrastatCode)));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "Exclusivity", string.Empty)).AppendChild(doc.CreateTextNode((product.Exclusivity)));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ShippingMethod", string.Empty)).AppendChild(doc.CreateTextNode((product.ShippingMethod)));
+                xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ShippingMethod2", string.Empty)).AppendChild(doc.CreateTextNode((product.ShippingMethod2)));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "WeightKg", string.Empty)).AppendChild(doc.CreateTextNode((product.WeightKg.ToString(new CultureInfo("en-US")))));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ConsumerPriceNL", string.Empty)).AppendChild(doc.CreateTextNode((product.ConsumerPriceNL.ToString(new CultureInfo("en-US")))));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ConsumerPriceFromNL", string.Empty)).AppendChild(doc.CreateTextNode((product.ConsumerPriceFromNL.ToString(new CultureInfo("en-US")))));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ConsumerPriceISE", string.Empty)).AppendChild(doc.CreateTextNode((product.ConsumerPriceISE.ToString(new CultureInfo("en-US")))));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ConsumerPriceFromISE", string.Empty)).AppendChild(doc.CreateTextNode((product.ConsumerPriceFromISE.ToString(new CultureInfo("en-US")))));
+                xmlProduct.AppendChild(doc.CreateElement(string.Empty, "Warehouse", string.Empty)).AppendChild(doc.CreateTextNode((product.Warehouse)));
                 XmlElement xmlPackages = doc.CreateElement(string.Empty, "Packages", string.Empty);
                 xmlProduct.AppendChild(xmlPackages);
                 if (product.QtyPackages > 1)
@@ -124,6 +126,9 @@ namespace APITaskManagement.Logic.Filer
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "LengthMm", string.Empty)).AppendChild(doc.CreateTextNode((package.LengthMm.ToString(new CultureInfo("en-US")))));
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "WidthMm", string.Empty)).AppendChild(doc.CreateTextNode((package.WidthMm.ToString(new CultureInfo("en-US")))));
                         xmlPackage.AppendChild(doc.CreateElement(string.Empty, "VolumeM3", string.Empty)).AppendChild(doc.CreateTextNode((package.VolumeM3.ToString(new CultureInfo("en-US")))));
+                        xmlPackage.AppendChild(doc.CreateElement(string.Empty, "Quantity", string.Empty)).AppendChild(doc.CreateTextNode((package.Quantity.ToString(new CultureInfo("en-US")))));
+                        xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ShippingMethod2", string.Empty)).AppendChild(doc.CreateTextNode((package.ShippingMethod2)));
+                        xmlPackage.AppendChild(doc.CreateElement(string.Empty, "Warehouse", string.Empty)).AppendChild(doc.CreateTextNode((package.Warehouse)));
                     }
                 }
                 else
@@ -141,6 +146,9 @@ namespace APITaskManagement.Logic.Filer
                     xmlPackage.AppendChild(doc.CreateElement(string.Empty, "LengthMm", string.Empty)).AppendChild(doc.CreateTextNode((product.LengthMm.ToString(new CultureInfo("en-US")))));
                     xmlPackage.AppendChild(doc.CreateElement(string.Empty, "WidthMm", string.Empty)).AppendChild(doc.CreateTextNode((product.WidthMm.ToString(new CultureInfo("en-US")))));
                     xmlPackage.AppendChild(doc.CreateElement(string.Empty, "VolumeM3", string.Empty)).AppendChild(doc.CreateTextNode((product.VolumeM3.ToString(new CultureInfo("en-US")))));
+                    xmlPackage.AppendChild(doc.CreateElement(string.Empty, "Quantity", string.Empty)).AppendChild(doc.CreateTextNode(("1")));
+                    xmlPackage.AppendChild(doc.CreateElement(string.Empty, "ShippingMethod2", string.Empty)).AppendChild(doc.CreateTextNode((product.ShippingMethod2)));
+                    xmlPackage.AppendChild(doc.CreateElement(string.Empty, "Warehouse", string.Empty)).AppendChild(doc.CreateTextNode((product.Warehouse)));
                 }
                 XmlElement xmlImages = doc.CreateElement(string.Empty, "Images", string.Empty);
                 xmlProduct.AppendChild(xmlImages);

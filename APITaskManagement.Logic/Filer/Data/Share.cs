@@ -1,9 +1,10 @@
 ﻿using APITaskManagement.Logic.Common;
+using APITaskManagement.Logic.Schedulers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace APITaskManagement.Logic.Filer.Data
 {
@@ -11,6 +12,9 @@ namespace APITaskManagement.Logic.Filer.Data
     {
         public virtual string Name { get; set; }
         public virtual string UNCPath { get; set; }
+
+        public virtual Interval InactivityTimeout { get; set; }
+        public virtual bool MonitorInactivity { get; set; }
 
         public virtual ISet<Task> Tasks { get; set; }
 

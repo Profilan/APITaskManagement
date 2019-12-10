@@ -45,6 +45,8 @@ namespace APITaskManagement.Web.Models
         public Unit Unit { get; set; }
 
         public bool Enabled { get; set; }
+        public bool Active { get; set; }
+        public int Queued { get; set; }
 
         [Display(Name = "Last Run Time")]
         public DateTime LastRunTime { get; set; }
@@ -52,12 +54,18 @@ namespace APITaskManagement.Web.Models
         [Display(Name = "Last Run Details")]
         public string LastRunDetails { get; set; }
 
+        [Display(Name = "Last Run Result")]
+        public string LastRunResult { get; set; }
+
         [Display(Name = "Url")]
         public int UrlId { get; set; }
         public IEnumerable<Url> Urls { get; set; }
 
         [Display(Name = "Maximum Errors")]
         public int MaxErrors { get; set; }
+
+        [Display(Name = "Total processed items")]
+        public int TotalProcessedItems { get; set; }
 
         // FTP fields
 

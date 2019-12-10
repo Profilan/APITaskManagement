@@ -39,6 +39,7 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual string IntrastatCode { get; set; }               // INTRASTAT_CODE
         public virtual string Exclusivity { get; set; }                 // EXCLUSIV
         public virtual string ShippingMethod { get; set; }              // VERZENDWIJZE
+        public virtual string ShippingMethod2 { get; set; }             // SHIPPINGMETHOD2
         public virtual decimal WeightKg { get; set; }                   // GEWICHT
         public virtual decimal ConsumerPriceNL { get; set; }            // CONSUMENTENPRIJS
         public virtual decimal ConsumerPriceFromNL { get; set; }        // CONSUMENTENPRIJS_VAN
@@ -49,7 +50,7 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual decimal LengthMm { get; set; }                   // VERPAK_LENGTE_mm
         public virtual decimal WidthMm { get; set; }                    // VERPAK_BREEDTE_mm
         public virtual decimal VolumeM3 { get; set; }                   // VOL_M3_VERP
-
+        public virtual string Warehouse { get; set; }                   // WAREHOUSE
         public Product()
         {
             

@@ -37,6 +37,7 @@
     <property name="IntrastatCode" column="INTRASTAT_CODE"/>
     <property name="Exclusivity" column="EXCLUSIV"/>
     <property name="ShippingMethod" column="VERZENDWIJZE"/>
+    <property name="ShippingMethod2" column="SHIPPINGMETHOD2"/>
     <property name="WeightKg" column="GEWICHT" precision="18" scale="2"/>
     <property name="ConsumerPriceNL" column="CONSUMENTENPRIJS" precision="18" scale="2"/>
     <property name="ConsumerPriceFromNL" column="CONSUMENTENPRIJS_VAN" precision="18" scale="2"/>
@@ -47,5 +48,7 @@
     <property name="WidthMm" column="VERPAK_BREEDTE_mm" precision="18" scale="2"/>
     <property name="VolumeM3" column="VOL_M3_VERP" precision="18" scale="2"/>
     <property name="Condition" column="Condition"/>
+    <property name="Warehouse" column="WAREHOUSE"/>
+    
   </class>
 </hibernate-mapping>

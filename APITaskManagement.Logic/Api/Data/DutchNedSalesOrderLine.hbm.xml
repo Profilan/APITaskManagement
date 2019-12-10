@@ -17,6 +17,7 @@
     <property name="CashOnDelivery"/>
     <property name="IsReturn"/>
     <property name="PlanFromDate"/>
+    <property name="Type"/>
   </class>
 
 </hibernate-mapping>

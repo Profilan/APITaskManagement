@@ -6,38 +6,126 @@
 
 <h2>Queue</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Key)
-        </th>
-        <th>
-            Task
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TryCount)
-        </th>
-    </tr>
+<div class="row">
+    <div class="col-md-3">
+        Total: <span id="total"></span>
+    </div>
+</div>
 
-    @foreach (var item in Model)
-    {
+<table class="table" id="queueTable">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Key)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Task.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TryCount)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Key)
+            </th>
+            <th>
+                Task
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TryCount)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.Id">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Task.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SysCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TryCount)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { data_toggle = "modal", data_target = "#deleteModal", data_id = item.Key + ":" + item.Task.Title })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 
+<div id="deleteModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete <span id="titleName"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="okBtn" type="button" class="btn btn-primary">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts
 {
+    <script type="text/javascript">
 
+        function refreshQueue() {
+            $('#queueTable tbody').empty();
+
+            $.getJSON('/api/queue').done(function (data) {
+                $("#total").text(data.length);
+                $.each(data, function (idx, item) {
+                    var row = $('<tr/>').attr('data-id', item.Id);
+                    var key = $('<td/>').text(item.Key);
+                    var title = $('<td/>').text(item.Task.Title);
+                    var created = $('<td/>').text(item.SysCreated);
+                    var count = $('<td/>').text(item.TryCount);
+                    var linkDelete = $('<a/>').attr('href', '#').attr('data-id', item.Id).attr('data-toggle', 'modal').attr('data-target', '#deleteModal').text('Delete');
+                    var tasks = $('<td/>');
+                    tasks.append(linkDelete);
+                    row.append(key).append(title).append(created).append(count).append(tasks);
+                    $('#queueTable tbody').append(row);
+                });
+            });
+        }
+
+        $(function () {
+
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var name = button.data('url');
+                var id = button.data('id');
+                console.log(id);
+                $('#titleName').text(name);
+                $('#okBtn').attr('data-id', id);
+            });
+
+            $('#okBtn').click(function (event) {
+                event.preventDefault();
+
+                var id = $(this).data('id');
+                $.post('/api/Queue/Delete/' + id, function () {
+                    $('tr[data-id="' + id + '"]').remove();
+                    $('#deleteModal').modal('hide');
+                });
+
+            });
+
+            refreshQueue();
+            setInterval(refreshQueue, 10 * 1000);
+        });
+
+    </script>
 }
 

@@ -37,5 +37,8 @@ namespace APITaskManagement.Logic.Api.Models
 
         [JsonProperty("return")]
         public bool IsReturn { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }

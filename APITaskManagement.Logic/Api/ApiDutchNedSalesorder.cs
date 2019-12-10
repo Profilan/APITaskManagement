@@ -22,7 +22,7 @@ namespace APITaskManagement.Logic.Api
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
             var requests = new List<Request>();
-            var items = _queueRepository.ListByTask(taskId, 100);
+            var items = _queueRepository.ListByTask(taskId, TotalItems);
 
             var formatter = new DutchNedSalesorderFormatter();
 

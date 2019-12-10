@@ -11,6 +11,8 @@
     <property name="OrderDate"/>
     <property name="OrderReference"/>
     <property name="DeliveryInstructions"/>
+    <property name="DeliveryDate"/>
+    <property name="PreferredDeliveryTimeSlot"/>
     <property name="IsCombyOrder"/>
     <property name="MailCustomer"/>
     <component name="Customer">

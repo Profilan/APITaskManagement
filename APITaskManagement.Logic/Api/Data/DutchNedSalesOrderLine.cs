@@ -16,6 +16,7 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string Warehouse { get; set; }
         public virtual int CashOnDelivery { get; set; }
         public virtual bool IsReturn { get; set; }
+        public virtual string Type { get; set; }
 
         public virtual DutchNedSalesOrder SalesOrder { get; set; }
     }

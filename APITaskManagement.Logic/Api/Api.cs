@@ -26,9 +26,12 @@ namespace APITaskManagement.Logic.Api
 
         public string Name { get; set; }
 
+        public int TotalItems { get; set; }
+
         public Api(string name) : this()
         {
             Name = name;
+            TotalItems = 100;
         }
 
         public Api()
@@ -81,44 +84,53 @@ namespace APITaskManagement.Logic.Api
                     {
                         if (!keys.Contains(request.ReferenceId))
                         {
-                            switch (httpMethod)
+                            try
                             {
-                                case Common.HttpMethod.Get:
-                                    responseMessage = client.GetAsync(url.Address).Result;
-                                    break;
-                                case Common.HttpMethod.Post:
-                                    responseMessage = client.PostAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
-                                   
-                                    break;
-                                case Common.HttpMethod.Put:
-                                    responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
-                                    break;
-                                case Common.HttpMethod.Patch:
-                                    responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
-                                    break;
-                                case Common.HttpMethod.Delete:
-                                    responseMessage = client.DeleteAsync(url.Address).Result;
-                                    break;
-                                default:
-                                    responseMessage = client.GetAsync(url.Address).Result;
-                                    break;
+                                switch (httpMethod)
+                                {
+                                    case Common.HttpMethod.Get:
+                                        responseMessage = client.GetAsync(url.Address).Result;
+                                        break;
+                                    case Common.HttpMethod.Post:
+                                        responseMessage = client.PostAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
+
+                                        break;
+                                    case Common.HttpMethod.Put:
+                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
+                                        break;
+                                    case Common.HttpMethod.Patch:
+                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
+                                        break;
+                                    case Common.HttpMethod.Delete:
+                                        responseMessage = client.DeleteAsync(url.Address).Result;
+                                        break;
+                                    default:
+                                        responseMessage = client.GetAsync(url.Address).Result;
+                                        break;
+                                }
+
+                                var result = responseMessage.Content.ReadAsStringAsync().Result;
+                                var statusCode = (int)responseMessage.StatusCode;
+                                var description = responseMessage.StatusCode.ToString();
+
+                                var response = new Response(statusCode, description, result);
+                                request.SetResponse(response);
+
+                                if (request.ExecPost == true)
+                                {
+                                    ExecutePost(request);
+                                }
+
+                                LogResponse(request, url, task.SPLogger);
+
+                                keys.Add(request.ReferenceId);
+
                             }
-
-                            var result = responseMessage.Content.ReadAsStringAsync().Result;
-                            var statusCode = (int)responseMessage.StatusCode;
-                            var description = responseMessage.StatusCode.ToString();
-
-                            var response = new Response(statusCode, description, result);
-                            request.SetResponse(response);
-
-                            if (request.ExecPost == true)
+                            catch (Exception e)
                             {
-                                ExecutePost(request);
+                                var response = new Response(500, "Internal Server Error", "Call to API failed. (" + e.Message + ")");
+                                request.SetResponse(response);
                             }
-
-                            LogResponse(request, url, task.SPLogger);
-
-                            keys.Add(request.ReferenceId);
                         }
                     }
                     else

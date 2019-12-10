@@ -230,6 +230,7 @@
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\SchedulerViewModel.cs" />
     <Compile Include="Models\SortAndPage.cs" />
+    <Compile Include="Models\TaskApiModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\ShareViewModel.cs" />
     <Compile Include="Models\UrlViewModel.cs" />
@@ -416,6 +417,7 @@
     <Content Include="Views\Share\Edit.cshtml" />
     <Content Include="Views\Queue\Index.cshtml" />
     <Content Include="Views\Task\_Mail.cshtml" />
+    <Content Include="Views\Share\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

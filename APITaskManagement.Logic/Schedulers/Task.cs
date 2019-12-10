@@ -44,6 +44,7 @@ namespace APITaskManagement.Logic.Schedulers
 
         public virtual int MaxErrors { get; set; }
         public virtual bool Active { get; set; }
+        public virtual int TotalProcessedItems { get; set; }
 
         public virtual ISet<Share> Shares { get; set; }
 
@@ -63,7 +64,8 @@ namespace APITaskManagement.Logic.Schedulers
             int scheduleId,
             Interval interval,
             Authentication authentication,
-            bool enabled
+            bool enabled,
+            int totalProcessedItems = 100
             ) : base(Guid.NewGuid())
         {
             Active = false;
@@ -76,6 +78,7 @@ namespace APITaskManagement.Logic.Schedulers
             LastRunTime = DateTime.Now;
             LastRunResult = "0 Not Run";
             MaxErrors = 4;
+            TotalProcessedItems = totalProcessedItems;
 
             Shares = new HashSet<Share>();
         }

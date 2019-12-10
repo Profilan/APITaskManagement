@@ -18,5 +18,8 @@
     <property name="LengthMm" column="VERPAK_LENGTE_mm" precision="18" scale="2"/>
     <property name="WidthMm" column="VERPAK_BREEDTE_mm" precision="18" scale="2"/>
     <property name="VolumeM3" column="`VOL_M3/VERP`" precision="18" scale="2"/>
+    <property name="Quantity" column="AANTAL_PAKKETTEN" precision="18" scale="2"/>
+    <property name="Warehouse" column="WAREHOUSE"/>
+    <property name="ShippingMethod2" column="SHIPPINGMETHOD2"/>
   </class>
 </hibernate-mapping>

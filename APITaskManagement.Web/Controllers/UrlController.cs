@@ -76,7 +76,8 @@ namespace APITaskManagement.Web.Controllers
                 Address = url.Address,
                 Amount = url.InactivityTimeout.Amount,
                 Unit = url.InactivityTimeout.Unit,
-                ExternalUrl = url.ExternalUrl
+                ExternalUrl = url.ExternalUrl,
+                MonitorInactivity = url.MonitorInactivity
             };
 
             return View(urlViewModel);

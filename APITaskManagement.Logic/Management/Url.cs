@@ -90,6 +90,8 @@ namespace APITaskManagement.Logic.Management
             set;
         }
 
+        public virtual bool MonitorInactivity { get; set; }
+
     }
 
 }

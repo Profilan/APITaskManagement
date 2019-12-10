@@ -10,6 +10,12 @@
     <property name="Name"/>
     <property name="UNCPath"/>
 
+    <component name="InactivityTimeout">
+      <property name="Seconds" column="InactivityTimeout" not-null="true"/>
+    </component>
+
+    <property name="MonitorInactivity"/>
+
     <set name="Tasks" table="EEK_API_TASK_SHARES" inverse="true">
       <key>
         <column name="ShareId" />

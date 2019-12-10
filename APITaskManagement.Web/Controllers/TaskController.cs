@@ -119,6 +119,7 @@ namespace APITaskManagement.Web.Controllers
                 }
 
                 task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);
+                task.TotalProcessedItems = Convert.ToInt32(collection["TotalProcessedItems"]);
                 task.TaskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
                 
                 task.Classname = collection["Classname"];
@@ -233,7 +234,8 @@ namespace APITaskManagement.Web.Controllers
                 Shares = shares,
                 SelectedShares = task.Shares,
                 SPLogger = task.SPLogger,
-                ApiKey = apiKey
+                ApiKey = apiKey,
+                TotalProcessedItems = task.TotalProcessedItems
             };
             try
             {
@@ -301,6 +303,7 @@ namespace APITaskManagement.Web.Controllers
 
                 task.Authentication = authentication;
                 task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);
+                task.TotalProcessedItems = Convert.ToInt32(collection["TotalProcessedItems"]);
                 task.TaskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
                 // task.Disk.UNCPath = collection["DiskUNCPath"];
                 task.Classname = collection["Classname"];

@@ -90,7 +90,7 @@ namespace APITaskManagement.Test
         {
             var rep = new MonitorRepository();
 
-            var monitor = rep.GetById(new Guid("EB67F08C-BB86-4890-BF9D-A97B00D3B903"));
+            var monitor = rep.GetById(new Guid("EAA1468C-1CA8-4CC9-A726-A8B700A345FE"));
             var monitorToRun = rep.GetByName(monitor.Name);
 
             monitorToRun.Run(monitor.Messengers);

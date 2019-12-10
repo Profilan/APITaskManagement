@@ -20,7 +20,9 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual decimal LengthMm { get; set; }              // VERPAK_LENGTE_mm
         public virtual decimal WidthMm { get; set; }               // VERPAK_BREEDTE_mm
         public virtual decimal VolumeM3 { get; set; }              // VOL_M3_VERP
-
+        public virtual decimal Quantity { get; set; }              // AANTAL_PAKKETTEN
+        public virtual string ShippingMethod2 { get; set; }        // SHIPPINGMETHOD2 
+        public virtual string Warehouse { get; set; }              // WAREHOUSE
         public virtual Product Product { get; set; }
 
         public Package()

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APITaskManagement.Logic.Schedulers.Task>
+﻿@model IEnumerable<APITaskManagement.Web.Models.TaskViewModel>
 
 @{
     ViewBag.Title = "Dashboard";
@@ -16,6 +16,9 @@
             </th>
             <th>
                 Enabled
+            </th>
+            <th>
+                #Queued
             </th>
             <th>
                 Last Run Time
@@ -40,6 +43,9 @@
                     {
                         <a><img class="enable-task" data-enabled="0" data-id="@item.Id" src="~/images/bullet_red.png" width="24" /></a>
                     }
+                </td>
+                <td class="queued" style="text-align: right;">
+                    @item.Queued
                 </td>
                 <td>
                     <span class="last-run-time">@item.LastRunTime.ToString("dd-MM-yyyy HH:mm:ss")</span>
@@ -106,6 +112,23 @@
     <script src="@System.Configuration.ConfigurationManager.AppSettings["HubConnectionUrl"]/signalr/hubs"></script>
     <!-- Verbinding met SignalR en bericht update -->
     <script type="text/javascript">
+
+        function refreshTasks() {
+            $.getJSON("/api/task")
+                .done(function (data) {
+                    $.each(data, function (idx, task) {
+                        $("#" + task.id).find(".queued").text(task.queued);
+                    });
+                }); 
+        }
+
+        function refreshTask(id) {
+            $.getJSON("/api/task/" + id)
+                .done(function (data) {                    
+                    $("#" + id).find(".queued").text(data.queued);                   
+                });
+        }
+
         $(function () {
 
             $('#detailsModal').on('show.bs.modal', function (event) {
@@ -115,13 +138,10 @@
 
                 $.getJSON("/api/task/" + id)
                     .done(function (data) {
-                        console.log(data);
-                        modal.find('.modal-title').text(data.Title);
-                        modal.find('.modal-body > p').text(data.LastRunDetails);
+                        
+                        modal.find('.modal-title').text(data.title);
+                        modal.find('.modal-body > p').text(data.last_run_details);
                     });
-
-
-
             });
 
             // De url definieren waar de service wordt uitgevoerd
@@ -189,6 +209,8 @@
                             type: notifyType
                         });
                 }
+
+                refreshTask(id);
             };
 
 
@@ -235,6 +257,8 @@
                     });
                 });
 
+                refreshTasks();
+                setInterval(refreshTasks, 60 * 1000);
             });
 
             $.connection.hub.stateChanged(function (state) {

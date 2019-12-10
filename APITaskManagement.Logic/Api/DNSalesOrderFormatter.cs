@@ -19,12 +19,15 @@ namespace APITaskManagement.Logic.Api
 
                 if (salesOrder != null && salesOrder.Lines.Count > 0)
                 {
+                    var deliveryDate = salesOrder.DeliveryDate.ToString("yyyy-MM-dd");
                     var salesOrderView = new DutchNedSalesOrder()
                     {
                         OrderNumber = salesOrder.OrderNumber,
                         OrderDate = salesOrder.OrderDate.ToString("yyyy-MM-dd"),
                         OrderReference = salesOrder.OrderReference,
                         DeliveryInstructions = salesOrder.DeliveryInstructions,
+                        DeliveryDate = deliveryDate == "0001-01-01" ? null : deliveryDate,
+                        PreferredDeliveryTimeSlot = salesOrder.PreferredDeliveryTimeSlot,
                         IsCombyOrder = salesOrder.IsCombyOrder,
                         MailCustomer = salesOrder.MailCustomer,
                         CustomerName = salesOrder.Customer.Name,
@@ -59,7 +62,8 @@ namespace APITaskManagement.Logic.Api
                             Warehouse = line.Warehouse.Trim(),
                             CashOnDelivery = line.CashOnDelivery,
                             IsReturn = line.IsReturn,
-                            PlanFromDate = line.PlanFromDate.ToString("yyyy-MM-dd")
+                            PlanFromDate = line.PlanFromDate.ToString("yyyy-MM-dd"),
+                            Type = line.Type
                         };
                         salesOrderView.Lines.Add(salesOrderLineView);
                     }

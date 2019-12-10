@@ -10,7 +10,9 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string OrderNumber { get; set; }
         public virtual DateTime OrderDate { get; set; }
         public virtual string OrderReference { get; set; }
+        public virtual DateTime DeliveryDate { get; set; }
         public virtual string DeliveryInstructions { get; set; }
+        public virtual string PreferredDeliveryTimeSlot { get; set; }
         public virtual bool IsCombyOrder { get; set; }
         public virtual bool MailCustomer { get; set; }
         public virtual DutchNedCustomer Customer { get; set; }

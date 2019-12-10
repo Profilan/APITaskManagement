@@ -26,7 +26,7 @@ namespace APITaskManagement.Logic.Logging
                 priority = ErrorType.ERR;
             }
 
-            var detail = "{\"request\": " + request.Body + ",\"response\":" + request.Response.Detail + "}";
+            var detail = "{\"key\": " + request.ReferenceId + ",\"request\": " + request.Body + ",\"response\":" + request.Response.Detail + "}";
             var message = request.Response.Code + " " + request.Response.Description;
             var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), url.Address, detail, false);
 
