@@ -108,7 +108,7 @@ namespace APITaskManagement.Logic.Api
                 {
                     if (request.Response.Code == 200)
                     {
-                        APITaskManagement.Logic.Api.Models.DutchNedSalesOrder salesOrder = JsonConvert.DeserializeObject<APITaskManagement.Logic.Api.Models.DutchNedSalesOrder>(request.Body);
+                        APITaskManagement.Logic.Api.Models.DutchNedSalesOrderDto salesOrder = JsonConvert.DeserializeObject<APITaskManagement.Logic.Api.Models.DutchNedSalesOrderDto>(request.Body);
 
                         foreach (var line in salesOrder.Lines)
                         {

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace APITaskManagement.Logic.Api.Models
 {
-    public class DutchNedSalesOrderLine
+    public class DutchNedSalesOrderLineDto
     {
         [JsonProperty("id")]
         public string Id { get; set; }

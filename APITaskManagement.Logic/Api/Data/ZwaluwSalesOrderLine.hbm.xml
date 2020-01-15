@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="ZwaluwSalesOrderLine" table="EEK_vw_DISTRIBUTION_SALESORDERLINES_ZWALUW">
+    <id name="OrderLineId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="OrderNumber"/>
+    <property name="OrderLineDescription"/>
+    <property name="MainItemQuantity"/>
+    <property name="Quantity"/>
+    <property name="DeliveryDate"/>
+    <property name="ItemMainItemCode"/>
+    <property name="ItemMainItemDescription"/>
+    <property name="ItemCode"/>
+    <property name="ItemDescription"/>
+    <property name="ItemSalesUnit"/>
+    <property name="ItemEANCode"/>
+    <property name="ItemBrand"/>
+    <property name="ItemProductGroup"/>
+    <property name="ItemColliUnit"/>
+    <property name="ItemSalesUnitsPerColli"/>
+    <property name="ItemVolume"/>
+    <property name="ItemWeight"/>
+    <property name="ItemHeight"/>
+    <property name="ItemLength"/>
+    <property name="ItemWidth"/>
+  </class>
+
+</hibernate-mapping>

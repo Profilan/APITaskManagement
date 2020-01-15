@@ -20,7 +20,7 @@ namespace APITaskManagement.Logic.Api
                 if (salesOrder != null && salesOrder.Lines.Count > 0)
                 {
                     var deliveryDate = salesOrder.DeliveryDate.ToString("yyyy-MM-dd");
-                    var salesOrderView = new DutchNedSalesOrder()
+                    var salesOrderView = new DutchNedSalesOrderDto()
                     {
                         OrderNumber = salesOrder.OrderNumber,
                         OrderDate = salesOrder.OrderDate.ToString("yyyy-MM-dd"),
@@ -50,7 +50,7 @@ namespace APITaskManagement.Logic.Api
 
                     foreach (var line in salesOrder.Lines)
                     {
-                        var salesOrderLineView = new APITaskManagement.Logic.Api.Models.DutchNedSalesOrderLine()
+                        var salesOrderLineView = new APITaskManagement.Logic.Api.Models.DutchNedSalesOrderLineDto()
                         {
                             Id = line.Id.ToString(),
                             CollectionDate = line.CollectionDate.ToString("yyyy-MM-dd"),

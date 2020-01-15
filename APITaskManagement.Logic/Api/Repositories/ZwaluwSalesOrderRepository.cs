@@ -6,21 +6,23 @@ using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace APITaskManagement.Logic.Api.Repositories
 {
-    public class DutchNedSalesOrderRepository : IRepository<DutchNedSalesOrder, int>
+    public class ZwaluwSalesOrderRepository : IRepository<ZwaluwSalesOrder, int>
     {
         public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public DutchNedSalesOrder GetById(int id)
+        public ZwaluwSalesOrder GetById(int id)
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var item = session.Get<DutchNedSalesOrder>(id);
+                var item = session.Get<ZwaluwSalesOrder>(id);
                 if (item != null)
                 {
                     NHibernateUtil.Initialize(item.Lines);
@@ -30,28 +32,28 @@ namespace APITaskManagement.Logic.Api.Repositories
             }
         }
 
-        public void Insert(DutchNedSalesOrder entity)
+        public void Insert(ZwaluwSalesOrder entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DutchNedSalesOrder> List(string sortOrder, string searchString, int pageSize, int pageNumber)
+        public IEnumerable<ZwaluwSalesOrder> List(string sortOrder, string searchString, int pageSize, int pageNumber)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DutchNedSalesOrder> List()
+        public IEnumerable<ZwaluwSalesOrder> List()
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var query = session.Query<DutchNedSalesOrder>()
+                var query = session.Query<ZwaluwSalesOrder>()
                     .FetchMany(x => x.Lines);
 
                 return query.ToList();
             }
         }
 
-        public void Update(DutchNedSalesOrder entity)
+        public void Update(ZwaluwSalesOrder entity)
         {
             throw new NotImplementedException();
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace APITaskManagement.Logic.Api.Models
 {
-    public class DutchNedSalesOrder
+    public class DutchNedSalesOrderDto
     {
         [JsonProperty("order_number")]
         public string OrderNumber { get; set; }
@@ -64,11 +64,11 @@ namespace APITaskManagement.Logic.Api.Models
         public DutchNedSender Sender { get; set; }
 
         [JsonProperty("order_lines")]
-        public IList<DutchNedSalesOrderLine> Lines { get; set; }
+        public IList<DutchNedSalesOrderLineDto> Lines { get; set; }
 
-        public DutchNedSalesOrder()
+        public DutchNedSalesOrderDto()
         {
-            Lines = new List<DutchNedSalesOrderLine>();
+            Lines = new List<DutchNedSalesOrderLineDto>();
         }
     }
 }

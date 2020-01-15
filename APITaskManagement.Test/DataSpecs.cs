@@ -44,6 +44,14 @@ namespace APITaskManagement.Test
         }
 
         [TestMethod]
+        public void ZwaluwSalesOrderGetById()
+        {
+            var rep = new ZwaluwSalesOrderRepository();
+
+            var item = rep.GetById(167214);
+        }
+
+        [TestMethod]
         public void InsertDutchNedInsertedOrderlinestatus()
         {
             DutchNedInsertedOrderlinestatusRepository dnRepo = new DutchNedInsertedOrderlinestatusRepository();

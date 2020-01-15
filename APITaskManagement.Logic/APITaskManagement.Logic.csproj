@@ -154,15 +154,20 @@
     <Compile Include="Api\Data\PostNLShipment.cs" />
     <Compile Include="Api\Data\PostNLMessage.cs" />
     <Compile Include="Api\Data\PostNLShipmentAddress.cs" />
+    <Compile Include="Api\Data\ZwaluwSalesOrder.cs" />
+    <Compile Include="Api\Data\ZwaluwSalesOrderLine.cs" />
     <Compile Include="Api\DNSalesOrderFormatter.cs" />
-    <Compile Include="Api\Models\DutchNedSalesOrder.cs" />
-    <Compile Include="Api\Models\DutchNedSalesOrderLine.cs" />
+    <Compile Include="Api\Models\DutchNedSalesOrderDto.cs" />
+    <Compile Include="Api\Models\DutchNedSalesOrderLineDto.cs" />
     <Compile Include="Api\Models\DutchNedSender.cs" />
+    <Compile Include="Api\Models\ZwaluwSalesOrderDto.cs" />
+    <Compile Include="Api\Models\ZwaluwSalesOrderLineDto.cs" />
     <Compile Include="Api\PostNLShipmentFormatter.cs" />
     <Compile Include="Api\Repositories\CashOnDeliveryOrderlineRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
     <Compile Include="Api\Repositories\PostNLRepository.cs" />
+    <Compile Include="Api\Repositories\ZwaluwSalesOrderRepository.cs" />
     <Compile Include="Common\DomainEvents.cs" />
     <Compile Include="Common\Entity.cs" />
     <Compile Include="Common\Enums.cs" />
@@ -306,6 +311,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Api\Data\DutchNedInsertedOrderlinestatus.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\ZwaluwSalesOrder.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\ZwaluwSalesOrderLine.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

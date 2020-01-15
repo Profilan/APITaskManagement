@@ -1,4 +1,7 @@
-﻿using APITaskManagement.Logic.Api.Interfaces;
+﻿using APITaskManagement.Logic.Api.Data;
+using APITaskManagement.Logic.Api.Interfaces;
+using APITaskManagement.Logic.Api.Models;
+using APITaskManagement.Logic.Api.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,76 +15,43 @@ using System.Web.Script.Serialization;
 
 namespace APITaskManagement.Logic.Api
 {
-    public class ZwaluwSalesOrder
-    {
-        public IList<ZwaluwSalesOrderHeader> SalesOrderHeaders;
-        public IList<ZwaluwSalesOrderLine> SalesOrderLines;
-
-        public ZwaluwSalesOrder()
-        {
-            SalesOrderHeaders = new List<ZwaluwSalesOrderHeader>();
-            SalesOrderLines = new List<ZwaluwSalesOrderLine>();
-        }
-    }
-
-    public class ZwaluwSalesOrderHeader
-    {
-        public int CustomerId;
-        public string DebtorName;
-        public string DebtorNumber;
-        public string DelAddress;
-        public string DelCity;
-        public string Carrier;
-        public string DelCountryCode;
-        public string DelZip;
-        public string Description;
-        public string OrderNumber;
-        public string Reference;
-        public int WarehouseId;
-        public string DeliveryNote;
-        public bool TestIndicator;
-        public string MainDebtorNumber;
-
-        public ZwaluwSalesOrderHeader()
-        {
-            
-        }
-    }
-
-    public class ZwaluwSalesOrderLine
-    {
-        public string OrderNumber;
-        public string OrderLineDescription;
-        public int MainItemQuantity;
-        public int Quantity;
-        public string DeliveryDate;
-        public int OrderLineId;
-        public string ItemMainItemCode;
-        public string ItemMainItemDescription;
-        public string ItemCode;
-        public string ItemDescription;
-        public string ItemSalesUnit;
-        public string ItemEANCode;
-        public string ItemBrand;
-        public string ItemProductGroup;
-        public string ItemColliUnit;
-        public float ItemSalesUnitsPerColli;
-        public float ItemVolume;
-        public float ItemWeight;
-        public float ItemHeight;
-        public float ItemLength;
-        public float ItemWidth;
-
-        public ZwaluwSalesOrderLine()
-        {
-
-        }
-    }
-
     public class ZwaluwSalesOrderFormatter : IContentFormatter
     {
+        private readonly ZwaluwSalesOrderRepository zwaluwSalesOrderRepository = new ZwaluwSalesOrderRepository();
+
         public string GetJsonContent(int key, IDictionary<string, string> properties)
         {
+            // Get the salesOrderHeader
+            var orderHeader = zwaluwSalesOrderRepository.GetById(key);
+
+            if (orderHeader != null)
+            {
+                if (orderHeader.DelZip == null)
+                {
+                    orderHeader.DelZip = "Unknown";
+                }
+
+                var salesOrderDto = new ZwaluwSalesOrderDto();
+                salesOrderDto.SalesOrderHeaders.Add(orderHeader);
+
+                foreach (var orderLine in orderHeader.Lines)
+                {
+                    if (orderLine.OrderLineDescription == null)
+                    {
+                        orderLine.OrderLineDescription = orderLine.ItemMainItemDescription;
+                    }
+
+                    salesOrderDto.SalesOrderLines.Add(orderLine);
+                }
+
+                return new JavaScriptSerializer().Serialize(salesOrderDto);
+            }
+            else
+            {
+                return null;
+            }
+
+            /*
             string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
 
             using (SqlConnection connection = new SqlConnection(connectionstring))
@@ -122,7 +92,7 @@ namespace APITaskManagement.Logic.Api
                     mainDebtorNumber = null;
                 }
 
-                var orderHeader = new ZwaluwSalesOrderHeader
+                var orderHeader = new Data.ZwaluwSalesOrder
                 {
                     CustomerId = Convert.ToInt32(salesOrderHeader["CustomerId"]),
                     DebtorName = (string)salesOrderHeader["DebtorName"],
@@ -247,10 +217,11 @@ namespace APITaskManagement.Logic.Api
 
                     salesOrder.SalesOrderLines.Add(orderLine);
                 }
+                */
 
-                return new JavaScriptSerializer().Serialize(salesOrder);
+            
                 
-            }
+            
         }
     }
 }
