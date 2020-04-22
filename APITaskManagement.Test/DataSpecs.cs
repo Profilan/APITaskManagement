@@ -1,6 +1,7 @@
 ﻿using System;
 using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Repositories;
+using APITaskManagement.Logic.Schedulers.Repositories;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,12 +19,45 @@ namespace APITaskManagement.Test
         }
 
         [TestMethod]
+        public void GetDeliveryDate()
+        {
+            var rep = new SissyboyRepository();
+
+            var item = rep.GetDeliveryDateById(1);
+        }
+
+        [TestMethod]
+        public void GetTrackAndTrace()
+        {
+            var rep = new SissyboyRepository();
+
+            var item = rep.GetTrackAndTraceById(1);
+        }
+
+        [TestMethod]
+        public void GetReadyForPickup()
+        {
+            var rep = new SissyboyRepository();
+
+            var item = rep.GetReadyForPickupById(1);
+        }
+
+        [TestMethod]
         public void GetByIdPostNL()
         {
             var item = postNLRepository.GetById(5);
 
             item.Should().NotBeNull();
         }
+
+        [TestMethod]
+        public void GetTasks()
+        {
+            var rep = new TaskRepository();
+
+            var items = rep.List();
+        }
+           
 
         [TestMethod]
         public void DutchNedSalesOrderList()

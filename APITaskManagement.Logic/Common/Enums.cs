@@ -35,7 +35,8 @@
         Basic = 1,
         OAuth2 = 2,
         Windows = 3,
-        ApiKey = 4
+        ApiKey = 4,
+        Header = 5
     }
 
     public enum TaskType

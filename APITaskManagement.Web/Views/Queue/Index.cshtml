@@ -88,7 +88,7 @@
                 $.each(data, function (idx, item) {
                     var row = $('<tr/>').attr('data-id', item.Id);
                     var key = $('<td/>').text(item.Key);
-                    var title = $('<td/>').text(item.Task.Title);
+                    var title = $('<td/>').text(item.Title);
                     var created = $('<td/>').text(item.SysCreated);
                     var count = $('<td/>').text(item.TryCount);
                     var linkDelete = $('<a/>').attr('href', '#').attr('data-id', item.Id).attr('data-toggle', 'modal').attr('data-target', '#deleteModal').text('Delete');

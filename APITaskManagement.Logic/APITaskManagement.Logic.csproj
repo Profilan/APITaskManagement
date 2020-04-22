@@ -44,6 +44,9 @@
     <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -137,7 +140,9 @@
   <ItemGroup>
     <Compile Include="Api\ApiDNSalesOrder.cs" />
     <Compile Include="Api\ApiPostNLShipment.cs" />
+    <Compile Include="Api\ApiSissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\CashOnDeliveryOrderline.cs" />
+    <Compile Include="Api\Data\SissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\DutchNedCustomer.cs" />
     <Compile Include="Api\Data\DutchNedInsertedOrderlinestatus.cs" />
     <Compile Include="Api\Data\DutchNedSalesOrder.cs" />
@@ -154,20 +159,33 @@
     <Compile Include="Api\Data\PostNLShipment.cs" />
     <Compile Include="Api\Data\PostNLMessage.cs" />
     <Compile Include="Api\Data\PostNLShipmentAddress.cs" />
+    <Compile Include="Api\Data\SissyboyReadyForPickup.cs" />
+    <Compile Include="Api\Data\SissyboyTrackAndTrace.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrder.cs" />
+    <Compile Include="Api\Data\ZwaluwSalesOrderHeader.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderLine.cs" />
-    <Compile Include="Api\DNSalesOrderFormatter.cs" />
+    <Compile Include="Api\Formatters\DNSalesOrderFormatter.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderDto.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderLineDto.cs" />
     <Compile Include="Api\Models\DutchNedSender.cs" />
+    <Compile Include="Api\Models\SissyboyDeliveryDateDto.cs" />
+    <Compile Include="Api\Models\SissyboyReadyForPickupDto.cs" />
+    <Compile Include="Api\Models\SissyboyTrackAndTraceDto.cs" />
     <Compile Include="Api\Models\ZwaluwSalesOrderDto.cs" />
+    <Compile Include="Api\Models\ZwaluwSalesOrderHeaderDto.cs" />
     <Compile Include="Api\Models\ZwaluwSalesOrderLineDto.cs" />
-    <Compile Include="Api\PostNLShipmentFormatter.cs" />
+    <Compile Include="Api\Formatters\PostNLShipmentFormatter.cs" />
     <Compile Include="Api\Repositories\CashOnDeliveryOrderlineRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
     <Compile Include="Api\Repositories\PostNLRepository.cs" />
+    <Compile Include="Api\Repositories\SissyboyRepository.cs" />
     <Compile Include="Api\Repositories\ZwaluwSalesOrderRepository.cs" />
+    <Compile Include="Api\ApiSissyboyReadyForPickup.cs" />
+    <Compile Include="Api\ApiSissyboyTrackAndTrace.cs" />
+    <Compile Include="Api\Formatters\SissyboyDeliveryDateFormatter.cs" />
+    <Compile Include="Api\Formatters\SissyboyReadyForPickupFormatter.cs" />
+    <Compile Include="Api\Formatters\SissyboyTrackAndTraceFormatter.cs" />
     <Compile Include="Common\DomainEvents.cs" />
     <Compile Include="Common\Entity.cs" />
     <Compile Include="Common\Enums.cs" />
@@ -223,8 +241,8 @@
     <Compile Include="Monitoring\TaskScheduler.cs" />
     <Compile Include="Monitoring\UrlMonitor.cs" />
     <Compile Include="Api\DecimalFormatConverter.cs" />
-    <Compile Include="Api\DutchNedSalesorderFormatter.cs" />
-    <Compile Include="Api\HelloDialogEmailFormatter.cs" />
+    <Compile Include="Api\Formatters\DutchNedSalesorderFormatter.cs" />
+    <Compile Include="Api\Formatters\HelloDialogEmailFormatter.cs" />
     <Compile Include="Api\Interfaces\IContentFormatter.cs" />
     <Compile Include="Api\Interfaces\IApi.cs" />
     <Compile Include="Api\Api.cs" />
@@ -242,8 +260,8 @@
     <Compile Include="Common\Data\Queue.cs" />
     <Compile Include="Api\ApiZwaluwCrossdock.cs" />
     <Compile Include="Api\ApiZwaluwSalesorder.cs" />
-    <Compile Include="Api\ZwaluwCrossdockFormatter.cs" />
-    <Compile Include="Api\ZwaluwSalesOrderFormatter.cs" />
+    <Compile Include="Api\Formatters\ZwaluwCrossdockFormatter.cs" />
+    <Compile Include="Api\Formatters\ZwaluwSalesOrderFormatter.cs" />
     <Compile Include="Common\Repositories\QueueRepository.cs" />
     <Compile Include="Schedulers\APITask.cs" />
     <Compile Include="Schedulers\ApplicationEvents\TaskFinishedEvent.cs" />
@@ -251,6 +269,7 @@
     <Compile Include="Schedulers\Authentication.cs" />
     <Compile Include="Schedulers\Data\IScheduleRepository.cs" />
     <Compile Include="Schedulers\FILETask.cs" />
+    <Compile Include="Schedulers\HttpHeader.cs" />
     <Compile Include="Schedulers\Interfaces\ITask.cs" />
     <Compile Include="Schedulers\MAILTask.cs" />
     <Compile Include="Management\Repositories\LogRepository.cs" />
@@ -271,6 +290,7 @@
     <Compile Include="Schedulers\Status.cs" />
     <Compile Include="Schedulers\Task.cs" />
     <Compile Include="Schedulers\Repositories\TaskRepository.cs" />
+    <Compile Include="Services\LogService.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\Initer.cs" />
     <Compile Include="Utils\SessionFactory.cs" />
@@ -291,6 +311,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Schedulers\HttpHeader.hbm.xml" />
     <EmbeddedResource Include="Mailer\Data\Pos.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\Image.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\Package.hbm.xml">
@@ -311,8 +332,11 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Api\Data\DutchNedInsertedOrderlinestatus.hbm.xml" />
-    <EmbeddedResource Include="Api\Data\ZwaluwSalesOrder.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\ZwaluwSalesOrderHeader.hbm.xml" />
     <EmbeddedResource Include="Api\Data\ZwaluwSalesOrderLine.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\SissyboyDeliveryDate.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\SissyboyReadyForPickup.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\SissyboyTrackAndTrace.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

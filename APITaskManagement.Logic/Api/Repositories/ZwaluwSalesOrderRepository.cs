@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 
 namespace APITaskManagement.Logic.Api.Repositories
 {
-    public class ZwaluwSalesOrderRepository : IRepository<ZwaluwSalesOrder, int>
+    public class ZwaluwSalesOrderRepository : IRepository<ZwaluwSalesOrderHeader, int>
     {
         public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public ZwaluwSalesOrder GetById(int id)
+        public ZwaluwSalesOrderHeader GetById(int id)
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var item = session.Get<ZwaluwSalesOrder>(id);
+                var item = session.Get<ZwaluwSalesOrderHeader>(id);
                 if (item != null)
                 {
                     NHibernateUtil.Initialize(item.Lines);
@@ -32,28 +32,28 @@ namespace APITaskManagement.Logic.Api.Repositories
             }
         }
 
-        public void Insert(ZwaluwSalesOrder entity)
+        public void Insert(ZwaluwSalesOrderHeader entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ZwaluwSalesOrder> List(string sortOrder, string searchString, int pageSize, int pageNumber)
+        public IEnumerable<ZwaluwSalesOrderHeader> List(string sortOrder, string searchString, int pageSize, int pageNumber)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ZwaluwSalesOrder> List()
+        public IEnumerable<ZwaluwSalesOrderHeader> List()
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var query = session.Query<ZwaluwSalesOrder>()
+                var query = session.Query<ZwaluwSalesOrderHeader>()
                     .FetchMany(x => x.Lines);
 
                 return query.ToList();
             }
         }
 
-        public void Update(ZwaluwSalesOrder entity)
+        public void Update(ZwaluwSalesOrderHeader entity)
         {
             throw new NotImplementedException();
         }

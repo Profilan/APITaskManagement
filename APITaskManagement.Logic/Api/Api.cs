@@ -73,6 +73,11 @@ namespace APITaskManagement.Logic.Api
                         client.DefaultRequestHeaders.Add("apikey", task.Authentication.ApiKey);
                         break;
                 }
+                // Add headers
+                foreach (var header in task.HttpHeaders)
+                {
+                    client.DefaultRequestHeaders.Add(header.Name, header.Value);
+                }
 
                 Requests = GetRequestsForTask(task.Id);
 
@@ -93,7 +98,6 @@ namespace APITaskManagement.Logic.Api
                                         break;
                                     case Common.HttpMethod.Post:
                                         responseMessage = client.PostAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
-
                                         break;
                                     case Common.HttpMethod.Put:
                                         responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;

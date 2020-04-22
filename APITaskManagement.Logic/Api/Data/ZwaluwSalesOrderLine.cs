@@ -32,7 +32,7 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual float ItemWidth{ get; set; }
 
         [JsonIgnore]
-        public virtual ZwaluwSalesOrder SalesOrder { get; set; }
+        public virtual ZwaluwSalesOrderHeader SalesOrder { get; set; }
 
         public ZwaluwSalesOrderLine()
         {

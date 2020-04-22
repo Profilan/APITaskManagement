@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using APITaskManagement.Logic.Api.Data;
+using APITaskManagement.Logic.Api.Formatters;
 using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Common.Repositories;
 using APITaskManagement.Logic.Schedulers;

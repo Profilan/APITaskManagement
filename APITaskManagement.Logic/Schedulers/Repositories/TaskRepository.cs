@@ -10,6 +10,7 @@ using System.Text;
 using System.Net.Http.Headers;
 using System.Data;
 using System.Data.SqlClient;
+using NHibernate.Linq;
 
 namespace APITaskManagement.Logic.Schedulers.Repositories
 {
@@ -25,6 +26,10 @@ namespace APITaskManagement.Logic.Schedulers.Repositories
             using (ISession session = SessionFactory.GetNewSession())
             {
                 var task = session.Get<Task>(id);
+                if (task != null)
+                {
+                    NHibernateUtil.Initialize(task.HttpHeaders);
+                }
                 return task;
             }
         }
@@ -64,10 +69,9 @@ namespace APITaskManagement.Logic.Schedulers.Repositories
             
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var query = from l in session.Query<Task>()
-                            select l;
-
-                query = query.OrderBy(l => l.Title);
+                var query = session.Query<Task>()
+                    .FetchMany(x => x.HttpHeaders)
+                    .OrderBy(x => x.Title);
 
                 return query.ToList();
                

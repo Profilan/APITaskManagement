@@ -1,0 +1,84 @@
+14:20:28.655 [5] DEBUG NHibernate.SQL - 
+    SELECT
+        task0_.Id as id1_1_1_,
+        task0_.Title as title3_1_1_,
+        task0_.ScheduleId as scheduleid4_1_1_,
+        task0_.TaskType as tasktype5_1_1_,
+        task0_.Enabled as enabled6_1_1_,
+        task0_.LastRunResult as lastrunresult7_1_1_,
+        task0_.LastRunTime as lastruntime8_1_1_,
+        task0_.LastRunDetails as lastrundetails9_1_1_,
+        task0_.MaxErrors as maxerrors10_1_1_,
+        task0_.TotalProcessedItems as totalprocesseditems11_1_1_,
+        task0_.Active as active12_1_1_,
+        task0_.DiskClassname as diskclassname13_1_1_,
+        task0_.DiskContentFormats as diskcontentformats14_1_1_,
+        task0_.SPLogger as splogger15_1_1_,
+        task0_.Username as username16_1_1_,
+        task0_.Password as password17_1_1_,
+        task0_.AuthenticationType as authenticationtype18_1_1_,
+        task0_.Scope as scope19_1_1_,
+        task0_.GrantType as granttype20_1_1_,
+        task0_.OAuthUrl as oauthurl21_1_1_,
+        task0_.ApiKey as apikey22_1_1_,
+        task0_.StatusCode as statuscode23_1_1_,
+        task0_.StatusDescription as statusdescription24_1_1_,
+        task0_.Interval as interval25_1_1_,
+        task0_.QueueName as queuename26_1_1_,
+        task0_.HttpMethod as httpmethod27_1_1_,
+        task0_.UrlId as urlid28_1_1_,
+        task0_.MailSender as mailsender29_1_1_,
+        task0_.MailRecipient as mailrecipient30_1_1_,
+        task0_.Type as type2_1_1_,
+        url1_.Id as id1_22_0_,
+        url1_.Name as name2_22_0_,
+        url1_.Address as address3_22_0_,
+        url1_.ExternalUrl as externalurl4_22_0_,
+        url1_.InactivityTimeout as inactivitytimeout5_22_0_,
+        url1_.MonitorInactivity as monitorinactivity6_22_0_ 
+    FROM
+        EEK_API_TASK task0_ 
+    left outer join
+        EEK_API_URLS url1_ 
+            on task0_.UrlId=url1_.Id 
+    WHERE
+        task0_.Id=@p0;
+    @p0 = 40402739-879e-40cb-9109-a99e008eb4cc [Type: Guid (0:0:0)]
+14:20:28.666 [5] DEBUG NHibernate.SQL - 
+    SELECT
+        httpheader0_.TaskId as taskid4_3_1_,
+        httpheader0_.Id as id1_3_1_,
+        httpheader0_.Id as id1_3_0_,
+        httpheader0_.Name as name2_3_0_,
+        httpheader0_.Value as value3_3_0_,
+        httpheader0_.TaskId as taskid4_3_0_ 
+    FROM
+        EEK_API_TASK_HEADERS httpheader0_ 
+    WHERE
+        httpheader0_.TaskId=@p0;
+    @p0 = 40402739-879e-40cb-9109-a99e008eb4cc [Type: Guid (0:0:0)]
+14:20:28.673 [5] DEBUG NHibernate.SQL - 
+    SELECT
+        url0_.Id as id1_22_0_,
+        url0_.Name as name2_22_0_,
+        url0_.Address as address3_22_0_,
+        url0_.ExternalUrl as externalurl4_22_0_,
+        url0_.InactivityTimeout as inactivitytimeout5_22_0_,
+        url0_.MonitorInactivity as monitorinactivity6_22_0_ 
+    FROM
+        EEK_API_URLS url0_ 
+    WHERE
+        url0_.Id=@p0;
+    @p0 = 45 [Type: Int32 (0:0:0)]
+14:20:36.810 [5] DEBUG NHibernate.SQL - 
+    INSERT 
+    INTO
+        EEK_API_TASK_HEADERS
+        (Name, Value, TaskId) 
+    VALUES
+        (@p0, @p1, @p2);
+    select
+        SCOPE_IDENTITY();
+    @p0 = 'Token' [Type: String (4000:0:0)],
+    @p1 = 'dfdfdf' [Type: String (4000:0:0)],
+    @p2 = 40402739-879e-40cb-9109-a99e008eb4cc [Type: Guid (0:0:0)]

@@ -8,8 +8,10 @@ namespace APITaskManagement.Web.Models
 {
     public class QueueViewModel
     {
-        public virtual int Key { get; set; }
-        public virtual int TryCount { get; set; }
-        public virtual Task Task { get; set; }
+        public int Id { get; set; }
+        public int Key { get; set; }
+        public int TryCount { get; set; }
+        public string Title { get; set; }
+        public DateTime SysCreated { get; set; }
     }
 }

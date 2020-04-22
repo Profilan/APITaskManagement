@@ -49,6 +49,11 @@
       <many-to-one name="Url" class="APITaskManagement.Logic.Management.Url">
         <column name="UrlId" not-null="true" />
       </many-to-one>
+
+      <set name="HttpHeaders" table="EEK_API_TASK_HEADERS" cascade="all-delete-orphan" inverse="true">
+        <key column="TaskId"/>
+        <one-to-many class="HttpHeader"/>
+      </set>
     </subclass>
 
     <subclass name="FILETask" discriminator-value="FILE">

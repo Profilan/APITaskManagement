@@ -38,6 +38,11 @@ namespace APITaskManagement.Web.Models
         [Display(Name = "Api Key")]
         public string ApiKey { get; set; }
 
+
+        [Display(Name = "Http Headers")]
+        public IEnumerable<HttpHeader> Headers { get; set; }
+
+
         [Required]
         public int Amount { get; set; }
 

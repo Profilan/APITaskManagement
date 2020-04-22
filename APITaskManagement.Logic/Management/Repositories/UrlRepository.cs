@@ -25,6 +25,28 @@ namespace APITaskManagement.Logic.Management.Repositories
             }
         }
 
+        public Url GetByName(string name)
+        {
+            using (ISession session = SessionFactory.GetNewSession())
+            {
+                var query = from u in session.Query<Url>()
+                            select u;
+
+                query = query.Where(u => u.Name == name);
+
+                var users = query.ToList();
+
+                if (users.Count > 0)
+                {
+                    return query.ToList().Last();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public void Insert(Url entity)
         {
             using (ISession session = SessionFactory.GetNewSession())

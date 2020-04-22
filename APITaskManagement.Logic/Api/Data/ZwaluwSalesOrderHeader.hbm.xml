@@ -2,8 +2,8 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    namespace="APITaskManagement.Logic.Api.Data"
                    assembly="APITaskManagement.Logic">
-  <class name="ZwaluwSalesOrder" table="EEK_vw_DISTRIBUTION_SALESORDERHEADERS_ZWALUW">
-    <id name="Id" column="SalesOrderHeaderId">
+  <class name="ZwaluwSalesOrderHeader" table="EEK_vw_DISTRIBUTION_SALESORDERHEADERS_ZWALUW">
+    <id name="SalesOrderHeaderId">
       <generator class="identity"/>
     </id>
 

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="SissyboyTrackAndTrace" table="EEK_vw_SissyBoy_TrackTraceUrl">
+    <id name="Id" column="SissyBoyId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="PoNumber"/>
+    <property name="TrackingUrl" column="trackTraceUrl"/>
+  </class>
+
+</hibernate-mapping>

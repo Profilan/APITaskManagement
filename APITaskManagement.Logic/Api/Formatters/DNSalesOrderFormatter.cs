@@ -5,7 +5,7 @@ using APITaskManagement.Logic.Api.Models;
 using APITaskManagement.Logic.Api.Repositories;
 using Newtonsoft.Json;
 
-namespace APITaskManagement.Logic.Api
+namespace APITaskManagement.Logic.Api.Formatters
 {
     public class DNSalesOrderFormatter : IContentFormatter
     {

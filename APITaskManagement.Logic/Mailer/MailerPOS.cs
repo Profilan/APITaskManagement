@@ -47,6 +47,10 @@ namespace APITaskManagement.Logic.Mailer
                         var response = new Response();
 
                         var result = formatter.getContent(item.Key);
+                        if (result.Count == 0)
+                        {
+                            break;
+                        }
 
                         lines.Add("");
                         lines.Add("NBG:" + nbg);

@@ -3,6 +3,7 @@ using APITaskManagement.Logic.Schedulers;
 using System.Configuration;
 using System;
 using APITaskManagement.Logic.Common.Repositories;
+using APITaskManagement.Logic.Api.Formatters;
 
 namespace APITaskManagement.Logic.Api
 {

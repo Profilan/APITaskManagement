@@ -51,6 +51,7 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual decimal WidthMm { get; set; }                    // VERPAK_BREEDTE_mm
         public virtual decimal VolumeM3 { get; set; }                   // VOL_M3_VERP
         public virtual string Warehouse { get; set; }                   // WAREHOUSE
+        public virtual string ProductManual { get; set; }               // ProductManual
         public Product()
         {
             

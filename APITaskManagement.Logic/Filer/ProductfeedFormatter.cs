@@ -106,6 +106,7 @@ namespace APITaskManagement.Logic.Filer
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ConsumerPriceISE", string.Empty)).AppendChild(doc.CreateTextNode((product.ConsumerPriceISE.ToString(new CultureInfo("en-US")))));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ConsumerPriceFromISE", string.Empty)).AppendChild(doc.CreateTextNode((product.ConsumerPriceFromISE.ToString(new CultureInfo("en-US")))));
                 xmlProduct.AppendChild(doc.CreateElement(string.Empty, "Warehouse", string.Empty)).AppendChild(doc.CreateTextNode((product.Warehouse)));
+                xmlProduct.AppendChild(doc.CreateElement(string.Empty, "ProductManual", string.Empty)).AppendChild(doc.CreateTextNode((product.ProductManual)));
                 XmlElement xmlPackages = doc.CreateElement(string.Empty, "Packages", string.Empty);
                 xmlProduct.AppendChild(xmlPackages);
                 if (product.QtyPackages > 1)

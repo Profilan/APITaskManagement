@@ -1,5 +1,6 @@
 ﻿using APITaskManagement.Logic.Common.Data;
 using APITaskManagement.Logic.Common.Repositories;
+using APITaskManagement.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,24 @@ namespace APITaskManagement.Web.Controllers.Api
         }
 
         // GET: api/Queue
-        public IEnumerable<Queue> Get()
+        public IHttpActionResult Get()
         {
             var items = queueRepository.List();
 
-            return items;
+            List<QueueViewModel> queueItems = new List<QueueViewModel>();
+            foreach (var item in items)
+            {
+                queueItems.Add(new QueueViewModel()
+                {
+                    Id = item.Id,
+                    Key = item.Key,
+                    Title = item.Task.Title,
+                    SysCreated = item.SysCreated,
+                    TryCount = item.TryCount
+                });
+            }
+
+            return Ok(queueItems);
         }
 
         // GET: api/Queue/5

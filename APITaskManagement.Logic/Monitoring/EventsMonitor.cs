@@ -4,6 +4,7 @@ using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Management.Repositories;
 using APITaskManagement.Logic.Monitoring.ApplicationEvents;
 using APITaskManagement.Logic.Monitoring.Interfaces;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,8 @@ namespace APITaskManagement.Logic.Monitoring
 
             try
             {
-                var logs = _logRepository.List(start, end, ErrorType.ERR);
-
+                // var logs = _logRepository.List(start, end, ErrorType.ERR);
+                var logs = APITaskMonitor.Services.LogService.ListByUrlAndStatus(start, end, ErrorType.ERR);
                 if (logs.Count() > 0)
                 {
                     var errorDetectedEvent = new ErrorDetectedEvent(this);

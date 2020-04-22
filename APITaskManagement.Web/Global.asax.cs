@@ -9,6 +9,7 @@ using System.Web.Routing;
 
 namespace APITaskManagement.Web
 {
+
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
@@ -19,6 +20,7 @@ namespace APITaskManagement.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
+
         }
     }
 }

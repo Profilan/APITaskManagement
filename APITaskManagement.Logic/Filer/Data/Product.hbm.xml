@@ -49,6 +49,7 @@
     <property name="VolumeM3" column="VOL_M3_VERP" precision="18" scale="2"/>
     <property name="Condition" column="Condition"/>
     <property name="Warehouse" column="WAREHOUSE"/>
+    <property name="ProductManual"/>
     
   </class>
 </hibernate-mapping>

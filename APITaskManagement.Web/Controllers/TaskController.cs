@@ -235,7 +235,8 @@ namespace APITaskManagement.Web.Controllers
                 SelectedShares = task.Shares,
                 SPLogger = task.SPLogger,
                 ApiKey = apiKey,
-                TotalProcessedItems = task.TotalProcessedItems
+                TotalProcessedItems = task.TotalProcessedItems,
+                Headers = task.HttpHeaders
             };
             try
             {
@@ -275,39 +276,38 @@ namespace APITaskManagement.Web.Controllers
 
         // POST: Task/Edit/{guid}
         [HttpPost]
-        public ActionResult Edit(Guid id, FormCollection collection)
+        public ActionResult Edit(Guid id, TaskViewModel data)
         {
             try
             {
                 var task = _taskRepository.GetById(id);
-                var url = _urlRepository.GetById(Convert.ToInt32(collection["UrlId"]));
+                var url = _urlRepository.GetById(data.UrlId);
 
-                task.Title = collection["Title"];
+                task.Title = data.Title;
 
-                task.HttpMethod = (HttpMethod)Enum.Parse(typeof(HttpMethod), collection["HttpMethod"]);
+                task.HttpMethod = data.HttpMethod;
                 task.Url = url;
 
                 Interval interval = new Interval(
-                     Convert.ToInt32(collection["Amount"]),
-                     (Unit)Enum.Parse(typeof(Unit), collection["Unit"]));
+                     data.Amount, data.Unit);
 
                 task.Interval = interval;
 
-                Authentication authentication = new Authentication(collection["Username"],
-                    collection["Password"],
-                    (AuthenticationType)Enum.Parse(typeof(AuthenticationType), collection["AuthenticationType"]),
-                    collection["Scope"],
-                    collection["GrantType"],
-                    collection["OAuthUrl"]);
-                authentication.ApiKey = collection["ApiKey"];
+                Authentication authentication = new Authentication(data.Username,
+                    data.Password,
+                    data.AuthenticationType,
+                    data.Scope,
+                    data.GrantType,
+                    data.OAuthUrl);
+                authentication.ApiKey = data.ApiKey;
 
                 task.Authentication = authentication;
-                task.MaxErrors = Convert.ToInt32(collection["MaxErrors"]);
-                task.TotalProcessedItems = Convert.ToInt32(collection["TotalProcessedItems"]);
-                task.TaskType = (TaskType)Enum.Parse(typeof(TaskType), collection["TaskType"]);
+                task.MaxErrors = data.MaxErrors;
+                task.TotalProcessedItems = data.TotalProcessedItems;
+                task.TaskType = data.TaskType;
                 // task.Disk.UNCPath = collection["DiskUNCPath"];
-                task.Classname = collection["Classname"];
-                task.ContentFormats = String.Join(";", collection["SelectedFormats"]);
+                task.Classname = data.Classname;
+                task.ContentFormats = String.Join(";", data.SelectedFormats);
 
                 string spLogger;
                 try
@@ -322,20 +322,30 @@ namespace APITaskManagement.Web.Controllers
                 try
                 {
                     task.Shares.Clear();
-                    var selectedShares = collection["SelectedShares"].Split(',');
-                    foreach (var shareId in selectedShares)
-                    {
-                        var share = _shareRepository.GetById(Convert.ToInt32(shareId));
-                        task.Shares.Add(share);
-                    }
+                    var selectedShares = data.SelectedShares;
+                    
                 }
-                catch (Exception)
+                catch
                 {
 
                 }
 
-                task.MailSender = collection["MailSender"];
-                task.MailRecipient = collection["MailRecipient"];
+                task.MailSender = data.MailSender;
+                task.MailRecipient = data.MailRecipient;
+
+                try
+                {
+                    // task.HttpHeaders.Clear();
+                    foreach (var header in data.Headers)
+                    {
+                        task.AddHeader(new HttpHeader(header.Name, header.Value));
+                    }
+                    
+                }
+                catch
+                {
+
+                }
 
                 _taskRepository.Update(task);
 

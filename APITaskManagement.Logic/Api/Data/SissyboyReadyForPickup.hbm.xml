@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="SissyboyReadyForPickup" table="EEK_vw_SissyBoy_ReadyForPickup">
+    <id name="Id" column="SissyBoyId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="PoNumber"/>
+  </class>
+
+</hibernate-mapping>

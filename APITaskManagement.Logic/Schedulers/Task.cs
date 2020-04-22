@@ -48,6 +48,8 @@ namespace APITaskManagement.Logic.Schedulers
 
         public virtual ISet<Share> Shares { get; set; }
 
+        public virtual ISet<HttpHeader> HttpHeaders { get; set; }
+
         #region More Properties
 
         // Not persisted
@@ -58,6 +60,7 @@ namespace APITaskManagement.Logic.Schedulers
         public Task()
         {
             Shares = new HashSet<Share>();
+            HttpHeaders = new HashSet<HttpHeader>();
         }
 
         public Task(string title,
@@ -151,6 +154,11 @@ namespace APITaskManagement.Logic.Schedulers
         public virtual void Send()
         {
 
+        }
+        public virtual void AddHeader(HttpHeader header)
+        {
+            header.Task = this;
+            HttpHeaders.Add(header);
         }
     }
 }

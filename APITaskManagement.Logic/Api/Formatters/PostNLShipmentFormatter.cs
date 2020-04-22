@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
-namespace APITaskManagement.Logic.Api
+namespace APITaskManagement.Logic.Api.Formatters
 {
     public class PostNLShipmentFormatter : IContentFormatter
     {
