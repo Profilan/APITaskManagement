@@ -13,5 +13,7 @@
         //public virtual string ServiceEmail { get; set; }
         //public virtual string ServicePhoneNumber { get; set; }
         public virtual string LogoUrl { get; set; }
+
+        public virtual string CCMailAddress { get; set; }
     }
 }

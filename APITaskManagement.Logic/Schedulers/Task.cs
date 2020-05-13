@@ -84,6 +84,7 @@ namespace APITaskManagement.Logic.Schedulers
             TotalProcessedItems = totalProcessedItems;
 
             Shares = new HashSet<Share>();
+            HttpHeaders = new HashSet<HttpHeader>();
         }
 
         public virtual void Start()

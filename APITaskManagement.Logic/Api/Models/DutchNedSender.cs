@@ -37,5 +37,8 @@ namespace APITaskManagement.Logic.Api.Models
 
         [JsonProperty("logo_url")]
         public string LogoUrl { get; set; }
+
+        [JsonProperty("cc_email")]
+        public string CCMailAddress { get; set; }
     }
 }

@@ -30,6 +30,7 @@
     <component name="Sender">
       <property name="Name" column="SenderName" not-null="true"/>
       <property name="LogoUrl" column="SenderLogoUrl"/>
+      <property name="CCMailAddress" column="CCMailaddress"/>
     </component>
 
     <set name="Lines" table="EEK_vw_DISTRIBUTION_DUTCHNED_SALESORDERLINES" cascade="all-delete-orphan" inverse="true" lazy="false">

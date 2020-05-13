@@ -43,8 +43,8 @@ namespace APITaskManagement.Logic.Api.Formatters
                         Sender = new DutchNedSender()
                         {
                             Name = salesOrder.Sender.Name,
-                            LogoUrl = salesOrder.Sender.LogoUrl
-                            
+                            LogoUrl = salesOrder.Sender.LogoUrl,
+                            CCMailAddress = salesOrder.Sender.CCMailAddress
                         },
                     };
 
