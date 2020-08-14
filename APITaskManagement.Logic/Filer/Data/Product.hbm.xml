@@ -32,6 +32,7 @@
     <property name="QtyPackages" column="AANTAL_PAKKETTEN"/>
     <property name="OrderingQty" column="COMMERCIELEBE" precision="18" scale="2"/>
     <property name="FreeStockQty" column="VrijeVoorraad" precision="18" scale="2"/>
+    <property name="FreeStockQtyChannelEngine" column="VrijeVoorraadChannelEngine" precision="18" scale="2"/>
     <property name="AssemblyRequired" column="ASSEMBLY_REQUIRED"/>
     <property name="CountryOfOrigin" column="COUNTRY_OF_ORIGIN"/>
     <property name="IntrastatCode" column="INTRASTAT_CODE"/>

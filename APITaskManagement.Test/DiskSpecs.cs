@@ -17,12 +17,22 @@ namespace APITaskManagement.Test
         private readonly ProductRepository productRepository;
         private readonly ImageRepository imageRepository;
         private readonly PackageRepository packageRepository;
+        private readonly EazystockForecastRepository eazystockForecastRepository;
 
         public DiskSpecs()
         {
             productRepository = new ProductRepository();
             imageRepository = new ImageRepository();
             packageRepository = new PackageRepository();
+            eazystockForecastRepository = new EazystockForecastRepository();
+        }
+
+        [TestMethod]
+        public void ListEazystock()
+        {
+            var items = eazystockForecastRepository.List();
+
+            items.Should().NotBeNullOrEmpty();
         }
 
         [TestMethod]

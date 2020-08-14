@@ -34,6 +34,7 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual int QtyPackages { get; set; }                    // AANTAL_PAKKETTEN
         public virtual decimal OrderingQty { get; set; }                // COMMERCIELEBE
         public virtual decimal FreeStockQty { get; set; }               // VrijeVoorraad
+        public virtual decimal FreeStockQtyChannelEngine { get; set; }  // VrijeVoorraadChannelEngine
         public virtual bool AssemblyRequired { get; set; }              // ASSEMBLY_REQUIRED
         public virtual string CountryOfOrigin { get; set; }             // COUNTRY_OF_ORIGIN
         public virtual string IntrastatCode { get; set; }               // INTRASTAT_CODE

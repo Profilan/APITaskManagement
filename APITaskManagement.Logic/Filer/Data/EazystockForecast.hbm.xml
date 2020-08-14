@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="EazystockForecast" table="EEK_EAZYSTOCK_FORECAST">
+    <id name="Id">
+      <generator class="guid.comb"/>
+    </id>
+
+    <property name="Rowtransactiontype"/>
+    <property name="Itemcode"/>
+    <property name="Prefix"/>
+    <property name="Warehousecode"/>
+    <property name="Warehousegroupcode"/>
+    <property name="Period"/>
+    <property name="ForecastAdjustmentType"/>
+    <property name="Extractiondate"/>
+    <property name="AdjustmentValueType"/>
+    <property name="AdjustmentValue" precision="18" scale="2"/>
+    <property name="ExcludeDemand"/>
+    <property name="Comment"/>
+  </class>
+</hibernate-mapping>

@@ -138,10 +138,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiDHLDeliveries.cs" />
     <Compile Include="Api\ApiDNSalesOrder.cs" />
     <Compile Include="Api\ApiPostNLShipment.cs" />
     <Compile Include="Api\ApiSissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\CashOnDeliveryOrderline.cs" />
+    <Compile Include="Api\Data\DHLDeliveryHeader.cs" />
+    <Compile Include="Api\Data\DHLDeliveryLine.cs" />
     <Compile Include="Api\Data\SissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\DutchNedCustomer.cs" />
     <Compile Include="Api\Data\DutchNedInsertedOrderlinestatus.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Api\Data\ZwaluwSalesOrder.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderHeader.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderLine.cs" />
+    <Compile Include="Api\Formatters\DHLDeliveriesFormatter.cs" />
     <Compile Include="Api\Formatters\DNSalesOrderFormatter.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderDto.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderLineDto.cs" />
@@ -190,16 +194,20 @@
     <Compile Include="Common\Entity.cs" />
     <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\Interfaces\IApplicationEvent.cs" />
+    <Compile Include="Filer\Data\EazystockForecast.cs" />
     <Compile Include="Filer\Data\Share.cs" />
     <Compile Include="Filer\Data\Image.cs" />
     <Compile Include="Filer\Data\Package.cs" />
     <Compile Include="Filer\Data\Product.cs" />
+    <Compile Include="Filer\EazystockForecastFormatter.cs" />
     <Compile Include="Filer\FilerAbstract.cs" />
+    <Compile Include="Filer\FilerEazystockForecast.cs" />
     <Compile Include="Filer\FilerFormatterAbstract.cs" />
     <Compile Include="Filer\FilerProductfeed.cs" />
     <Compile Include="Filer\Interfaces\IFiler.cs" />
     <Compile Include="Filer\Interfaces\IFilerFormatter.cs" />
     <Compile Include="Filer\ProductfeedFormatter.cs" />
+    <Compile Include="Filer\Repositories\EazystockForecastRepository.cs" />
     <Compile Include="Filer\Repositories\ImageRepository.cs" />
     <Compile Include="Filer\Repositories\PackageRepository.cs" />
     <Compile Include="Filer\Repositories\ProductRepository.cs" />
@@ -337,6 +345,7 @@
     <EmbeddedResource Include="Api\Data\SissyboyDeliveryDate.hbm.xml" />
     <EmbeddedResource Include="Api\Data\SissyboyReadyForPickup.hbm.xml" />
     <EmbeddedResource Include="Api\Data\SissyboyTrackAndTrace.hbm.xml" />
+    <EmbeddedResource Include="Filer\Data\EazystockForecast.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

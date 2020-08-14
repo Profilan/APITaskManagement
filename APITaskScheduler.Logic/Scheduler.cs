@@ -1,4 +1,5 @@
 ﻿using APITaskManagement.Logic.Common;
+using APITaskManagement.Logic.Schedulers;
 using APITaskManagement.Logic.Schedulers.ApplicationEvents;
 using APITaskManagement.Logic.Schedulers.Repositories;
 using System;
@@ -124,5 +125,10 @@ namespace APITaskScheduler.Logic
             _taskRepository.Update(task);
         }
 
+        private void SetupTimer(Schedule schedule)
+        {
+            DateTime current = DateTime.Now;
+            TimeSpan timeToGo = schedule.
+        }
     }
 }
