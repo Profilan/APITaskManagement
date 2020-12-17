@@ -81,8 +81,18 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -141,10 +151,14 @@
     <Compile Include="Api\ApiDHLDeliveries.cs" />
     <Compile Include="Api\ApiDNSalesOrder.cs" />
     <Compile Include="Api\ApiPostNLShipment.cs" />
+    <Compile Include="Api\ApiPriceSearch.cs" />
     <Compile Include="Api\ApiSissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\CashOnDeliveryOrderline.cs" />
+    <Compile Include="Api\Data\DHLDeliveryBarcode.cs" />
     <Compile Include="Api\Data\DHLDeliveryHeader.cs" />
     <Compile Include="Api\Data\DHLDeliveryLine.cs" />
+    <Compile Include="Api\Data\DHLDeliveryLineIdentifier.cs" />
+    <Compile Include="Api\Data\PriceSearch.cs" />
     <Compile Include="Api\Data\SissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\DutchNedCustomer.cs" />
     <Compile Include="Api\Data\DutchNedInsertedOrderlinestatus.cs" />
@@ -172,17 +186,22 @@
     <Compile Include="Api\Models\DutchNedSalesOrderDto.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderLineDto.cs" />
     <Compile Include="Api\Models\DutchNedSender.cs" />
+    <Compile Include="Api\Models\PriceSearchDto.cs" />
+    <Compile Include="Api\Models\PriceSearchResultItemDto.cs" />
     <Compile Include="Api\Models\SissyboyDeliveryDateDto.cs" />
     <Compile Include="Api\Models\SissyboyReadyForPickupDto.cs" />
     <Compile Include="Api\Models\SissyboyTrackAndTraceDto.cs" />
+    <Compile Include="Api\Models\PriceSearchUrlDto.cs" />
     <Compile Include="Api\Models\ZwaluwSalesOrderDto.cs" />
     <Compile Include="Api\Models\ZwaluwSalesOrderHeaderDto.cs" />
     <Compile Include="Api\Models\ZwaluwSalesOrderLineDto.cs" />
     <Compile Include="Api\Formatters\PostNLShipmentFormatter.cs" />
     <Compile Include="Api\Repositories\CashOnDeliveryOrderlineRepository.cs" />
+    <Compile Include="Api\Repositories\DHLDeliveryRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
     <Compile Include="Api\Repositories\PostNLRepository.cs" />
+    <Compile Include="Api\Repositories\PriceSearchRepository.cs" />
     <Compile Include="Api\Repositories\SissyboyRepository.cs" />
     <Compile Include="Api\Repositories\ZwaluwSalesOrderRepository.cs" />
     <Compile Include="Api\ApiSissyboyReadyForPickup.cs" />
@@ -199,11 +218,14 @@
     <Compile Include="Filer\Data\Image.cs" />
     <Compile Include="Filer\Data\Package.cs" />
     <Compile Include="Filer\Data\Product.cs" />
+    <Compile Include="Filer\Data\TransMissionHeader.cs" />
+    <Compile Include="Filer\Data\TransMissionLine.cs" />
     <Compile Include="Filer\EazystockForecastFormatter.cs" />
     <Compile Include="Filer\FilerAbstract.cs" />
     <Compile Include="Filer\FilerEazystockForecast.cs" />
     <Compile Include="Filer\FilerFormatterAbstract.cs" />
     <Compile Include="Filer\FilerProductfeed.cs" />
+    <Compile Include="Filer\FilerTransMission.cs" />
     <Compile Include="Filer\Interfaces\IFiler.cs" />
     <Compile Include="Filer\Interfaces\IFilerFormatter.cs" />
     <Compile Include="Filer\ProductfeedFormatter.cs" />
@@ -212,6 +234,8 @@
     <Compile Include="Filer\Repositories\PackageRepository.cs" />
     <Compile Include="Filer\Repositories\ProductRepository.cs" />
     <Compile Include="Filer\Repositories\ShareRepository.cs" />
+    <Compile Include="Filer\Formatters\TransmissionFormatter.cs" />
+    <Compile Include="Filer\Repositories\TransMissionRepository.cs" />
     <Compile Include="Helpers\HibernateStoredProcedureExecutor.cs" />
     <Compile Include="Helpers\Interfaces\IExecuteStoredProcedure.cs" />
     <Compile Include="Logging\ApplicationLogger.cs" />
@@ -291,7 +315,6 @@
     <Compile Include="Api\Repositories\ApiRepository.cs" />
     <Compile Include="Schedulers\Response.cs" />
     <Compile Include="Schedulers\Schedule.cs" />
-    <Compile Include="Schedulers\ScheduleInstance.cs" />
     <Compile Include="Schedulers\Services\FtpService.cs" />
     <Compile Include="Schedulers\Services\SchedulerService.cs" />
     <Compile Include="Schedulers\Services\TaskService.cs" />
@@ -313,7 +336,6 @@
     <Folder Include="Schedulers\Events\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Schedulers\Schedule.hbm.xml" />
     <EmbeddedResource Include="Schedulers\Task.hbm.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -346,6 +368,12 @@
     <EmbeddedResource Include="Api\Data\SissyboyReadyForPickup.hbm.xml" />
     <EmbeddedResource Include="Api\Data\SissyboyTrackAndTrace.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\EazystockForecast.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\PriceSearch.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DHLDeliveryHeader.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DHLDeliveryLine.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DHLDeliveryBarcode.hbm.xml" />
+    <EmbeddedResource Include="Filer\Data\TransMissionHeader.hbm.xml" />
+    <EmbeddedResource Include="Filer\Data\TransMissionLine.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskManagement.Logic", "APITaskManagement.Logic\APITaskManagement.Logic.csproj", "{86F87F12-357C-4B7F-8190-D7E875F532F7}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskMonitor", "APITaskMonitor\APITaskMonitor.csproj", "{C5404F44-802B-422F-8C66-DE0BDE15B4D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskScheduler.Logic", "APITaskScheduler.Logic\APITaskScheduler.Logic.csproj", "{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "APITaskMonitorServiceSetup", "APITaskMonitorServiceSetup\APITaskMonitorServiceSetup.vdproj", "{9AF902E2-1AF5-4529-B64C-0DECF1BF2DA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD5EA97-E17D-4DEC-897E-59976D89FE9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF902E2-1AF5-4529-B64C-0DECF1BF2DA9}.Debug|Any CPU.ActiveCfg = Debug
+		{9AF902E2-1AF5-4529-B64C-0DECF1BF2DA9}.Debug|Any CPU.Build.0 = Debug
+		{9AF902E2-1AF5-4529-B64C-0DECF1BF2DA9}.Release|Any CPU.ActiveCfg = Release
+		{9AF902E2-1AF5-4529-B64C-0DECF1BF2DA9}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

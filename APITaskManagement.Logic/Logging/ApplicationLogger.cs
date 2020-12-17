@@ -47,9 +47,39 @@ namespace APITaskManagement.Logic.Logging
 
         }
 
-        public void Log(Response response, Share share)
+        public void Log(Response response, Share share, string spLogger)
         {
-            throw new System.NotImplementedException();
+            if (!string.IsNullOrEmpty(spLogger))
+            {
+                bool isOk = true;
+                if (response.Code >= 300)
+                {
+                    isOk = false;
+                    response.Ids = "";
+                }
+
+                var detail = response.Detail;
+                var message = response.Code + " " + response.Description;
+
+                string connectionstring = ConfigurationManager.ConnectionStrings["mvw"].ConnectionString;
+
+                var requests = new List<Request>();
+
+                using (SqlConnection connection = new SqlConnection(connectionstring))
+                {
+                    DataSet dataSet = new DataSet();
+                    SqlCommand command = new SqlCommand(spLogger, connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@ids", SqlDbType.VarChar).Value = response.Ids;
+                    command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
+                    command.Parameters.Add("@msg", SqlDbType.VarChar).Value = message;
+                    command.Parameters.Add("@IsSuccess", SqlDbType.Bit).Value = isOk;
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                    adapter.Fill(dataSet);
+                }
+            }
         }
 
         public void Log(Response response, string recipient, string spLogger)
@@ -83,6 +113,11 @@ namespace APITaskManagement.Logic.Logging
 
                 adapter.Fill(dataSet);
             }
+        }
+
+        public void Log(Request request, Url url)
+        {
+            
         }
     }
 }

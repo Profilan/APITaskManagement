@@ -23,6 +23,11 @@ namespace APITaskManagement.Logic.Schedulers
             ExecPost = execPost;
         }
 
+        public Request(bool execPost = false)
+        {
+            ExecPost = execPost;
+        }
+
         public void SetResponse(Response response)
         {
             Response = response;

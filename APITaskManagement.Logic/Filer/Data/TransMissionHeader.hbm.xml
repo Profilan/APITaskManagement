@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="TransMissionHeader" table="EEK_vw_TRM_XML_Header">
+    <id name="id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="type"/>
+    <property name="nrorder"/>
+    <property name="datum"/>
+    <property name="afznaam"/>
+    <property name="geanaam"/>
+    <property name="geastraat"/>
+    <property name="geahuisnr"/>
+    <property name="geapostcode"/>
+    <property name="geaplaats"/>
+    <property name="gealand"/>
+    <property name="geatelefoon"/>
+    <property name="geaemail"/>
+
+    <set name="lines" table="EEK_vw_TRM_XML_Lines" cascade="all-delete-orphan">
+      <key column="headerid"/>
+      <one-to-many class="TransMissionLine"/>
+    </set>
+
+  </class>
+
+</hibernate-mapping>

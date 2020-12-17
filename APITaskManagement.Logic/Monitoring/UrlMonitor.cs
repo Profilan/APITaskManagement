@@ -29,8 +29,9 @@ namespace APITaskManagement.Logic.Monitoring
                 {
                     if (!String.IsNullOrEmpty(url.ExternalUrl))
                     {
-                        if (!HostIsReachable(url.ExternalUrl))
+                        if (!HostIsReachable(url.ExternalUrl) && url.Reachable == true)
                         {
+                            
                             foreach (var messenger in messengers)
                             {
                                 try
@@ -47,6 +48,14 @@ namespace APITaskManagement.Logic.Monitoring
                                 {
                                 }
                             }
+
+                            url.Reachable = false;
+                            _urlRepository.Update(url);
+                        }
+                        else
+                        {
+                            url.Reachable = true;
+                            _urlRepository.Update(url);
                         }
                     }
                 }

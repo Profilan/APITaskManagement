@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Common;
+﻿using ApiTaskManagement.Logic.Models;
+using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Filer.Interfaces;
 using APITaskManagement.Logic.Logging;
 using System;
@@ -18,14 +19,14 @@ namespace APITaskManagement.Logic.Schedulers
 
         public FILETask(string title,
             int scheduleId,
-            Interval interval,
+            Schedule schedule,
             Authentication authentication,
             bool enabled
-            ) : base(title, scheduleId, interval, authentication, enabled)
+            ) : base(title, scheduleId, schedule, authentication, enabled)
         {
 
         }
-        public override void Send()
+        public override void Run()
         {
             var formats = ContentFormats.Split(';');
             List<ContentFormat> contentFormats = new List<ContentFormat>();
@@ -34,9 +35,10 @@ namespace APITaskManagement.Logic.Schedulers
                 contentFormats.Add((ContentFormat)Enum.Parse(typeof(ContentFormat), format));
             }
             var t = Type.GetType("APITaskManagement.Logic.Filer." + Classname);
-            var filer = (IFiler)Activator.CreateInstance(t, contentFormats);
+            IFiler filer = (IFiler)Activator.CreateInstance(t, contentFormats);
             filer.AddLogger(new SystemLogger());
-            filer.Send(Shares, this.Id);
+            filer.AddLogger(new ApplicationLogger());
+            filer.Send(Shares, this);
             LatestResponse = filer.GetLatestResponse();
         }
     }

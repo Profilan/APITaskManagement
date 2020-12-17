@@ -32,14 +32,16 @@
       <property name="OAuthUrl"/>
       <property name="ApiKey"/>
     </component>
-
+    
     <component name="Status">
       <property name="Code" column="StatusCode"/>
       <property name="Description" column="StatusDescription"/>
     </component>
     
-    <component name="Interval">
-      <property name="Seconds" column="Interval" not-null="true"/>
+    <component name="Schedule">
+      <component name="Interval">
+        <property name="Seconds" column="Interval" not-null="true"/>
+      </component>
     </component>
     
     <subclass name="APITask" discriminator-value="API">

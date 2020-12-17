@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Api.Interfaces;
+﻿using ApiTaskManagement.Logic.Models;
+using APITaskManagement.Logic.Api.Interfaces;
 using APITaskManagement.Logic.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,23 +18,31 @@ namespace APITaskManagement.Logic.Schedulers
 
         public APITask(string title,
             int scheduleId,
-            Interval interval,
+            Schedule schedule,
             Authentication authentication,
             bool enabled,
             int totalProcesseditems = 100
-            ) : base(title, scheduleId, interval, authentication, enabled, totalProcesseditems)
+            ) : base(title, scheduleId, schedule, authentication, enabled, totalProcesseditems)
         {
 
         }
 
-        public override void Send()
+        public override void Run()
         {
             Type t = Type.GetType("APITaskManagement.Logic.Api." + Classname);
             var api = (IApi)Activator.CreateInstance(t, Classname);
             api.TotalItems = TotalProcessedItems;
             api.AddLogger(new ApplicationLogger());
             api.AddLogger(new SystemLogger());
-            api.SendRequestsToTarget(HttpMethod, Url, Authentication, this);
+            if (HttpMethod == Common.HttpMethod.Get)
+            {
+                api.ReceiveResponseFromTarget(Url, Authentication, this);
+            }
+            else
+            {
+                api.SendRequestsToTarget(HttpMethod, Url, Authentication, this);
+            }
+            
             LatestResponse = api.GetLatestResponse();
         }
     }

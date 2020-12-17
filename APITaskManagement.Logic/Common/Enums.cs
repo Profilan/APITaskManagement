@@ -16,6 +16,12 @@
         Delete = 5
     }
 
+    public enum AccessType
+    {
+        Inbound = 1,
+        Outbound = 2
+    }
+
     public enum ErrorType
     {
         EMERG = 0,  // Emergency: system is unusable
@@ -36,7 +42,8 @@
         OAuth2 = 2,
         Windows = 3,
         ApiKey = 4,
-        Header = 5
+        Header = 5,
+        BasicWithSHA1 = 6
     }
 
     public enum TaskType
@@ -66,4 +73,12 @@
         XML = 2,
         TXT = 3
     }
+
+    public enum ScheduleType
+    {
+        Once = 0,
+        Daily = 1,
+        Weekly = 2
+    }
+
 }

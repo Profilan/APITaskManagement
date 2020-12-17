@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="DHLDeliveryBarcode" table="EEK_vw_DHL_API_Lines_Barcodes">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="Barcode"/>
+
+    <many-to-one name="DeliveryLine" class="DHLDeliveryLine" insert="false" update="false">
+      <column name="OrderIdId" />
+      <column name="OrsrgId" />
+    </many-to-one>
+
+  </class>
+
+</hibernate-mapping>

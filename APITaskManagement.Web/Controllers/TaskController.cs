@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Api.Interfaces;
+﻿using ApiTaskManagement.Logic.Models;
+using APITaskManagement.Logic.Api.Interfaces;
 using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Common.Interfaces;
@@ -81,6 +82,14 @@ namespace APITaskManagement.Web.Controllers
                     Convert.ToInt32(collection["Amount"]),
                     (Unit)Enum.Parse(typeof(Unit), collection["Unit"]));
 
+                Schedule schedule = new Schedule((ScheduleType)Enum.Parse(typeof(ScheduleType), collection["ScheduleType"]),
+                    DateTime.Parse(collection["ScheduleStart"]),
+                    DateTime.Parse(collection["ScheduleEnd"]),
+                    collection["ScheduleDays"],
+                    Convert.ToInt32(collection["ScheduleRecurrence"]),
+                    interval
+                    );
+
                 Authentication authentication = new Authentication(collection["Username"],
                     collection["Password"],
                     (AuthenticationType)Enum.Parse(typeof(AuthenticationType), collection["AuthenticationType"]),
@@ -95,23 +104,24 @@ namespace APITaskManagement.Web.Controllers
                 switch (taskType)
                 {
                     case TaskType.API:
+
                         task = new Logic.Schedulers.APITask(collection["Title"],
                                             1,
-                                            interval,
+                                            schedule,
                                             authentication,
                                             false);
                         break;
                     case TaskType.FILE:
                         task = new Logic.Schedulers.FILETask(collection["Title"],
                                             1,
-                                            interval,
+                                            schedule,
                                             authentication,
                                             false);
                         break;
                     case TaskType.MAIL:
                         task = new Logic.Schedulers.MAILTask(collection["Title"],
                                             1,
-                                            interval,
+                                            schedule,
                                             authentication,
                                             false);
                         break;
@@ -224,8 +234,8 @@ namespace APITaskManagement.Web.Controllers
                 AuthenticationType = task.Authentication.AuthenticationType,
                 TaskType = task.TaskType,
                 Scope = task.Authentication.Scope,
-                Amount = task.Interval.Amount,
-                Unit = task.Interval.Unit,
+                Amount = task.Schedule.Interval.Amount,
+                Unit = task.Schedule.Interval.Unit,
                 Urls = urls,
                 MaxErrors = task.MaxErrors,
                 Classname = classname,
@@ -291,7 +301,13 @@ namespace APITaskManagement.Web.Controllers
                 Interval interval = new Interval(
                      data.Amount, data.Unit);
 
-                task.Interval = interval;
+                task.Schedule = new Schedule(data.ScheduleType,
+                    data.ScheduleStart,
+                    data.ScheduleEnd,
+                    data.ScheduleDays,
+                    data.ScheduleRecurrence,
+                    interval
+                    );
 
                 Authentication authentication = new Authentication(data.Username,
                     data.Password,
@@ -305,6 +321,7 @@ namespace APITaskManagement.Web.Controllers
                 task.MaxErrors = data.MaxErrors;
                 task.TotalProcessedItems = data.TotalProcessedItems;
                 task.TaskType = data.TaskType;
+                
                 // task.Disk.UNCPath = collection["DiskUNCPath"];
                 task.Classname = data.Classname;
                 task.ContentFormats = String.Join(";", data.SelectedFormats);
@@ -347,7 +364,20 @@ namespace APITaskManagement.Web.Controllers
 
                 }
 
-                _taskRepository.Update(task);
+                switch (data.TaskType)
+                {
+                    case TaskType.API:
+                        _taskRepository.Update((APITask)task);
+                        break;
+                    case TaskType.FILE:
+                        _taskRepository.Update((FILETask)task);
+                        break;
+                    case TaskType.MAIL:
+                        _taskRepository.Update((MAILTask)task);
+                        break;
+
+                }
+                
 
                 return RedirectToAction("Index");
             }

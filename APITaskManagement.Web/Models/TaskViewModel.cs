@@ -48,6 +48,11 @@ namespace APITaskManagement.Web.Models
 
         [Required]
         public Unit Unit { get; set; }
+        public ScheduleType ScheduleType { get; set; }
+        public DateTime ScheduleStart { get; set; }
+        public DateTime? ScheduleEnd { get; set; }
+        public string ScheduleDays { get; set; }
+        public int ScheduleRecurrence { get; set; }
 
         public bool Enabled { get; set; }
         public bool Active { get; set; }

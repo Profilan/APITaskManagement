@@ -17,6 +17,8 @@ namespace APITaskManagement.Logic.Schedulers
         public string Detail { get; set; }
         public int Id { get; set; }
 
+        public string Ids { get; set; }
+
         public Response() { }
 
         public Response(int code,

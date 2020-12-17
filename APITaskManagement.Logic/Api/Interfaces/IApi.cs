@@ -16,6 +16,8 @@ namespace APITaskManagement.Logic.Api.Interfaces
 
         void SendRequestsToTarget(Common.HttpMethod httpMethod, Url url, Authentication authentication, Task task);
 
+        void ReceiveResponseFromTarget(Url url, Authentication authentication, Task task);
+
         int GetNumberOfRequests();
 
         Response GetLatestResponse();

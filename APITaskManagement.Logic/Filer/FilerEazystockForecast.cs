@@ -16,7 +16,7 @@ namespace APITaskManagement.Logic.Filer
 
         }
 
-        public override void SaveDocuments(Share share, Guid TaskId)
+        public override void SaveDocuments(Share share, Schedulers.Task task)
         {
             var dateNow = DateTime.Now.ToString("yyyyMMddTHHmm");
 

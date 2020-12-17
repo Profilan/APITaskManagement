@@ -44,48 +44,7 @@ namespace APITaskManagement.Web.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void Create()
-        {
-            
-
-            Interval interval = new Interval(
-                    2,
-                    Logic.Common.Unit.Minutes);
-
-                Authentication authentication = new Authentication("",
-                    "",
-                    Logic.Common.AuthenticationType.None,
-                    null,
-                    null,
-                    null);
-
-                var url = _urlRepository.GetById(21);
-
-                var task = new Logic.Schedulers.APITask("Test",
-                    1,
-                    interval,
-                    authentication,
-                    false);
-
-
-                task.MaxErrors = 4;
-                task.TaskType = Logic.Common.TaskType.API;
-
-                task.Classname = "ApiPostNLShipment";
-                task.ContentFormats = "1";
-                task.Url = url;
-
-                
-
-                task.SPLogger = "EEK_sp_APIQUEUE";
-
-                task.MailSender = "";
-                task.MailRecipient = "";
-
-                _taskRepository.Insert(task);
-
-         }
-
+   
+ 
     }
 }

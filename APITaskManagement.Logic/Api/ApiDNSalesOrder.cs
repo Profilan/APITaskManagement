@@ -139,5 +139,9 @@ namespace APITaskManagement.Logic.Api
             ExecutePost(request);
         }
 
+        protected override IList<ApiMessage> ProcessResponseForTask(string response)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

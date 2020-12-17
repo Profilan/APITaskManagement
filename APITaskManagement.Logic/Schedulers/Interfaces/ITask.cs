@@ -9,6 +9,6 @@ namespace APITaskManagement.Logic.Schedulers.Interfaces
     public interface ITask
     {
         void Start();
-        void Send();
+        void Run();
     }
 }

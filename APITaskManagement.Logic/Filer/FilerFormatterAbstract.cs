@@ -50,7 +50,7 @@ namespace APITaskManagement.Logic.Filer
                 case ContentFormat.JSON:
                     return getJSONContent(key);
                 case ContentFormat.XML:
-                    return getXMLContent(key);
+                    return GetXMLContent(key);
                 case ContentFormat.TXT:
                     return getTXTContent(key);
             }
@@ -58,7 +58,7 @@ namespace APITaskManagement.Logic.Filer
             return null;
         }
 
-        public abstract IList<string> getXMLContent(int key = -1);
+        public abstract IList<string> GetXMLContent(int key = -1);
 
         public abstract IList<string> getJSONContent(int key = -1);
 

@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Api.Interfaces;
+﻿using ApiTaskManagement.Logic.Models;
+using APITaskManagement.Logic.Api.Interfaces;
 using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Filer;
@@ -22,7 +23,7 @@ namespace APITaskManagement.Logic.Schedulers
         public virtual int ScheduleId { get; set; }
 
         public virtual Status Status { get; protected set; }
-        public virtual Interval Interval { get; set; }
+        public virtual Schedule Schedule { get; set; }
         public virtual Authentication Authentication { get; set; }
 
         public virtual Url Url { get; set; }
@@ -65,7 +66,7 @@ namespace APITaskManagement.Logic.Schedulers
 
         public Task(string title,
             int scheduleId,
-            Interval interval,
+            Schedule schedule,
             Authentication authentication,
             bool enabled,
             int totalProcessedItems = 100
@@ -75,7 +76,7 @@ namespace APITaskManagement.Logic.Schedulers
 
             Title = title;
             ScheduleId = scheduleId;
-            Interval = interval;
+            Schedule = schedule;
             Authentication = authentication;
             Enabled = enabled;
             LastRunTime = DateTime.Now;
@@ -94,7 +95,7 @@ namespace APITaskManagement.Logic.Schedulers
             var taskStartedEvent = new TaskStartedEvent(this);
             DomainEvents.Raise(taskStartedEvent);
 
-            Send();
+            Run();
 
             if (LatestResponse != null)
             {
@@ -152,7 +153,7 @@ namespace APITaskManagement.Logic.Schedulers
             Enabled = false;
         }
 
-        public virtual void Send()
+        public virtual void Run()
         {
 
         }

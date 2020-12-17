@@ -13,9 +13,18 @@ using System.Net;
 using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Common;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Security.Cryptography;
 
 namespace APITaskManagement.Logic.Api
 {
+    public struct ApiMessage
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
+
+
     public abstract class Api : IApi
     {
         protected IDictionary<string, string> Properties { get; set; }
@@ -41,10 +50,11 @@ namespace APITaskManagement.Logic.Api
             Loggers = new List<ILogger>();
         }
 
-
-        public void SendRequestsToTarget(Common.HttpMethod httpMethod, Url url, Authentication authentication, Task task)
+        public void ReceiveResponseFromTarget(Url url, Authentication authentication, Task task)
         {
-            
+            IList<ApiMessage> messages = new List<ApiMessage>();
+            Request request = new Request(true);
+
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage responseMessage = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
@@ -56,6 +66,122 @@ namespace APITaskManagement.Logic.Api
                     case AuthenticationType.Basic:
                         var byteArray = new UTF8Encoding().GetBytes(authentication.Username + ":" + authentication.Password);
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                        break;
+                    case AuthenticationType.OAuth2:
+                        // Create JSON body
+                        var jsonString = "{\"grant_type\":\"" + authentication.GrantType + "\","
+                            + "\"scope\":\"" + authentication.Scope + "\","
+                            + "\"client_id\":\"" + authentication.Username + "\","
+                            + "\"client_secret\":\"" + authentication.Password + "\"}";
+                        responseMessage = client.PostAsync(authentication.OAuthUrl, new StringContent(jsonString, Encoding.UTF8, "application/json")).Result;
+                        var result = responseMessage.Content.ReadAsStringAsync().Result;
+                        JToken token = JObject.Parse(result);
+                        var accessToken = (string)token.SelectToken("access_token");
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                        break;
+                    case AuthenticationType.ApiKey:
+                        client.DefaultRequestHeaders.Add("apikey", task.Authentication.ApiKey);
+                        break;
+                }
+                // Add headers
+                foreach (var header in task.HttpHeaders)
+                {
+                    client.DefaultRequestHeaders.Add(header.Name, header.Value);
+                }
+
+                // Check if Url is reachable
+                if (HostIsReachable(url.Address))
+                {
+                    try
+                    {
+                        responseMessage = client.GetAsync(url.Address).Result;
+
+                        var result = responseMessage.Content.ReadAsStringAsync().Result;
+                        var statusCode = (int)responseMessage.StatusCode;
+                        var description = responseMessage.StatusCode.ToString();
+
+                        messages = messages.Concat(ProcessResponseForTask(result)).ToList();
+                        
+
+                        if (request.ExecPost == true)
+                        {
+                            ExecutePost(request);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        messages.Add(new ApiMessage()
+                        {
+                            Code = 500,
+                            Description = "Internal Server Error: Call to API failed. (" + ex.Message + ")"
+                        });
+                    }
+                }
+                else
+                {
+                    messages.Add(new ApiMessage()
+                    {
+                        Code = 500,
+                        Description = "Internal Server Error: You tried to connect to a host who does not exist. (" + url.Address + ")"
+                    });
+                }
+
+                var errors = messages.Where(x => x.Code > 400);
+                if (errors.Count() > 0)
+                {
+                    var alerts = messages.Where(x => x.Code == 500);
+                    if (alerts.Count() > 0)
+                    {
+                        var response = new Response(500, "Internal Server Error", JsonConvert.SerializeObject(alerts));
+                        request.SetResponse(response);
+                    }
+                    else
+                    {
+                        var response = new Response(401, "Bad Request", JsonConvert.SerializeObject(errors));
+                        request.SetResponse(response);
+                    }
+                }
+                else
+                {
+                    var response = new Response(200, "Ok", JsonConvert.SerializeObject(messages));
+                    request.SetResponse(response);
+                }
+                Requests.Add(request);
+
+                LogResponse(request, url, task.SPLogger);
+            }
+        }
+
+        public void SendRequestsToTarget(Common.HttpMethod httpMethod, Url url, Authentication authentication, Task task)
+        {
+            string mediaType = "application/json";
+            // task.ContentFormats
+            var formats = task.ContentFormats.Split(';');
+            switch (formats[0]) 
+            {
+                case "1":
+                    mediaType = "application/json";
+                    break;
+                case "2":
+                    mediaType = "text/xml";
+                    break;
+            }
+
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage responseMessage = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.Timeout = new TimeSpan(0, 5, 0);
+
+                switch (authentication.AuthenticationType)
+                {
+                    case AuthenticationType.Basic:
+                        var byteArray = new UTF8Encoding().GetBytes(authentication.Username + ":" + authentication.Password);
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                        break;
+                    case AuthenticationType.BasicWithSHA1:
+                        var byteArraySha1 = new UTF8Encoding().GetBytes(authentication.Username + ":" + GetSha1(authentication.Password));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArraySha1));
                         break;
                     case AuthenticationType.OAuth2:
                         // Create JSON body
@@ -97,13 +223,13 @@ namespace APITaskManagement.Logic.Api
                                         responseMessage = client.GetAsync(url.Address).Result;
                                         break;
                                     case Common.HttpMethod.Post:
-                                        responseMessage = client.PostAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
+                                        responseMessage = client.PostAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
                                         break;
                                     case Common.HttpMethod.Put:
-                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
+                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
                                         break;
                                     case Common.HttpMethod.Patch:
-                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, "application/json")).Result;
+                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
                                         break;
                                     case Common.HttpMethod.Delete:
                                         responseMessage = client.DeleteAsync(url.Address).Result;
@@ -174,11 +300,20 @@ namespace APITaskManagement.Logic.Api
         {
             foreach (ILogger logger in Loggers)
             {
-                logger.Log(request, url, spLogger);
+                if (!string.IsNullOrEmpty(spLogger))
+                {
+                    logger.Log(request, url, spLogger);
+                }
+                else
+                {
+                    logger.Log(request, url);
+                }
             }
         }
 
         protected abstract IList<Request> GetRequestsForTask(Guid taskId);
+
+        protected abstract IList<ApiMessage> ProcessResponseForTask(string response);
 
         protected abstract void ExecutePost(Request request);
 
@@ -195,6 +330,17 @@ namespace APITaskManagement.Logic.Api
             }
 
             return null;
+        }
+        private string GetSha1(string value)
+        {
+            var data = Encoding.ASCII.GetBytes(value);
+            var hashData = new SHA1Managed().ComputeHash(data);
+            var hash = string.Empty;
+            foreach (var b in hashData)
+            {
+                hash += b.ToString("X2");
+            }
+            return hash;
         }
     }
 }

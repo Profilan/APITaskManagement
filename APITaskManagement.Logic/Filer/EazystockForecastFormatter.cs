@@ -28,7 +28,7 @@ namespace APITaskManagement.Logic.Filer
             throw new NotImplementedException();
         }
 
-        public override IList<string> getXMLContent(int key = -1)
+        public override IList<string> GetXMLContent(int key = -1)
         {
             throw new NotImplementedException();
         }

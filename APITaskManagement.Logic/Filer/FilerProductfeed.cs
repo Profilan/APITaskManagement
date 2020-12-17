@@ -17,7 +17,7 @@ namespace APITaskManagement.Logic.Filer
             
         }
 
-        public override void SaveDocuments(Share share, Guid taskId)
+        public override void SaveDocuments(Share share, Schedulers.Task task)
         {
             foreach (var format in Formats)
             {

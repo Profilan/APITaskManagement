@@ -7,11 +7,14 @@
     <property name="Name"/>
     <property name="Address"/>
     <property name="ExternalUrl"/>
+    <property name="AccessType"/>
     
     <component name="InactivityTimeout">
       <property name="Seconds" column="InactivityTimeout" not-null="true"/>
     </component>
 
     <property name="MonitorInactivity"/>
+
+    <property name="Reachable" />
   </class>
 </hibernate-mapping>

@@ -90,7 +90,11 @@ namespace APITaskManagement.Logic.Management
             set;
         }
 
+        public virtual AccessType AccessType { get; set; }
+
         public virtual bool MonitorInactivity { get; set; }
+
+        public virtual bool Reachable { get; set; }
 
     }
 

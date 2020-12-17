@@ -1,5 +1,4 @@
 ﻿using APITaskManagement.Logic.Common;
-using APITaskManagement.Logic.Schedulers;
 using APITaskManagement.Logic.Schedulers.ApplicationEvents;
 using APITaskManagement.Logic.Schedulers.Repositories;
 using System;
@@ -24,7 +23,7 @@ namespace APITaskScheduler.Logic
             EventLog = new EventLog();
 
             _timers = new Dictionary<string, TaskTimer>();
-           
+
 
             if (!System.Diagnostics.EventLog.SourceExists("API Task Scheduler"))
             {
@@ -41,13 +40,13 @@ namespace APITaskScheduler.Logic
                 EventLog.WriteEntry("API Task Scheduler started", System.Diagnostics.EventLogEntryType.Information, 0);
 
                 EventLog.WriteEntry("Getting tasks", System.Diagnostics.EventLogEntryType.Information, 1);
-                
+
                 var tasks = _taskRepository.List();
                 EventLog.WriteEntry("Number of tasks " + tasks.Count(), System.Diagnostics.EventLogEntryType.Information, 1);
                 foreach (var task in tasks)
                 {
                     TaskTimer timer = new TaskTimer(task.Id);
-                    timer.Interval = 1000 * task.Interval.Seconds;
+                    timer.Interval = 1000 * task.Schedule.Interval.Seconds;
                     timer.Elapsed += OnTimer;
 
                     _timers.Add(task.Id.ToString(), timer);
@@ -78,7 +77,7 @@ namespace APITaskScheduler.Logic
             {
 
                 var task = _taskRepository.GetById(taskId);
-                
+
 
                 if (task.Enabled && !task.Active)
                 {
@@ -92,7 +91,7 @@ namespace APITaskScheduler.Logic
                     EventLog.WriteEntry("Finishing task " + task.Title + "," + task.QueueName, System.Diagnostics.EventLogEntryType.Information, 1007);
                 }
 
-                
+
             }
             catch (Exception e)
             {
@@ -125,10 +124,5 @@ namespace APITaskScheduler.Logic
             _taskRepository.Update(task);
         }
 
-        private void SetupTimer(Schedule schedule)
-        {
-            DateTime current = DateTime.Now;
-            TimeSpan timeToGo = schedule.
-        }
     }
 }

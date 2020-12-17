@@ -1,37 +1,42 @@
 ﻿using APITaskManagement.Logic.Common;
+using APITaskManagement.Logic.Schedulers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APITaskManagement.Logic.Schedulers
+namespace ApiTaskManagement.Logic.Models
 {
-    public class Schedule : Entity<int>
+    public class Schedule : ValueObject<Schedule>
     {
-        public virtual string Title { get; protected set; }
+        public virtual ScheduleType Type { get; set; }
+        public virtual string Days { get; set; }
+        public virtual int Recurrence { get; set; }
+        public virtual Interval Interval { get; set; }
+        public virtual DateTime Start { get; set; }
+        public virtual DateTime? End { get; set; }
 
-        public virtual IList<Task> Tasks { get; protected set; }
+        private Schedule() { }
 
-        public Schedule()
+        public Schedule(ScheduleType type,
+            DateTime start,
+            DateTime? end,
+            string days,
+            int recurrence,
+            Interval interval)
         {
-            Tasks = new List<Task>();
-
-
+            Type = type;
+            Start = start;
+            End = end;
+            Days = days;
+            Recurrence = recurrence;
+            Interval = interval;
         }
 
-        public virtual void AddTask(Task task)
+        protected override bool EqualsCore(Schedule other)
         {
-            Tasks.Add(task);
-        }
-
-
-        public virtual void ProcessAllTasks()
-        {
-            foreach (var task in Tasks)
-            {
-               
-            }
+            return (Type == other.Type && Days == other.Days && Recurrence == other.Recurrence && Interval == other.Interval);
         }
     }
 }

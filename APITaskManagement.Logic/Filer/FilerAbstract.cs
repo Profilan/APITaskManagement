@@ -31,6 +31,7 @@ namespace APITaskManagement.Logic.Filer
         public IList<Response> Responses { get; set; }
         protected IList<ILogger> Loggers { get; set; }
 
+
         public FilerAbstract(IList<ContentFormat> formats)
         {
             Formats = formats;
@@ -38,17 +39,17 @@ namespace APITaskManagement.Logic.Filer
             Loggers = new List<ILogger>();
         }
 
-        public abstract void SaveDocuments(Share share, Guid TaskId);
+        public abstract void SaveDocuments(Share share, Schedulers.Task Task);
 
-        public void Send(ISet<Share> shares, Guid taskId)
+        public void Send(ISet<Share> shares, Schedulers.Task task)
         {
             foreach (var share in shares)
             {
-                SaveDocuments(share, taskId);
+                SaveDocuments(share, task);
 
                 foreach (var response in Responses)
                 {
-                    LogResponse(response, share);
+                    LogResponse(response, share, task.SPLogger);
                 }
             }
         }
@@ -58,11 +59,11 @@ namespace APITaskManagement.Logic.Filer
             Loggers.Add(logger);
         }
 
-        protected void LogResponse(Response response, Share share)
+        protected void LogResponse(Response response, Share share, string spLogger)
         {
             foreach (ILogger logger in Loggers)
             {
-                logger.Log(response, share);
+                logger.Log(response, share, spLogger);
             }
         }
 

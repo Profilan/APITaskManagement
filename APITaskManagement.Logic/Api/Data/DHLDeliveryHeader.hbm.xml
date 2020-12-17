@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="DHLDeliveryHeader" table="EEK_vw_DHL_API_Header">
+    <id name="Id" column="OrderIdId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="TransmissionCreationDate"/>
+    <property name="TransmissionControlNumber"/>
+    <property name="SendingPartyID"/>
+    <property name="ReceivingPartyID"/>
+    <property name="MessageCount"/>
+    <property name="MessageStructureVersion"/>
+    <property name="MessageCreationDate"/>
+    <property name="MessageControlNumber"/>
+    <property name="OrderIdSystem"/>
+    <property name="OrderNr"/>
+    <property name="SenderType"/>
+    <property name="SenderPartnerIdSystem"/>
+    <property name="SenderPartnerIdId"/>
+    <property name="ReceiverType"/>
+    <property name="ReceiverName"/>
+    <property name="ReceiverAddressName1"/>
+    <property name="ReceiverAddressCountryCode"/>
+    <property name="ReceiverAddressPostalCode"/>
+    <property name="ReceiverAddressCity"/>
+    <property name="ReceiverAddressStreet"/>
+    <property name="ReceiverAddressPhoneNumber1"/>
+    <property name="ReceiverAddressEMail"/>
+    <property name="OrderType"/>
+    <property name="ProductType"/>
+    <property name="FreightTerms"/>
+    <property name="OrderDate"/>
+    <property name="Packages"/>
+
+    <set name="DeliveryLines" table="EEK_vw_DHL_API_Lines" cascade="all-delete-orphan">
+      <key column="OrderIdId"/>
+      <one-to-many class="DHLDeliveryLine"/>
+    </set>
+
+  </class>
+
+</hibernate-mapping>

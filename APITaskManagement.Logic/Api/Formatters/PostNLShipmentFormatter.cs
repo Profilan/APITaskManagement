@@ -84,6 +84,9 @@ namespace APITaskManagement.Logic.Api.Formatters
 
                     groups.Add(group);
 
+                    string deliveryDate = line.DeliveryDate.ToString("dd-MM-yyyy HH:mm:ss");
+                    if (deliveryDate == "01-01-0001 00:00:00")
+                        deliveryDate = null;
                     var shipment = new PostNLShipment(
                         addresses,
                         line.Barcode,
@@ -94,7 +97,7 @@ namespace APITaskManagement.Logic.Api.Formatters
                         line.ProductCodeDelivery,
                         line.Reference,
                         item.Remark,
-                        line.DeliveryDate.ToString("dd-MM-yyyy HH:mm:ss"));
+                        deliveryDate);
 
                     shipments.Add(shipment);
                 }

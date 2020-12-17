@@ -1,6 +1,7 @@
 ﻿using System;
 using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Repositories;
+using APITaskManagement.Logic.Filer.Repositories;
 using APITaskManagement.Logic.Schedulers.Repositories;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -112,6 +113,22 @@ namespace APITaskManagement.Test
             };
 
             rep.Insert(item);
+        }
+
+        [TestMethod]
+        public void GetDHLDeliveries()
+        {
+            var rep = new DHLDeliveryRepository();
+
+            var items = rep.List();
+        }
+
+        [TestMethod]
+        public void GetTransMission()
+        {
+            var rep = new TransMissionRepository();
+
+            var items = rep.List();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace APITaskManagement.Logic.Filer.Interfaces
         bool saveTXTContent();
 
         IList<string> getContent(int key = -1);
-        IList<string> getXMLContent(int key = -1);
+        IList<string> GetXMLContent(int key = -1);
         IList<string> getJSONContent(int key = -1);
         IList<string> getTXTContent(int key = -1);
     }

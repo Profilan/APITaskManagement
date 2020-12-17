@@ -33,7 +33,7 @@ namespace APITaskManagement.Logic.Logging
             _logRepository.Insert(log);
         }
 
-        public void Log(Response response, Share share)
+        public void Log(Response response, Share share, string spLogger)
         {
             var _logRepository = new LogRepository();
 
@@ -67,6 +67,25 @@ namespace APITaskManagement.Logic.Logging
             var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), recipient, detail, false);
 
             _logRepository.Insert(log);
+        }
+
+        public void Log(Request request, Url url)
+        {
+            var _logRepository = new LogRepository();
+
+            var priority = ErrorType.INFO;
+            if (request.Response.Code >= 400)
+            {
+                priority = ErrorType.ERR;
+            }
+
+            var detail = request.Response.Detail;
+            var message = request.Response.Code + " " + request.Response.Description;
+
+            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), url.Address, detail, false);
+
+            _logRepository.Insert(log);
+
         }
     }
 }

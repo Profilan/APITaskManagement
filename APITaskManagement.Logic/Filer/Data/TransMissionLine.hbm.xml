@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Filer.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="TransMissionLine" table="EEK_vw_TRM_XML_Lines">
+    
+    <id name="id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="nrcollo"/>
+    <property name="vrzenh"/>
+    <property name="gewicht"/>
+    <property name="lengte"/>
+    <property name="breedte"/>
+    <property name="hoogte"/>
+    <property name="referentie"/>
+
+  </class>
+
+</hibernate-mapping>

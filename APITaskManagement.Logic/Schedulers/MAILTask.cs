@@ -1,4 +1,5 @@
-﻿using APITaskManagement.Logic.Common;
+﻿using ApiTaskManagement.Logic.Models;
+using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Logging;
 using APITaskManagement.Logic.Mailer.Interfaces;
 using System;
@@ -18,14 +19,14 @@ namespace APITaskManagement.Logic.Schedulers
 
         public MAILTask(string title,
             int scheduleId,
-            Interval interval,
+            Schedule schedule,
             Authentication authentication,
             bool enabled
-            ) : base(title, scheduleId, interval, authentication, enabled)
+            ) : base(title, scheduleId, schedule, authentication, enabled)
         {
 
         }
-        public override void Send()
+        public override void Run()
         {
             var formats = ContentFormats.Split(';');
             List<ContentFormat> contentFormats = new List<ContentFormat>();

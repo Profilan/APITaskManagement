@@ -47,19 +47,17 @@ namespace APITaskManagement.Logic.Mailer
                         var response = new Response();
 
                         var result = formatter.getContent(item.Key);
-                        if (result.Count == 0)
+                        if (result.Count > 0)
                         {
-                            break;
+                            lines.Add("");
+                            lines.Add("NBG:" + nbg);
+                            lines.Add("NNT:Order");
+                            lines.AddRange(result);
+                            lines.Add("FEN:" + nbg++);
+
+                            ids.Add(item.Id);
+                            keys.Add(item.Key);
                         }
-
-                        lines.Add("");
-                        lines.Add("NBG:" + nbg);
-                        lines.Add("NNT:Order");
-                        lines.AddRange(result);
-                        lines.Add("FEN:" + nbg++);
-
-                        ids.Add(item.Id);
-                        keys.Add(item.Key);
 
                     }
 

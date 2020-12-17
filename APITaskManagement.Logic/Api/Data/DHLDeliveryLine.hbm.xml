@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="DHLDeliveryLine" table="EEK_vw_DHL_API_Lines">
+    <composite-id name="DeliveryLineIdentifier" class="DHLDeliveryLineIdentifier">
+      <key-property name="OrderIdId" />
+      <key-property name="OrsrgId" />
+    </composite-id>
+
+    <property name="Id" column="LineId" />
+    <property name="OrderNr"/>
+    <property name="CatalogNr"/>
+    <property name="ProductNr"/>
+    <property name="ProductName"/>
+    <property name="Quantity"/>
+    <property name="VolumeAmount"/>
+    <property name="VolumeUnit"/>
+    <property name="WeightAmount"/>
+    <property name="WeightUnit"/>
+
+    <set name="Barcodes" table="EEK_vw_DHL_API_Lines_Barcodes" inverse="true">
+      <key>
+        <column name="OrderIdId"/>
+        <column name="OrsrgId"/>
+      </key>
+      <one-to-many class="DHLDeliveryBarcode"/>
+    </set>
+
+  </class>
+
+</hibernate-mapping>

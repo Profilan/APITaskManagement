@@ -43,5 +43,10 @@ namespace APITaskManagement.Logic.Api
         {
             throw new NotImplementedException();
         }
+
+        protected override IList<ApiMessage> ProcessResponseForTask(string response)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

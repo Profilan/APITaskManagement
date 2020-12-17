@@ -9,8 +9,9 @@ namespace APITaskManagement.Logic.Logging.Interfaces
 {
     public interface ILogger
     {
+        void Log(Request request, Url url);
         void Log(Request request, Url url, string spLogger);
-        void Log(Response response, Share share);
+        void Log(Response response, Share share, string spLogger);
         void Log(Response response, string recipient, string spLogger);
     }
 }
