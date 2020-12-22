@@ -178,6 +178,7 @@
     <Compile Include="Api\Data\PostNLShipmentAddress.cs" />
     <Compile Include="Api\Data\SissyboyReadyForPickup.cs" />
     <Compile Include="Api\Data\SissyboyTrackAndTrace.cs" />
+    <Compile Include="Api\Data\Test.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrder.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderHeader.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderLine.cs" />
