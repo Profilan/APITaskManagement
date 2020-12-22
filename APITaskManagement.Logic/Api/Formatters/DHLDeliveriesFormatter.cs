@@ -78,7 +78,7 @@ namespace APITaskManagement.Logic.Api.Formatters
 
             XmlElement xmlReceiverPartnerId = doc.CreateElement("PartnerId");
             xmlReceiverPartnerId.AppendChild(doc.CreateElement("System")).AppendChild(doc.CreateTextNode(item.SenderPartnerIdSystem));
-            xmlReceiverPartnerId.AppendChild(doc.CreateElement("Id")).AppendChild(doc.CreateTextNode(item.SenderPartnerIdId.ToString()));
+            xmlReceiverPartnerId.AppendChild(doc.CreateElement("Id")).AppendChild(doc.CreateTextNode(item.ReceivingPartnerIdId.ToString()));
             xmlReceiver.AppendChild(xmlReceiverPartnerId);
 
             xmlReceiver.AppendChild(doc.CreateElement("Name")).AppendChild(doc.CreateTextNode(item.ReceiverName));

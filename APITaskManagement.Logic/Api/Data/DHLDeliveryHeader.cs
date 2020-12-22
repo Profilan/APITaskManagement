@@ -23,6 +23,7 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string SenderType { get; set; }
         public virtual string SenderPartnerIdSystem { get; set; }
         public virtual int SenderPartnerIdId { get; set; }
+        public virtual int ReceivingPartnerIdId { get; set; }
         public virtual string ReceiverType { get; set; }
         public virtual string ReceiverName { get; set; }
         public virtual string ReceiverAddressName1 { get; set; }

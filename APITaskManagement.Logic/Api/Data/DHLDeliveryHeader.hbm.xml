@@ -20,6 +20,7 @@
     <property name="SenderType"/>
     <property name="SenderPartnerIdSystem"/>
     <property name="SenderPartnerIdId"/>
+    <property name="ReceivingPartnerIdId"/>
     <property name="ReceiverType"/>
     <property name="ReceiverName"/>
     <property name="ReceiverAddressName1"/>
