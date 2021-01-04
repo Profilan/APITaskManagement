@@ -9,6 +9,22 @@ using Newtonsoft.Json;
 
 namespace APITaskManagement.Logic.Api
 {
+
+    public class DNException
+    { 
+        [JsonProperty("code")]
+        public int Code { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
+        [JsonProperty("errors")]
+        public object Errors { get; set; }
+
+        [JsonProperty("error_code")]
+        public int ErrorCode { get; set; }
+    }
+
     public class DNResponseResult
     {
         [JsonProperty("id")]
@@ -16,12 +32,18 @@ namespace APITaskManagement.Logic.Api
 
         [JsonProperty("status")]
         public int StatusCode { get; set; }
+
+        [JsonProperty("exception")]
+        public DNException Exception { get; set; }
     }
 
     public class DNResponse
     {
         [JsonProperty("status")]
         public string StatusDescription { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
 
         [JsonProperty("results")]
         public IList<DNResponseResult> Results { get; set; }
@@ -93,6 +115,9 @@ namespace APITaskManagement.Logic.Api
                             break;
                         case 604:
                             description = "Can’t be changed already planned";
+                            break;
+                        case 605:
+                            description = "{ Exception: {" + JsonConvert.SerializeObject(result.Exception) + "}}";
                             break;
                     }
                     var status = new DutchNedInsertedOrderlinestatus()

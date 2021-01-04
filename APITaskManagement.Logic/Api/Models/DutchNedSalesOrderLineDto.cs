@@ -26,8 +26,22 @@ namespace APITaskManagement.Logic.Api.Models
         [JsonProperty("volume")]
         public int Volume { get; set; }
 
+        [JsonProperty("length")]
+        public float Length { get; set; }
+
+        [JsonProperty("width")]
+        public float Width { get; set; }
+
+        [JsonProperty("height")]
+        public float Height { get; set; }
+
+        [JsonProperty("weight")]
+        public float Weight { get; set; }
+
         [JsonProperty("plan_from_date")]
         public string PlanFromDate { get; set; }
+        
+        // [JsonProperty
 
         [JsonProperty("warehouse")]
         public string Warehouse { get; set; }

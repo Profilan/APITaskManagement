@@ -13,10 +13,15 @@
     <property name="Identifier"/>
     <property name="MainPackageIdentifier"/>
     <property name="Volume"/>
+    <property name="Length"/>
+    <property name="Width"/>
+    <property name="Height"/>
+    <property name="Weight"/>
     <property name="Warehouse"/>
     <property name="CashOnDelivery"/>
     <property name="IsReturn"/>
     <property name="PlanFromDate"/>
+    <property name="PickedUpDate" column="picked_up_date"/>
     <property name="Type"/>
   </class>
 

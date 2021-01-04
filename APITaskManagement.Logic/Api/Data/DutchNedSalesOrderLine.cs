@@ -12,7 +12,12 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string Identifier { get; set; }
         public virtual string MainPackageIdentifier { get; set; }
         public virtual int Volume { get; set; }
+        public virtual int Length { get; set; }
+        public virtual int Width { get; set; }
+        public virtual int Height { get; set; }
+        public virtual int Weight { get; set; }
         public virtual DateTime PlanFromDate { get; set; }
+        public virtual DateTime PickedUpDate { get; set; }
         public virtual string Warehouse { get; set; }
         public virtual int CashOnDelivery { get; set; }
         public virtual bool IsReturn { get; set; }
