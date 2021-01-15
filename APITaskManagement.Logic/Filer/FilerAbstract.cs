@@ -2,6 +2,8 @@
 using APITaskManagement.Logic.Filer.Data;
 using APITaskManagement.Logic.Filer.Interfaces;
 using APITaskManagement.Logic.Logging.Interfaces;
+using APITaskManagement.Logic.Management;
+using APITaskManagement.Logic.Management.Repositories;
 using APITaskManagement.Logic.Schedulers;
 using System;
 using System.Collections.Generic;
@@ -31,12 +33,17 @@ namespace APITaskManagement.Logic.Filer
         public IList<Response> Responses { get; set; }
         protected IList<ILogger> Loggers { get; set; }
 
+        protected User user;
+
+        private readonly UserRepository userRepository = new UserRepository();
 
         public FilerAbstract(IList<ContentFormat> formats)
         {
             Formats = formats;
             Responses = new List<Response>();
             Loggers = new List<ILogger>();
+
+            user = userRepository.GetById(40); // Administrator
         }
 
         public abstract void SaveDocuments(Share share, Schedulers.Task Task);
@@ -49,7 +56,7 @@ namespace APITaskManagement.Logic.Filer
 
                 foreach (var response in Responses)
                 {
-                    LogResponse(response, share, task.SPLogger);
+                    LogResponse(response, share, task);
                 }
             }
         }
@@ -59,11 +66,11 @@ namespace APITaskManagement.Logic.Filer
             Loggers.Add(logger);
         }
 
-        protected void LogResponse(Response response, Share share, string spLogger)
+        protected void LogResponse(Response response, Share share, Schedulers.Task task)
         {
             foreach (ILogger logger in Loggers)
             {
-                logger.Log(response, share, spLogger);
+                logger.Log(response, share, user, task);
             }
         }
 

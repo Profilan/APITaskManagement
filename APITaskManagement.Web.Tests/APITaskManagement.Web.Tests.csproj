@@ -99,10 +99,6 @@
       <Project>{86f87f12-357c-4b7f-8190-d7e875f532f7}</Project>
       <Name>APITaskManagement.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\APITaskManagement.Web\APITaskManagement.Web.csproj">
-      <Project>{FD9747C1-A7BF-4970-8B3B-59AB4551A6A3}</Project>
-      <Name>APITaskManagement.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

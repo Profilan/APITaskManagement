@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace APITaskManagement.Logic.Api
 {
-    public class ApiDutchNedSalesOrder : Api
+    public class ApiDNOrderLinePatch : Api
     {
         private readonly QueueRepository queueRepository = new QueueRepository();
 
-        public ApiDutchNedSalesOrder(string name) : base(name)
+        public ApiDNOrderLinePatch(string name) : base(name)
         {
-            queueRepository = new QueueRepository();
+
         }
 
-        public ApiDutchNedSalesOrder() : base()
+        public ApiDNOrderLinePatch() : base()
         {
-            queueRepository = new QueueRepository();
+
         }
 
         protected override void ExecutePost(Request request)
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override IList<Request> GetRequestsForTask(Guid taskId)

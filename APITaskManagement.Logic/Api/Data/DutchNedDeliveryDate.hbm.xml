@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    namespace="APITaskManagement.Logic.Api.Data"
+                    assembly="APITaskManagement.Logic">
+<class name="DutchNedDeliveryDate" table="EEK_DISTRIBUTION_DELIVERYDATES_AVAILABLE">
+  <id name="Id">
+    <generator class="identity"/>
+  </id>
+
+  <property name="Carrier"/>
+  <property name="DeliveryDate"/>
+  <property name="CountryCode"/>
+  <property name="Note"/>
+</class>
+
+</hibernate-mapping>

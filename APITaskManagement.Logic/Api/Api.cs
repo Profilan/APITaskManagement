@@ -15,6 +15,7 @@ using APITaskManagement.Logic.Common;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
+using APITaskManagement.Logic.Management.Repositories;
 
 namespace APITaskManagement.Logic.Api
 {
@@ -37,10 +38,15 @@ namespace APITaskManagement.Logic.Api
 
         public int TotalItems { get; set; }
 
+        private readonly UserRepository userRepository = new UserRepository();
+        protected User user;
+
         public Api(string name) : this()
         {
             Name = name;
             TotalItems = 100;
+
+            user = userRepository.GetById(40); // Administrator
         }
 
         public Api()
@@ -94,7 +100,10 @@ namespace APITaskManagement.Logic.Api
                 {
                     try
                     {
-                        responseMessage = client.GetAsync(url.Address).Result;
+                        // Parse url for known values
+                        var requestUri = url.Address.Replace("{TODAY}", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                        responseMessage = client.GetAsync(requestUri).Result;
 
                         var result = responseMessage.Content.ReadAsStringAsync().Result;
                         var statusCode = (int)responseMessage.StatusCode;
@@ -148,7 +157,7 @@ namespace APITaskManagement.Logic.Api
                 }
                 Requests.Add(request);
 
-                LogResponse(request, url, task.SPLogger);
+                LogResponse(request, url, task);
             }
         }
 
@@ -229,10 +238,17 @@ namespace APITaskManagement.Logic.Api
                                         responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
                                         break;
                                     case Common.HttpMethod.Patch:
-                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
+                                        var method = new System.Net.Http.HttpMethod("PATCH");
+                                        var httpRequest = new HttpRequestMessage(method, url.Address + "/" + request.ReferenceId)
+                                        {
+                                            Content = new StringContent(request.Body, Encoding.UTF8, mediaType)
+                                        };
+                                        responseMessage = client.SendAsync(httpRequest).Result;
+
+                                        // responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
                                         break;
                                     case Common.HttpMethod.Delete:
-                                        responseMessage = client.DeleteAsync(url.Address).Result;
+                                        responseMessage = client.DeleteAsync(url.Address + "/" + request.ReferenceId).Result;
                                         break;
                                     default:
                                         responseMessage = client.GetAsync(url.Address).Result;
@@ -251,7 +267,7 @@ namespace APITaskManagement.Logic.Api
                                     ExecutePost(request);
                                 }
 
-                                LogResponse(request, url, task.SPLogger);
+                                LogResponse(request, url, task);
 
                                 keys.Add(request.ReferenceId);
 
@@ -296,18 +312,11 @@ namespace APITaskManagement.Logic.Api
             Loggers.Add(logger);
         }
 
-        protected void LogResponse(Request request, Url url, string spLogger)
+        protected void LogResponse(Request request, Url url, Task task)
         {
             foreach (ILogger logger in Loggers)
             {
-                if (!string.IsNullOrEmpty(spLogger))
-                {
-                    logger.Log(request, url, spLogger);
-                }
-                else
-                {
-                    logger.Log(request, url);
-                }
+                logger.Log(request, url, user, task);
             }
         }
 
@@ -326,7 +335,12 @@ namespace APITaskManagement.Logic.Api
         {
             if (Requests.Count > 0)
             {
-                return Requests.Last().Response;
+                var latestResponse = Requests.Last().Response;
+                if (string.IsNullOrEmpty(latestResponse.Detail))
+                {
+                    latestResponse.Detail = "No Detail";
+                }
+                return latestResponse;
             }
 
             return null;

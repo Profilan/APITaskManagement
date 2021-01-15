@@ -3,19 +3,49 @@ using System.Collections.Generic;
 using APITaskManagement.Logic.Schedulers;
 using APITaskManagement.Logic.Api.Interfaces;
 using System;
+using APITaskManagement.Logic.Common.Repositories;
+using APITaskManagement.Logic.Api.Formatters;
 
 namespace APITaskManagement.Logic.Api
 {
     public class ApiGeneric : Api
     {
+        private readonly QueueRepository queueRepository = new QueueRepository();
+
+        public ApiGeneric(string name) : base(name)
+        {
+
+        }
+
+        public ApiGeneric() : base()
+        {
+
+        }
         protected override void ExecutePost(Request request)
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
-            throw new System.NotImplementedException();
+            var requests = new List<Request>();
+            var items = queueRepository.ListByTask(taskId, TotalItems);
+
+            var formatter = new GenericFormatter();
+
+            foreach (var item in items)
+            {
+                var content = formatter.GetJsonContent(item.Id, Properties);
+
+                if (!String.IsNullOrEmpty(content))
+                {
+                    var request = new Request(item.Id, (int)item.Key, content, true);
+
+                    requests.Add(request);
+                }
+            }
+
+            return requests;
         }
 
         protected override IList<ApiMessage> ProcessResponseForTask(string response)

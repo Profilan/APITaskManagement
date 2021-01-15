@@ -13,5 +13,9 @@
     <property name="Url"/>
     <property name="Detail" column="trace" type="StringClob"/>
     <property name="Acknowledged" column="acknowledged"/>
+    <property name="Duration"  not-null="true"/>
+    
+    <many-to-one name="User" column="userId" not-null="true"/>
+    <many-to-one name="Task" column="taskId" not-null="true"/>
   </class>
 </hibernate-mapping>

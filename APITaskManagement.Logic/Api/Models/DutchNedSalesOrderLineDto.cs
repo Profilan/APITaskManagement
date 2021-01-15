@@ -41,7 +41,8 @@ namespace APITaskManagement.Logic.Api.Models
         [JsonProperty("plan_from_date")]
         public string PlanFromDate { get; set; }
         
-        // [JsonProperty
+        [JsonProperty("picked_up_date")]
+        public string PickedUpDate { get; set; }
 
         [JsonProperty("warehouse")]
         public string Warehouse { get; set; }

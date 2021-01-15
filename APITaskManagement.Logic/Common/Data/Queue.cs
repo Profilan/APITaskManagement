@@ -10,6 +10,7 @@ namespace APITaskManagement.Logic.Common.Data
         public virtual int TryCount { get; set; }
         public virtual DateTime SysCreated { get; set; }
         public virtual Task Task { get; set; }
+        public virtual string Body { get; set; }
 
         protected Queue()
         {

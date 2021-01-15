@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskManagement.Logic", "APITaskManagement.Logic\APITaskManagement.Logic.csproj", "{86F87F12-357C-4B7F-8190-D7E875F532F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskManagement.Web", "APITaskManagement.Web\APITaskManagement.Web.csproj", "{FD9747C1-A7BF-4970-8B3B-59AB4551A6A3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskManagement.Web.Tests", "APITaskManagement.Web.Tests\APITaskManagement.Web.Tests.csproj", "{6E3F9448-D795-428B-9853-A639B9B67EA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITaskManagement.Test", "APITaskManagement.Test\APITaskManagement.Test.csproj", "{8DB6FB3F-D154-4A1B-8B29-EE44C400B8AE}"
@@ -31,10 +29,6 @@ Global
 		{86F87F12-357C-4B7F-8190-D7E875F532F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F87F12-357C-4B7F-8190-D7E875F532F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F87F12-357C-4B7F-8190-D7E875F532F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD9747C1-A7BF-4970-8B3B-59AB4551A6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD9747C1-A7BF-4970-8B3B-59AB4551A6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD9747C1-A7BF-4970-8B3B-59AB4551A6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD9747C1-A7BF-4970-8B3B-59AB4551A6A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E3F9448-D795-428B-9853-A639B9B67EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E3F9448-D795-428B-9853-A639B9B67EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E3F9448-D795-428B-9853-A639B9B67EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU

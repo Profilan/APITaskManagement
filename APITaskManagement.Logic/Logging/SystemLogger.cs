@@ -16,7 +16,7 @@ namespace APITaskManagement.Logic.Logging
 {
     public class SystemLogger : ILogger
     {
-        public void Log(Request request, Url url, string spLogger)
+        public void Log(Request request, Url url, User user, Schedulers.Task task)
         {
             var _logRepository = new LogRepository();
 
@@ -28,12 +28,13 @@ namespace APITaskManagement.Logic.Logging
 
             var detail = "{\"key\": " + request.ReferenceId + ",\"request\": " + request.Body + ",\"response\":" + request.Response.Detail + "}";
             var message = request.Response.Code + " " + request.Response.Description;
-            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), url.Address, detail, false);
+            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), url.Address, detail, false, user, task);
+
 
             _logRepository.Insert(log);
         }
 
-        public void Log(Response response, Share share, string spLogger)
+        public void Log(Response response, Share share, User user, Schedulers.Task task)
         {
             var _logRepository = new LogRepository();
 
@@ -46,12 +47,12 @@ namespace APITaskManagement.Logic.Logging
             var detail = response.Detail;
             var message = response.Code + " " + response.Description;
 
-            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), share.UNCPath, detail, false);
+            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), share.UNCPath, detail, false, user, task);
 
             _logRepository.Insert(log);
         }
 
-        public void Log(Response response, string recipient, string spLogger)
+        public void Log(Response response, string recipient, User user, Schedulers.Task task)
         {
             var _logRepository = new LogRepository();
 
@@ -64,28 +65,10 @@ namespace APITaskManagement.Logic.Logging
             var detail = response.Detail;
             var message = response.Code + " " + response.Description;
 
-            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), recipient, detail, false);
+            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), recipient, detail, false, user, task);
 
             _logRepository.Insert(log);
         }
 
-        public void Log(Request request, Url url)
-        {
-            var _logRepository = new LogRepository();
-
-            var priority = ErrorType.INFO;
-            if (request.Response.Code >= 400)
-            {
-                priority = ErrorType.ERR;
-            }
-
-            var detail = request.Response.Detail;
-            var message = request.Response.Code + " " + request.Response.Description;
-
-            var log = new Log(DateTime.Now, (int)priority, message, Enum.GetName(typeof(ErrorType), (int)priority), url.Address, detail, false);
-
-            _logRepository.Insert(log);
-
-        }
     }
 }

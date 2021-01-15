@@ -148,8 +148,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiChannelEngineOrder.cs" />
     <Compile Include="Api\ApiDHLDeliveries.cs" />
+    <Compile Include="Api\ApiDNDeliveryDate.cs" />
+    <Compile Include="Api\ApiDNOrderLinePatch.cs" />
     <Compile Include="Api\ApiDNSalesOrder.cs" />
+    <Compile Include="Api\ApiDutchNedSalesOrder.cs" />
     <Compile Include="Api\ApiPostNLShipment.cs" />
     <Compile Include="Api\ApiPriceSearch.cs" />
     <Compile Include="Api\ApiSissyboyDeliveryDate.cs" />
@@ -158,6 +162,10 @@
     <Compile Include="Api\Data\DHLDeliveryHeader.cs" />
     <Compile Include="Api\Data\DHLDeliveryLine.cs" />
     <Compile Include="Api\Data\DHLDeliveryLineIdentifier.cs" />
+    <Compile Include="Api\Data\DutchNedDeliveryDate.cs" />
+    <Compile Include="Api\Data\OrderHeader.cs" />
+    <Compile Include="Api\Data\OrderIdentifier.cs" />
+    <Compile Include="Api\Data\OrderLine.cs" />
     <Compile Include="Api\Data\PriceSearch.cs" />
     <Compile Include="Api\Data\SissyboyDeliveryDate.cs" />
     <Compile Include="Api\Data\DutchNedCustomer.cs" />
@@ -182,8 +190,18 @@
     <Compile Include="Api\Data\ZwaluwSalesOrder.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderHeader.cs" />
     <Compile Include="Api\Data\ZwaluwSalesOrderLine.cs" />
+    <Compile Include="Api\Formatters\GenericFormatter.cs" />
     <Compile Include="Api\Formatters\DHLDeliveriesFormatter.cs" />
     <Compile Include="Api\Formatters\DNSalesOrderFormatter.cs" />
+    <Compile Include="Api\Formatters\DutchNedSalesOrderFormatter.cs" />
+    <Compile Include="Api\Models\ChannelEngineAcknowledgeDto.cs" />
+    <Compile Include="Api\Models\ChannelEngineAddressDto.cs" />
+    <Compile Include="Api\Models\ChannelEngineDto.cs" />
+    <Compile Include="Api\Models\ChannelEngineOrderHeaderDto.cs" />
+    <Compile Include="Api\Models\ChannelEngineOrderLineDto.cs" />
+    <Compile Include="Api\Models\DHLAcknowledgementDetails.cs" />
+    <Compile Include="Api\Models\DHLTransmissionAcknowledgement.cs" />
+    <Compile Include="Api\Models\DutchNedAvailableDeliveryDateDto.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderDto.cs" />
     <Compile Include="Api\Models\DutchNedSalesOrderLineDto.cs" />
     <Compile Include="Api\Models\DutchNedSender.cs" />
@@ -199,8 +217,10 @@
     <Compile Include="Api\Formatters\PostNLShipmentFormatter.cs" />
     <Compile Include="Api\Repositories\CashOnDeliveryOrderlineRepository.cs" />
     <Compile Include="Api\Repositories\DHLDeliveryRepository.cs" />
+    <Compile Include="Api\Repositories\DutchNedDeliveryDateRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
+    <Compile Include="Api\Repositories\OrderRepository.cs" />
     <Compile Include="Api\Repositories\PostNLRepository.cs" />
     <Compile Include="Api\Repositories\PriceSearchRepository.cs" />
     <Compile Include="Api\Repositories\SissyboyRepository.cs" />
@@ -274,12 +294,10 @@
     <Compile Include="Monitoring\TaskScheduler.cs" />
     <Compile Include="Monitoring\UrlMonitor.cs" />
     <Compile Include="Api\DecimalFormatConverter.cs" />
-    <Compile Include="Api\Formatters\DutchNedSalesorderFormatter.cs" />
     <Compile Include="Api\Formatters\HelloDialogEmailFormatter.cs" />
     <Compile Include="Api\Interfaces\IContentFormatter.cs" />
     <Compile Include="Api\Interfaces\IApi.cs" />
     <Compile Include="Api\Api.cs" />
-    <Compile Include="Api\ApiDutchNedSalesorder.cs" />
     <Compile Include="Api\ApiGeneric.cs" />
     <Compile Include="Common\Interfaces\IRepository.cs" />
     <Compile Include="Common\Interfaces\IDomainEvent.cs" />
@@ -375,6 +393,9 @@
     <EmbeddedResource Include="Api\Data\DHLDeliveryBarcode.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\TransMissionHeader.hbm.xml" />
     <EmbeddedResource Include="Filer\Data\TransMissionLine.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\OrderHeader.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\OrderLine.hbm.xml" />
+    <EmbeddedResource Include="Api\Data\DutchNedDeliveryDate.hbm.xml" />
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

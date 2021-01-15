@@ -63,7 +63,12 @@ namespace APITaskManagement.Logic.Api.Formatters
                             CashOnDelivery = line.CashOnDelivery,
                             IsReturn = line.IsReturn,
                             PlanFromDate = line.PlanFromDate.ToString("yyyy-MM-dd"),
-                            Type = line.Type
+                            Type = line.Type,
+                            Height = line.Height,
+                            Length = line.Length,
+                            Width = line.Width,
+                            Weight = line.Weight,
+                            PickedUpDate = line.PickedUpDate.ToString("yyyy-MM-ddTHH:mm:sszzz")
                         };
                         salesOrderView.Lines.Add(salesOrderLineView);
                     }

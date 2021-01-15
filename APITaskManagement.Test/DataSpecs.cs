@@ -2,9 +2,11 @@
 using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Filer.Repositories;
+using APITaskManagement.Logic.Management.Repositories;
 using APITaskManagement.Logic.Schedulers.Repositories;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace APITaskManagement.Test
 {
@@ -55,6 +57,14 @@ namespace APITaskManagement.Test
         public void GetTasks()
         {
             var rep = new TaskRepository();
+
+            var items = rep.List();
+        }
+
+        [TestMethod]
+        public void GetLog()
+        {
+            var rep = new LogRepository();
 
             var items = rep.List();
         }
@@ -129,6 +139,18 @@ namespace APITaskManagement.Test
             var rep = new TransMissionRepository();
 
             var items = rep.List();
+        }
+
+        [TestMethod]
+        public void NarovaShouldWriteNettoPrice()
+        {
+            var rep = new OrderRepository();
+
+            string json = "{\"OrderIdentifier\":{\"REFERENTIE\":\"20389-01 testorder\",\"DEBITEURNR\":\"105574\"},\"SELECTIECODE\":\"TH\",\"ORDERTOELICHTING\":null,\"DS_NAAM\":\"Noëmi Putzeys\",\"DS_ADRES1\":\"Wuytsbergen 178\",\"DS_POSTCODE\":\"2200\",\"DS_PLAATS\":\"Herentals\",\"DS_LAND\":\"BE\",\"DS_TELEFOON\":\"498705059\",\"DS_EMAIL\":\"noemi.putzeys@gmail.com\",\"AUTHENTICATED_USER\":\"ChannelEngineApi\",\"CUSTOMERORDERID\":15379,\"Lines\":[{\"OrderIdentifier\":{\"REFERENTIE\":\"20389-01 testorder\",\"DEBITEURNR\":\"105574\"},\"ITEMCODE\":\"373636-M\",\"AANTAL\":2.0,\"NETTO_PRIJS\":57.02,\"NETT_PRICE_INCL_VAT\":69.00,\"UNIT_VAT\":11.98,\"REQUESTEDDATE\":null}]}";
+
+            OrderHeader order = JsonConvert.DeserializeObject<OrderHeader>(json);
+
+            rep.Insert(order);
         }
     }
 }

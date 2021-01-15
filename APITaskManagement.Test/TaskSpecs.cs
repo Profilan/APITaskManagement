@@ -55,7 +55,7 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void TaskShouldRun()
         {
-            var task = _taskRepository.GetById(new Guid("289b2ae1-02b5-4ecb-bf87-a8e8009a7e56"));
+            var task = _taskRepository.GetById(new Guid("ae03f9c6-5a66-497d-885d-aca7009e05c5"));
 
             task.Start();
 
@@ -87,7 +87,7 @@ namespace APITaskManagement.Test
         {
             // DutchNed e2f93b02-97fd-4124-8286-a87200c08f40
             // Zwaluw d0c86125-588e-46c0-8721-d49612af219f
-            var task = _taskRepository.GetById(new Guid("14c263e8-54b0-443e-ac79-ac92011b2bb9"));
+            var task = _taskRepository.GetById(new Guid("ae03f9c6-5a66-497d-885d-aca7009e05c5"));
 
             task.Start();
         }

@@ -1,9 +1,6 @@
 ﻿using APITaskManagement.Logic.Common;
+using APITaskManagement.Logic.Schedulers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APITaskManagement.Logic.Management
 {
@@ -16,6 +13,11 @@ namespace APITaskManagement.Logic.Management
         public virtual string Url { get; protected set; }
         public virtual string Detail { get; protected set; }
         public virtual bool Acknowledged { get; set; }
+        public virtual double Duration { get; set; }
+
+        public virtual User User { get; set; }
+
+        public virtual Task Task { get; set; }
 
         // Needed for NHibernate
         public Log()
@@ -29,7 +31,9 @@ namespace APITaskManagement.Logic.Management
             string priorityName,
             string url,
             string detail,
-             bool acknowledged)
+             bool acknowledged,
+             User user,
+             Task task)
         {
             TimeStamp = timeStamp;
             Priority = priority;
@@ -38,8 +42,8 @@ namespace APITaskManagement.Logic.Management
             Url = url;
             Detail = detail;
             Acknowledged = acknowledged;
+            User = user;
+            Task = task;
         }
-
-        // requestId, targetId, response, properties, referenceId
     }
 }

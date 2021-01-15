@@ -27,7 +27,11 @@ namespace APITaskManagement.Logic.Common.Repositories
 
         public Queue GetById(int id)
         {
-            throw new NotImplementedException();
+            using (ISession session = SessionFactory.GetNewSession())
+            {
+                var item = session.Get<Queue>(id);
+                return item;
+            }
         }
 
         public void Insert(Queue entity)

@@ -12,44 +12,46 @@ namespace APITaskManagement.Logic.Logging
 {
     public class ApplicationLogger : ILogger
     {
-        public void Log(Request request, Url url, string spLogger)
+        public void Log(Request request, Url url, User user, Task task)
         {
-            bool isOk = true;
-            if (request.Response.Code >= 300)
+            if (!string.IsNullOrEmpty(task.SPLogger))
             {
-                isOk = false;
+                bool isOk = true;
+                if (request.Response.Code >= 300)
+                {
+                    isOk = false;
+                }
+
+                var detail = "{\"request\": " + request.Body + ",\"response\":" + request.Response.Detail + "}";
+                var message = request.Response.Code + " " + request.Response.Description;
+
+                string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+
+                var requests = new List<Request>();
+
+                using (SqlConnection connection = new SqlConnection(connectionstring))
+                {
+                    DataSet dataSet = new DataSet();
+                    SqlCommand command = new SqlCommand(task.SPLogger, connection);
+                    command.CommandTimeout = 300;
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = request.Id;
+                    command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
+                    command.Parameters.Add("@json", SqlDbType.VarChar).Value = detail;
+                    command.Parameters.Add("@msg", SqlDbType.VarChar).Value = message;
+                    // command.Parameters.Add("@target", SqlDbType.Int).Value = target.Id;
+                    command.Parameters.Add("@IsSuccess", SqlDbType.Bit).Value = isOk;
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                    adapter.Fill(dataSet);
+                }
             }
-
-            var detail = "{\"request\": " + request.Body + ",\"response\":" + request.Response.Detail + "}";
-            var message = request.Response.Code + " " + request.Response.Description;
-
-            string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
-            
-            var requests = new List<Request>();
-
-            using (SqlConnection connection = new SqlConnection(connectionstring))
-            {
-                DataSet dataSet = new DataSet();
-                SqlCommand command = new SqlCommand(spLogger, connection);
-                command.CommandTimeout = 300;
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add("@id", SqlDbType.Int).Value = request.Id;
-                command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
-                command.Parameters.Add("@json", SqlDbType.VarChar).Value = detail;
-                command.Parameters.Add("@msg", SqlDbType.VarChar).Value = message;
-                // command.Parameters.Add("@target", SqlDbType.Int).Value = target.Id;
-                command.Parameters.Add("@IsSuccess", SqlDbType.Bit).Value = isOk;
-
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-
-                adapter.Fill(dataSet);
-            }
-
         }
 
-        public void Log(Response response, Share share, string spLogger)
+        public void Log(Response response, Share share, User user, Task task)
         {
-            if (!string.IsNullOrEmpty(spLogger))
+            if (!string.IsNullOrEmpty(task.SPLogger))
             {
                 bool isOk = true;
                 if (response.Code >= 300)
@@ -68,7 +70,7 @@ namespace APITaskManagement.Logic.Logging
                 using (SqlConnection connection = new SqlConnection(connectionstring))
                 {
                     DataSet dataSet = new DataSet();
-                    SqlCommand command = new SqlCommand(spLogger, connection);
+                    SqlCommand command = new SqlCommand(task.SPLogger, connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@ids", SqlDbType.VarChar).Value = response.Ids;
                     command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
@@ -82,7 +84,7 @@ namespace APITaskManagement.Logic.Logging
             }
         }
 
-        public void Log(Response response, string recipient, string spLogger)
+        public void Log(Response response, string recipient, User user, Task task)
         {
             bool isOk = true;
             if (response.Code >= 300)
@@ -100,7 +102,7 @@ namespace APITaskManagement.Logic.Logging
             using (SqlConnection connection = new SqlConnection(connectionstring))
             {
                 DataSet dataSet = new DataSet();
-                SqlCommand command = new SqlCommand(spLogger, connection);
+                SqlCommand command = new SqlCommand(task.SPLogger, connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("@id", SqlDbType.Int).Value = response.Id;
                 command.Parameters.Add("@IsOk", SqlDbType.Bit).Value = isOk;
@@ -113,11 +115,6 @@ namespace APITaskManagement.Logic.Logging
 
                 adapter.Fill(dataSet);
             }
-        }
-
-        public void Log(Request request, Url url)
-        {
-            
         }
     }
 }

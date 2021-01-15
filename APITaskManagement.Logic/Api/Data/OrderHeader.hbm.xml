@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="OrderHeader" table="_AB_TB_WEB_ORKRG">
+
+    <id name="ID">
+      <generator class="identity" />
+    </id>
+    
+    <component name="OrderIdentifier">
+      <property name="REFERENTIE"/>
+      <property name="DEBITEURNR"/>
+    </component>
+
+    <property name="OMSCHRIJVING"/>
+    <property name="STATUS"/>
+    <property name="ORDERNR"/>
+    <property name="SELECTIECODE"/>
+    <property name="ORDERTOELICHTING"/>
+    <property name="ACCEPTATIE_VERZAMELEN"/>
+    <property name="ACCEPTATIE_ORDERKOSTEN"/>
+    <property name="DS_NAAM"/>
+    <property name="DS_AANSPREEKTITEL"/>
+    <property name="DS_ADRES1"/>
+    <property name="DS_POSTCODE"/>
+    <property name="DS_PLAATS"/>
+    <property name="DS_LAND"/>
+    <property name="DS_TELEFOON"/>
+    <property name="DS_EMAIL"/>
+    <property name="SR_SERVICE_PRODUCT"/>
+    <property name="SR_AFLEVEREN_AAN"/>
+    <property name="SR_LOCATIE"/>
+    <property name="SR_BEDRIJFSNAAM"/>
+    <property name="SR_BEWIJS"/>
+    <property name="SR_ORDERREF"/>
+    <property name="SR_REDEN"/>
+    <property name="SR_TOELICHTING"/>
+    <property name="SR_PDF_ATTACHMENT"/>
+    <property name="AUTHENTICATED_USER"/>
+    <property name="ACCEPTATIE_ORDERSPLITSING"/>
+    <property name="PAYMENT_RELEASE_REQUIRED"/>
+    <property name="SYSCREATED"/>
+    <property name="SYSMODIFIED"/>
+    <property name="SYSMSG"/>
+    <property name="CUSTOMERORDERID"/>
+
+    <set name="Lines" table="_AB_TB_WEB_ORSRG" cascade="save-update">
+      <key column="ORDERHEADERID"/>
+      <one-to-many class="OrderLine"/>
+    </set>
+
+  </class>
+</hibernate-mapping>

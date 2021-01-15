@@ -13,7 +13,8 @@
         Post = 2,
         Put = 3,
         Patch = 4,
-        Delete = 5
+        Delete = 5,
+        Generic = 6
     }
 
     public enum AccessType

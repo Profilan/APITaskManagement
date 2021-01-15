@@ -9,6 +9,7 @@
     <property name="Key" column="`Key`"/>
     <property name="TryCount"/>
     <property name="SysCreated" column="sysCreated"/>
+    <property name="Body"/>
     
     <many-to-one name="Task" class="APITaskManagement.Logic.Schedulers.Task">
       <column name="TaskId" not-null="true" />

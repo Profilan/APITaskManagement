@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="OrderLine" table="_AB_TB_WEB_ORSRG">
+    
+    <id name="ID">
+      <generator class="identity"/>
+    </id>
+
+    <component name="OrderIdentifier">
+      <property name="REFERENTIE"/>
+      <property name="DEBITEURNR"/>
+    </component>
+    <property name="ITEMCODE"/>
+    <property name="AANTAL"/>
+    <property name="NETTO_PRIJS"/>
+    <property name="REQUESTEDDATE"/>
+    <property name="STATUS"/>
+    <property name="ORDERNR"/>
+    <property name="VERZENDWEEK"/>
+    <property name="SYSCREATED"/>
+    <property name="SYSMODIFIED"/>
+    <property name="SYSMSG"/>
+    <property name="NETT_PRICE_INCL_VAT"/>
+    <property name="UNIT_VAT"/>
+  </class>
+</hibernate-mapping>

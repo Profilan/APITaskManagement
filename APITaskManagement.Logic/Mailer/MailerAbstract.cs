@@ -1,6 +1,8 @@
 ﻿using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Logging.Interfaces;
 using APITaskManagement.Logic.Mailer.Interfaces;
+using APITaskManagement.Logic.Management;
+using APITaskManagement.Logic.Management.Repositories;
 using APITaskManagement.Logic.Schedulers;
 using Newtonsoft.Json;
 using System;
@@ -30,6 +32,9 @@ namespace APITaskManagement.Logic.Mailer
         protected IList<ILogger> Loggers { get; set; }
         protected SmtpClient client { get; set; }
 
+        private readonly UserRepository userRepository = new UserRepository();
+        protected User user;
+
         public MailerAbstract(IList<ContentFormat> formats)
         {
             Formats = formats;
@@ -47,6 +52,8 @@ namespace APITaskManagement.Logic.Mailer
             client.Host = ConfigurationManager.AppSettings["MailHost"];
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            user = userRepository.GetById(40); // Administrator
         }
 
         public void AddLogger(ILogger logger)
@@ -84,19 +91,19 @@ namespace APITaskManagement.Logic.Mailer
                     var response = new Response(201, "Created", "Mail was sent succesfully");
                     request.SetResponse(response);
 
-                    LogResponse(response, task.MailRecipient, requestBody, task.SPLogger);
+                    LogResponse(response, task.MailRecipient, requestBody, task);
                 }
                 catch (Exception e)
                 {
                     var response = new Response(400, "Bad Request", "Mail was not sent succesfully: " + e.Message);
 
-                    LogResponse(response, task.MailRecipient, requestBody, task.SPLogger);
+                    LogResponse(response, task.MailRecipient, requestBody, task);
                 }
              }
         }
 
 
-        protected void LogResponse(Response response, string recipient, RequestBody body, string spLogger)
+        protected void LogResponse(Response response, string recipient, RequestBody body, Task task)
         {
             foreach (ILogger logger in Loggers)
             {
@@ -105,7 +112,7 @@ namespace APITaskManagement.Logic.Mailer
                 {
                     response.Id = id;
                     response.Detail = originalDetail + " with id: [" + id + "]";
-                    logger.Log(response, recipient, spLogger);
+                    logger.Log(response, recipient, user, task);
                 }
                 
             }

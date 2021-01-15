@@ -3,36 +3,48 @@ using NHibernate.Cfg;
 using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace APITaskManagement.Logic.Utils
 {
     public class SessionFactory
     {
-        private static ISessionFactory _factory;
+        private static readonly ISessionFactory _globalSessionFactory = new Configuration().Configure().BuildSessionFactory();
+        private static IDictionary<string, ISessionFactory> _allFactories = LoadAllFactories();
 
-        private static void Init()
+        private static IDictionary<string, ISessionFactory> LoadAllFactories()
         {
-            Configuration config = new Configuration();
-            config.Configure();
-            // config.SetProperty("connection.connection_string_name", "default");
+            var dictionary = new Dictionary<string, ISessionFactory>(2);
 
-            _factory = config.BuildSessionFactory();
+            // Database MAATWERK
+            var factory = new Configuration()
+                .Configure()
+                .SetProperty("connection.connection_string_name", "default").BuildSessionFactory();
+            dictionary.Add("default", factory);
+
+            // Database 100 (Exact)
+            factory = new Configuration()
+                .Configure()
+                .SetProperty("connection.connection_string_name", "db2").BuildSessionFactory();
+            dictionary.Add("db2", factory);
+
+            return dictionary;
         }
 
-        public static ISessionFactory GetSessionFactory()
+        public static ISessionFactory GetSessionFactory(string identifier)
         {
-            if (_factory == null)
+            if (_allFactories == null)
             {
-                Init();
+                _allFactories = LoadAllFactories();
             }
 
-            return _factory;
+            return _allFactories[identifier];
         }
 
-        public static ISession GetNewSession()
+        public static ISession GetNewSession(string identifier = "default")
         {
-            return GetSessionFactory().OpenSession();
+            return GetSessionFactory(identifier).OpenSession();
         }
     }
 }
