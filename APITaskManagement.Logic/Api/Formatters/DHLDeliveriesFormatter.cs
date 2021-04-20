@@ -91,7 +91,7 @@ namespace APITaskManagement.Logic.Api.Formatters
             xmlAddress.AppendChild(doc.CreateElement("CountryCode")).AppendChild(doc.CreateTextNode(item.ReceiverAddressCountryCode));
             xmlAddress.AppendChild(doc.CreateElement("PostalCode")).AppendChild(doc.CreateTextNode(item.ReceiverAddressPostalCode));
             xmlAddress.AppendChild(doc.CreateElement("City")).AppendChild(doc.CreateTextNode(item.ReceiverAddressCity));
-            xmlAddress.AppendChild(doc.CreateElement("Street")).AppendChild(doc.CreateTextNode(item.ReceiverAddressCity));
+            xmlAddress.AppendChild(doc.CreateElement("Street")).AppendChild(doc.CreateTextNode(item.ReceiverAddressStreet));
             xmlAddress.AppendChild(doc.CreateElement("PhoneNumber1")).AppendChild(doc.CreateTextNode(item.ReceiverAddressPhoneNumber1));
             xmlAddress.AppendChild(doc.CreateElement("PhoneNumber2"));
             xmlAddress.AppendChild(doc.CreateElement("EMail")).AppendChild(doc.CreateTextNode(item.ReceiverAddressEMail));
@@ -99,7 +99,7 @@ namespace APITaskManagement.Logic.Api.Formatters
             xmlOrder.AppendChild(xmlReceiver);
 
             xmlOrder.AppendChild(doc.CreateElement("OrderType")).AppendChild(doc.CreateTextNode(item.OrderType));
-            xmlOrder.AppendChild(doc.CreateElement("ProductType")).AppendChild(doc.CreateTextNode(item.ProductType)); // TODO: moet FV zijn, staat nu onder FreightTerms
+            xmlOrder.AppendChild(doc.CreateElement("ProductType")).AppendChild(doc.CreateTextNode(item.ProductType));
             xmlOrder.AppendChild(doc.CreateElement("FreightTerms")).AppendChild(doc.CreateTextNode(item.FreightTerms));
             xmlOrder.AppendChild(doc.CreateElement("OrderDate")).AppendChild(doc.CreateTextNode(item.OrderDate.ToString("yyyy-MM-dd")));
 

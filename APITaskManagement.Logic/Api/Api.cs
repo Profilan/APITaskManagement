@@ -85,6 +85,10 @@ namespace APITaskManagement.Logic.Api
                         var accessToken = (string)token.SelectToken("access_token");
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                         break;
+                    case AuthenticationType.BasicWithSHA1:
+                        var byteArraySha1 = new UTF8Encoding().GetBytes(authentication.Username + ":" + GetSha1(authentication.Password));
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArraySha1));
+                        break;
                     case AuthenticationType.ApiKey:
                         client.DefaultRequestHeaders.Add("apikey", task.Authentication.ApiKey);
                         break;
@@ -219,75 +223,97 @@ namespace APITaskManagement.Logic.Api
                 HashSet<int> keys = new HashSet<int>();
                 foreach (Request request in Requests)
                 {
-                    // Check if Url is reachable
-                    if (HostIsReachable(url.Address))
+                    // Parse url for known values
+                    var requestUri = url.Address.Replace("{ID}", request.ReferenceId.ToString());
+
+                    if (!request.Body.Contains("[Error]"))
                     {
-                        if (!keys.Contains(request.ReferenceId))
+                        // Check if Url is reachable
+                        if (HostIsReachable(url.Address))
                         {
-                            try
-                            {
-                                switch (httpMethod)
+                                try
                                 {
-                                    case Common.HttpMethod.Get:
-                                        responseMessage = client.GetAsync(url.Address).Result;
-                                        break;
-                                    case Common.HttpMethod.Post:
-                                        responseMessage = client.PostAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
-                                        break;
-                                    case Common.HttpMethod.Put:
-                                        responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
-                                        break;
-                                    case Common.HttpMethod.Patch:
-                                        var method = new System.Net.Http.HttpMethod("PATCH");
-                                        var httpRequest = new HttpRequestMessage(method, url.Address + "/" + request.ReferenceId)
+                                    if (request.ExecBefore == true)
+                                    {
+                                        if (ExecuteBefore(client, request, url) == false)
                                         {
-                                            Content = new StringContent(request.Body, Encoding.UTF8, mediaType)
-                                        };
-                                        responseMessage = client.SendAsync(httpRequest).Result;
+                                            throw new Exception("ExecuteBefore() returned false");
+                                        }
+                                    }
+                                    switch (httpMethod)
+                                    {
+                                        case Common.HttpMethod.Get:
+                                            responseMessage = client.GetAsync(requestUri).Result;
+                                            break;
+                                        case Common.HttpMethod.Post:
+                                            responseMessage = client.PostAsync(requestUri, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
+                                            break;
+                                        case Common.HttpMethod.Put:
+                                            responseMessage = client.PutAsync(requestUri, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
+                                            break;
+                                        case Common.HttpMethod.Patch:
+                                            var method = new System.Net.Http.HttpMethod("PATCH");
+                                            var httpRequest = new HttpRequestMessage(method, url.Address + "/" + request.ReferenceId)
+                                            {
+                                                Content = new StringContent(request.Body, Encoding.UTF8, mediaType)
+                                            };
+                                            responseMessage = client.SendAsync(httpRequest).Result;
 
-                                        // responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
-                                        break;
-                                    case Common.HttpMethod.Delete:
-                                        responseMessage = client.DeleteAsync(url.Address + "/" + request.ReferenceId).Result;
-                                        break;
-                                    default:
-                                        responseMessage = client.GetAsync(url.Address).Result;
-                                        break;
+                                            // responseMessage = client.PutAsync(url.Address, new StringContent(request.Body, Encoding.UTF8, mediaType)).Result;
+                                            break;
+                                        case Common.HttpMethod.Delete:
+                                            responseMessage = client.DeleteAsync(url.Address + "/" + request.ReferenceId).Result;
+                                            break;
+                                        default:
+                                            responseMessage = client.GetAsync(url.Address).Result;
+                                            break;
+                                    }
+
+                                    var result = responseMessage.Content.ReadAsStringAsync().Result;
+                                    var statusCode = (int)responseMessage.StatusCode;
+                                    var description = responseMessage.StatusCode.ToString();
+
+                                    if (request.RequestAcknowledgment == true)
+                                    {
+                                        result = RequestAcknowledgement();
+                                    }
+
+                                    var response = new Response(statusCode, description, result);
+                                    request.SetResponse(response);
+
+                                    if (request.ExecPost == true)
+                                    {
+                                        ExecutePost(request);
+                                    }
+
+                                    LogResponse(request, url, task);
+
+                                    keys.Add(request.ReferenceId);
+
                                 }
-
-                                var result = responseMessage.Content.ReadAsStringAsync().Result;
-                                var statusCode = (int)responseMessage.StatusCode;
-                                var description = responseMessage.StatusCode.ToString();
-
-                                var response = new Response(statusCode, description, result);
-                                request.SetResponse(response);
-
-                                if (request.ExecPost == true)
+                                catch (Exception e)
                                 {
-                                    ExecutePost(request);
+                                    var response = new Response(500, "Internal Server Error", "Call to API failed. (" + e.Message + ")");
+                                    request.SetResponse(response);
                                 }
-
-                                LogResponse(request, url, task);
-
-                                keys.Add(request.ReferenceId);
-
-                            }
-                            catch (Exception e)
-                            {
-                                var response = new Response(500, "Internal Server Error", "Call to API failed. (" + e.Message + ")");
-                                request.SetResponse(response);
-                            }
+                        }
+                        else
+                        {
+                            var response = new Response(500, "Internal Server Error", "You tried to connect to a host who does not exist. (" + url.Address + ")");
+                            request.SetResponse(response);
                         }
                     }
                     else
                     {
-                        var response = new Response(500, "Internal Server Error", "You tried to connect to a host who does not exist. (" + url.Address + ")");
-                        request.SetResponse(response);
+                        var response = new Response(422, "Unprocessable item", request.Body);
                     }
-
                 }
             }
         }
+
+        protected abstract string RequestAcknowledgement();
+
+        protected abstract bool ExecuteBefore(HttpClient client, Request request, Url url);
 
         private bool HostIsReachable(string url)
         {
@@ -335,8 +361,10 @@ namespace APITaskManagement.Logic.Api
         {
             if (Requests.Count > 0)
             {
-                var latestResponse = Requests.Last().Response;
-                if (string.IsNullOrEmpty(latestResponse.Detail))
+                var latestRequest = Requests.Last();
+                var latestResponse = Requests.Where(x => x.Response != null).Last().Response;
+                
+                if (string.IsNullOrEmpty(latestResponse.Detail) || latestResponse == null)
                 {
                     latestResponse.Detail = "No Detail";
                 }
@@ -345,7 +373,7 @@ namespace APITaskManagement.Logic.Api
 
             return null;
         }
-        private string GetSha1(string value)
+        protected string GetSha1(string value)
         {
             var data = Encoding.ASCII.GetBytes(value);
             var hashData = new SHA1Managed().ComputeHash(data);

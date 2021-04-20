@@ -17,7 +17,7 @@ namespace APITaskManagement.Logic.Api
         public override void WriteJson(JsonWriter writer, object value,
                                        JsonSerializer serializer)
         {
-            writer.WriteValue(string.Format("{0:N3}", value));
+            writer.WriteValue(string.Format("{0:N2}", value));
         }
 
         public override bool CanRead

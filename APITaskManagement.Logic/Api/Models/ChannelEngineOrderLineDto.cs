@@ -23,5 +23,8 @@ namespace APITaskManagement.Logic.Api.Models
 
         [JsonProperty("ExpectedDeliveryDate", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime ExpectedDeliveryDate { get; set; }
+
+        [JsonProperty("ExtraData")]
+        public IList<ChannelEngineExtraDataDto> ExtraData { get; set; }
     }
 }

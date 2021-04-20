@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="ZwaluwInboundHeader" table="vwDistribution_Zwaluw_InboundHeaders">
+    <id name="InboundShipmentHeaderId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="Supplier"/>
+    <property name="TruckReference"/>
+    <property name="DeliveryDate"/>
+
+    <set name="Lines" table="vwDistribution_Zwaluw_InboundLines" cascade="all-delete-orphan" inverse="true" lazy="false">
+      <key column="InboundShipmentHeaderId" not-null="true"/>
+      <one-to-many class="ZwaluwInboundLine"/>
+    </set>
+  </class>
+
+</hibernate-mapping>

@@ -1,11 +1,13 @@
 ﻿using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Models;
 using APITaskManagement.Logic.Api.Repositories;
+using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +22,11 @@ namespace APITaskManagement.Logic.Api
 
         }
 
+        protected override bool ExecuteBefore(HttpClient client, Request request, Url url)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void ExecutePost(Request request)
         {
             
@@ -32,6 +39,7 @@ namespace APITaskManagement.Logic.Api
 
         protected override IList<ApiMessage> ProcessResponseForTask(string response)
         {
+            
             ChannelEngineDto dto = JsonConvert.DeserializeObject<ChannelEngineDto>(response);
             IList<ApiMessage> messages = new List<ApiMessage>();
 
@@ -83,8 +91,23 @@ namespace APITaskManagement.Logic.Api
                             foreach (ChannelEngineOrderLineDto line in order.Lines)
                             {
                                 var nettoPrijs = line.UnitPriceInclVat - line.UnitVat;
+
+                                bool exactDeliveryDate = false;
+                                if (line.ExtraData.Count() > 0)
+                                {
+                                    foreach (var data in line.ExtraData)
+                                    {
+                                        if (data.Key == "ExactDeliveryDate")
+                                        {
+                                            if (data.Value == "True")
+                                            {
+                                                exactDeliveryDate = true;
+                                            }
+                                        }
+                                    }
+                                }
                                 
-                                if (line.ExpectedDeliveryDate.ToString() != "01/01/0001 00:00:00")
+                                if (line.ExpectedDeliveryDate != DateTime.MinValue && exactDeliveryDate == true)
                                 {
                                     orderHeader.Lines.Add(new OrderLine
                                     {
@@ -114,15 +137,17 @@ namespace APITaskManagement.Logic.Api
 
                             orderRepository.Insert(orderHeader);
 
-                            messages.Add(new ApiMessage
-                            {
-                                Code = 200,
-                                Description = "Before: " + JsonConvert.SerializeObject(order) + ", After: " + JsonConvert.SerializeObject(orderHeader)
-                            });
-
                             ++itemCount;
                         }
                     }
+                }
+                else
+                {
+                    messages.Add(new ApiMessage
+                    {
+                        Code = 200,
+                        Description = "No orders to process"
+                    });
                 }
             }
             catch (Exception ex)
@@ -130,11 +155,29 @@ namespace APITaskManagement.Logic.Api
                 messages.Add(new ApiMessage()
                 {
                     Code = 401,
-                    Description = "Error in (ProcessResponseForTask): " + ex.Message
+                    Description = "Error in (ProcessResponseForTask): " + ex.ToString()
                 });
             }
 
-            return messages;
+            if (messages.Count > 0) // Means that an error was raised
+            {
+                return messages;
+            }
+            else
+            {
+                messages.Add(new ApiMessage()
+                {
+                    Code = 200,
+                    Description = itemCount + " items processed: " + response
+                });
+
+                return messages;
+            }
+        }
+
+        protected override string RequestAcknowledgement()
+        {
+            throw new NotImplementedException();
         }
     }
 }

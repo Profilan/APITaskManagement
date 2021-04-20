@@ -29,6 +29,12 @@ namespace APITaskManagement.Logic.Utils
                 .SetProperty("connection.connection_string_name", "db2").BuildSessionFactory();
             dictionary.Add("db2", factory);
 
+            // Database MvW
+            factory = new Configuration()
+                .Configure()
+                .SetProperty("connection.connection_string_name", "mvw").BuildSessionFactory();
+            dictionary.Add("mvw", factory);
+
             return dictionary;
         }
 

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
 using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Filer.Repositories;
@@ -151,6 +155,73 @@ namespace APITaskManagement.Test
             OrderHeader order = JsonConvert.DeserializeObject<OrderHeader>(json);
 
             rep.Insert(order);
+        }
+
+        [TestMethod]
+        public void GetFonQFeedB2B()
+        {
+            var rep = new FonQOfferFeedB2BRepository();
+
+            var items = rep.List();
+        }
+
+        [TestMethod]
+        public void GetZwaluwItems()
+        {
+            var rep = new ZwaluwItemRepository();
+
+            var items = rep.List();
+        }
+
+        [TestMethod]
+        public void GetZwaluwItemById()
+        {
+            var rep = new ZwaluwItemRepository();
+
+            var item = rep.GetById(504);
+        }
+
+        [TestMethod]
+        public void GetZwaluwOutbound()
+        {
+            var rep = new ZwaluwOutboundRepository();
+
+            var items = rep.List();
+        }
+
+        [TestMethod]
+        public void GetZwaluwInbound()
+        {
+            var rep = new ZwaluwInboundRepository();
+
+            var items = rep.List();
+        }
+
+        [TestMethod]
+        public void ShouldGetDHLTransmissionAcknowledgment()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var byteArraySha1 = new UTF8Encoding().GetBytes("DEE:" + GetSha1("RObKrqfIit"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArraySha1));
+
+                var responseMessage = client.GetAsync("https://deliverit.dhl.com/webdsi/rest/latest/transmissionAcknowledgement/DEE").Result;
+
+                var result = responseMessage.Content.ReadAsStringAsync().Result;
+                var statusCode = (int)responseMessage.StatusCode;
+                var description = responseMessage.StatusCode.ToString();
+            }
+        }
+        private string GetSha1(string value)
+        {
+            var data = Encoding.ASCII.GetBytes(value);
+            var hashData = new SHA1Managed().ComputeHash(data);
+            var hash = string.Empty;
+            foreach (var b in hashData)
+            {
+                hash += b.ToString("X2");
+            }
+            return hash;
         }
     }
 }

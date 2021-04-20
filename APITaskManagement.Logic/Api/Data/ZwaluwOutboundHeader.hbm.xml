@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="ZwaluwOutboundHeader" table="vwDistribution_Zwaluw_OrderHeaders">
+    <id name="SalesOrderHeaderId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="OrderNumber"/>
+    <property name="Barcode"/>
+    <property name="DebtorNumber"/>
+    <property name="DebtorName"/>
+    <property name="DeliveryAddress"/>
+    <property name="DeliveryZip"/>
+    <property name="DeliveryCity"/>
+    <property name="DeliveryCountryCode"/>
+    <property name="DeliveryNote"/>
+    <property name="Carrier"/>
+
+    <set name="Lines" table="vwDistribution_Zwaluw_OrderLines" cascade="all-delete-orphan" inverse="true" lazy="false">
+      <key column="SalesOrderHeaderId" not-null="true"/>
+      <one-to-many class="ZwaluwOutboundLine"/>
+    </set>
+  </class>
+
+</hibernate-mapping>

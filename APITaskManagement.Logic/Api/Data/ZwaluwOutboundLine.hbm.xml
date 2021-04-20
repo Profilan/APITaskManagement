@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="ZwaluwOutboundLine" table="vwDistribution_Zwaluw_OrderLines">
+    <id name="OrderLineId">
+      <generator class="identity"/>
+    </id>
+
+    <property name="ItemCode"/>
+    <property name="Quantity"/>
+    
+  </class>
+
+</hibernate-mapping>

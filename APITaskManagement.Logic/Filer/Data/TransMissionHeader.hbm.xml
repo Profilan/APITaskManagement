@@ -12,6 +12,7 @@
     <property name="datum"/>
     <property name="afznaam"/>
     <property name="geanaam"/>
+    <property name="geanaam2"/>
     <property name="geastraat"/>
     <property name="geahuisnr"/>
     <property name="geapostcode"/>

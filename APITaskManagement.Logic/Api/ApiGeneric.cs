@@ -5,6 +5,8 @@ using APITaskManagement.Logic.Api.Interfaces;
 using System;
 using APITaskManagement.Logic.Common.Repositories;
 using APITaskManagement.Logic.Api.Formatters;
+using System.Net.Http;
+using APITaskManagement.Logic.Management;
 
 namespace APITaskManagement.Logic.Api
 {
@@ -49,6 +51,16 @@ namespace APITaskManagement.Logic.Api
         }
 
         protected override IList<ApiMessage> ProcessResponseForTask(string response)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string RequestAcknowledgement()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override bool ExecuteBefore(HttpClient client, Request request, Url url)
         {
             throw new NotImplementedException();
         }

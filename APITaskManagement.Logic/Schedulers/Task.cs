@@ -62,6 +62,13 @@ namespace APITaskManagement.Logic.Schedulers
         {
             Shares = new HashSet<Share>();
             HttpHeaders = new HashSet<HttpHeader>();
+
+            DomainEvents.Register<TaskStartedEvent>(OnTaskStarted);
+        }
+
+        private void OnTaskStarted(TaskStartedEvent obj)
+        {
+            var temp = obj;
         }
 
         public Task(string title,
@@ -103,6 +110,14 @@ namespace APITaskManagement.Logic.Schedulers
                 LastRunTime = DateTime.Now;
                 LastRunDetails = LatestResponse.Detail;
             }
+            /*
+            else
+            {
+                LastRunResult = "Warning";
+                LastRunTime = DateTime.Now;
+                LastRunDetails = "Last run data is not right";
+            }
+            */
 
             var taskFinishedEvent = new TaskFinishedEvent(this);
             DomainEvents.Raise(taskFinishedEvent);
@@ -156,11 +171,6 @@ namespace APITaskManagement.Logic.Schedulers
         public virtual void Run()
         {
 
-        }
-        public virtual void AddHeader(HttpHeader header)
-        {
-            header.Task = this;
-            HttpHeaders.Add(header);
         }
     }
 }

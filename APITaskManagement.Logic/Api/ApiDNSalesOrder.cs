@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Formatters;
 using APITaskManagement.Logic.Api.Repositories;
 using APITaskManagement.Logic.Common.Repositories;
+using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers;
 using Newtonsoft.Json;
 
@@ -165,6 +167,16 @@ namespace APITaskManagement.Logic.Api
         }
 
         protected override IList<ApiMessage> ProcessResponseForTask(string response)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override string RequestAcknowledgement()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override bool ExecuteBefore(HttpClient client, Request request, Url url)
         {
             throw new NotImplementedException();
         }

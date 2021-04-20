@@ -1,0 +1,31 @@
+﻿<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="FonQOfferFeedB2B" table="EEK_vw_Fonq_Offerfeed_B2B">
+
+    <id name="Id">
+      
+    </id>
+
+    <property name="Debtor"/>
+    <property name="EAN"/>
+    <property name="MOQ"/>
+    <property name="ArticleStatus"/>
+    <property name="VATPercentage"/>
+    <property name="BrandSupplier"/>
+    <property name="ArticleDescription"/>
+    <property name="ArticleNumberSupplier"/>
+    <property name="Fragile"/>
+    <property name="DeliveryLeadTime"/>
+    <property name="Weight"/>
+    <property name="Length"/>
+    <property name="Width"/>
+    <property name="Height"/>
+    <property name="QuantityPerBox"/>
+    <property name="QuantityPerOuterCarton"/>
+    <property name="QuantityPerPallet" not-null="false" />
+    <property name="QuantityFreeOnStock"/>
+    <property name="RestockDate"/>
+    <property name="ArticlePrice"/>
+  </class>
+</hibernate-mapping>

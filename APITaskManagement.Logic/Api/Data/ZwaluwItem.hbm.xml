@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   namespace="APITaskManagement.Logic.Api.Data"
+                   assembly="APITaskManagement.Logic">
+  <class name="ZwaluwItem" table="vwDistribution_Zwaluw_Items">
+    <id name="Id">
+      <generator class="identity"/>
+    </id>
+
+    <property name="ItemId"/>
+    <property name="ItemCode"/>
+    <property name="Description"/>
+    <property name="Supplier"/>
+    <property name="EANCode"/>
+    <property name="Weight"/>
+    <property name="Volume"/>
+    <property name="Height"/>
+    <property name="Length"/>
+    <property name="Width"/>
+    <property name="SalesUnitPerColliUnit"/>
+  </class>
+
+</hibernate-mapping>

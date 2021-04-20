@@ -46,7 +46,7 @@ namespace APITaskManagement.Logic.Monitoring
                                     var messengerToSend = (IMessenger)Activator.CreateInstance(t);
                                     messengerToSend.Send("API Queue contains overdue items", "The task '" + task.Title + "' contains " + queueItems.Count() + " overdue item(s) before " + sysCreated.ToString());
                                 }
-                                catch (Exception e)
+                                catch
                                 {
 
                                 }
@@ -55,7 +55,7 @@ namespace APITaskManagement.Logic.Monitoring
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
 
             }

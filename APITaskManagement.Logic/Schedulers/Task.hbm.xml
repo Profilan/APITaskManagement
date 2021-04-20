@@ -15,7 +15,6 @@
     <property name="Enabled"/>
     <property name="LastRunResult"/>
     <property name="LastRunTime"/>
-    <property name="LastRunDetails"/>
     <property name="MaxErrors"/>
     <property name="TotalProcessedItems"/>
     <property name="Active"/>

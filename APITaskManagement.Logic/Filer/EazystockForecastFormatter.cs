@@ -81,7 +81,7 @@ namespace APITaskManagement.Logic.Filer
 
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }

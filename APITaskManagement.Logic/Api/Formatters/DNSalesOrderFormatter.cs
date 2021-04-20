@@ -48,29 +48,56 @@ namespace APITaskManagement.Logic.Api.Formatters
                         },
                     };
 
+
+
                     foreach (var line in salesOrder.Lines)
                     {
-                        var salesOrderLineView = new APITaskManagement.Logic.Api.Models.DutchNedSalesOrderLineDto()
+                        if (line.PickedUpDate != DateTime.MinValue)
                         {
-                            Id = line.Id.ToString(),
-                            CollectionDate = line.CollectionDate.ToString("yyyy-MM-dd"),
-                            Description = line.Description,
-                            EANCode = line.EANCode,
-                            Identifier = line.Identifier,
-                            MainPackageIdentifier = line.MainPackageIdentifier,
-                            Volume = line.Volume,
-                            Warehouse = line.Warehouse.Trim(),
-                            CashOnDelivery = line.CashOnDelivery,
-                            IsReturn = line.IsReturn,
-                            PlanFromDate = line.PlanFromDate.ToString("yyyy-MM-dd"),
-                            Type = line.Type,
-                            Height = line.Height,
-                            Length = line.Length,
-                            Width = line.Width,
-                            Weight = line.Weight,
-                            PickedUpDate = line.PickedUpDate.ToString("yyyy-MM-ddTHH:mm:sszzz")
-                        };
-                        salesOrderView.Lines.Add(salesOrderLineView);
+                            salesOrderView.Lines.Add(new APITaskManagement.Logic.Api.Models.DutchNedSalesOrderLineDto()
+                            {
+                                Id = line.Id.ToString(),
+                                CollectionDate = line.CollectionDate.ToString("yyyy-MM-dd"),
+                                Description = line.Description,
+                                EANCode = line.EANCode,
+                                Identifier = line.Identifier,
+                                MainPackageIdentifier = line.MainPackageIdentifier,
+                                Volume = line.Volume,
+                                Warehouse = line.Warehouse.Trim(),
+                                CashOnDelivery = line.CashOnDelivery,
+                                IsReturn = line.IsReturn,
+                                PlanFromDate = line.PlanFromDate.ToString("yyyy-MM-dd"),
+                                Type = line.Type,
+                                Height = line.Height,
+                                Length = line.Length,
+                                Width = line.Width,
+                                Weight = line.Weight,
+                                PickedUpDate = line.PickedUpDate.ToString("yyyy-MM-ddTHH:mm:sszzz")
+                            });
+                        }
+                        else
+                        {
+                            salesOrderView.Lines.Add(new APITaskManagement.Logic.Api.Models.DutchNedSalesOrderLineDto()
+                            {
+                                Id = line.Id.ToString(),
+                                CollectionDate = line.CollectionDate.ToString("yyyy-MM-dd"),
+                                Description = line.Description,
+                                EANCode = line.EANCode,
+                                Identifier = line.Identifier,
+                                MainPackageIdentifier = line.MainPackageIdentifier,
+                                Volume = line.Volume,
+                                Warehouse = line.Warehouse.Trim(),
+                                CashOnDelivery = line.CashOnDelivery,
+                                IsReturn = line.IsReturn,
+                                PlanFromDate = line.PlanFromDate.ToString("yyyy-MM-dd"),
+                                Type = line.Type,
+                                Height = line.Height,
+                                Length = line.Length,
+                                Width = line.Width,
+                                Weight = line.Weight,
+                                PickedUpDate = null
+                            });
+                        }
                     }
 
                     return JsonConvert.SerializeObject(salesOrderView);

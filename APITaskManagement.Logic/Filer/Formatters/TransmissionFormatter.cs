@@ -53,7 +53,7 @@ namespace APITaskManagement.Logic.Filer.Formatters
                 opdracht.AppendChild(doc.CreateElement("afzland"));
 
                 opdracht.AppendChild(doc.CreateElement("geanaam")).AppendChild(doc.CreateTextNode(item.geanaam));
-                opdracht.AppendChild(doc.CreateElement("geanaam2"));
+                opdracht.AppendChild(doc.CreateElement("geanaam2")).AppendChild(doc.CreateTextNode(item.geanaam2));
                 opdracht.AppendChild(doc.CreateElement("geastraat")).AppendChild(doc.CreateTextNode(item.geastraat));
                 opdracht.AppendChild(doc.CreateElement("geahuisnr")).AppendChild(doc.CreateTextNode(item.geahuisnr));
                 opdracht.AppendChild(doc.CreateElement("geapostcode")).AppendChild(doc.CreateTextNode(item.geapostcode));

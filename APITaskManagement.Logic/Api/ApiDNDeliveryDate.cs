@@ -1,6 +1,7 @@
 ﻿using APITaskManagement.Logic.Api.Data;
 using APITaskManagement.Logic.Api.Models;
 using APITaskManagement.Logic.Api.Repositories;
+using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers;
 using Newtonsoft.Json;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +22,11 @@ namespace APITaskManagement.Logic.Api
         public ApiDNDeliveryDate(string name) : base(name)
         {
 
+        }
+
+        protected override bool ExecuteBefore(HttpClient client, Request request, Url url)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void ExecutePost(Request request)
@@ -92,6 +99,11 @@ namespace APITaskManagement.Logic.Api
 
                 return messages;
             }
+        }
+
+        protected override string RequestAcknowledgement()
+        {
+            throw new NotImplementedException();
         }
     }
 }

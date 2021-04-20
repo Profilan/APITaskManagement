@@ -14,6 +14,7 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual DateTime datum { get; set; }
         public virtual string afznaam { get; set; }
         public virtual string geanaam { get; set; }
+        public virtual string geanaam2 { get; set; }
         public virtual string geastraat { get; set; }
         public virtual string geahuisnr { get; set; }
         public virtual string geapostcode { get; set; }
