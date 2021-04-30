@@ -60,6 +60,7 @@ namespace APITaskManagement.Logic.Api
         {
             IList<ApiMessage> messages = new List<ApiMessage>();
             Request request = new Request(true);
+            request.ExecBefore = true;
 
             using (HttpClient client = new HttpClient())
             {
@@ -104,6 +105,14 @@ namespace APITaskManagement.Logic.Api
                 {
                     try
                     {
+                        if (request.ExecBefore == true)
+                        {
+                            if (ExecuteBefore(client, request, url) == false)
+                            {
+                                throw new Exception("ExecuteBefore() returned false");
+                            }
+                        }
+
                         // Parse url for known values
                         var requestUri = url.Address.Replace("{TODAY}", DateTime.Now.ToString("yyyy-MM-dd"));
 

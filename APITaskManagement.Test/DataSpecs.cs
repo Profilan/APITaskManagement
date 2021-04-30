@@ -66,6 +66,14 @@ namespace APITaskManagement.Test
         }
 
         [TestMethod]
+        public void GetTaskById()
+        {
+            var rep = new TaskRepository();
+
+            var task = rep.GetById(new Guid("E7145A24-82FB-4768-A405-AD10007BFC11"));
+        }
+
+        [TestMethod]
         public void GetLog()
         {
             var rep = new LogRepository();

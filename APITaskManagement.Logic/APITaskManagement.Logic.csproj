@@ -348,6 +348,7 @@
     <Compile Include="Api\Formatters\ZwaluwCrossdockFormatter.cs" />
     <Compile Include="Api\Formatters\ZwaluwSalesOrderFormatter.cs" />
     <Compile Include="Common\Repositories\QueueRepository.cs" />
+    <Compile Include="ReceiveSend\ValueObjects\DataBuffer.cs" />
     <Compile Include="Schedulers\APITask.cs" />
     <Compile Include="Schedulers\ApplicationEvents\TaskFinishedEvent.cs" />
     <Compile Include="Schedulers\ApplicationEvents\TaskStartedEvent.cs" />
@@ -386,6 +387,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ReceiveSend\Interfaces\" />
     <Folder Include="Schedulers\Events\" />
   </ItemGroup>
   <ItemGroup>

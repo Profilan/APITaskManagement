@@ -17,7 +17,6 @@ namespace APITaskManagement.Logic.Filer.Data
         public virtual bool MonitorInactivity { get; set; }
 
         public virtual ISet<Task> Tasks { get; set; }
-
         public Share()
         {
             Tasks = new HashSet<Task>();

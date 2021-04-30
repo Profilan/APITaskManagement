@@ -12,12 +12,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace APITaskManagement.Logic.Api
 {
     public class ApiDNDeliveryDate : Api
     {
         private readonly DutchNedDeliveryDateRepository dutchNedDeliveryDateRepository = new DutchNedDeliveryDateRepository();
+        private string CountryCode = "NL";
 
         public ApiDNDeliveryDate(string name) : base(name)
         {
@@ -26,7 +28,33 @@ namespace APITaskManagement.Logic.Api
 
         protected override bool ExecuteBefore(HttpClient client, Request request, Url url)
         {
-            throw new NotImplementedException();
+            string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
+
+            // Get Countrycode from url
+            var urlParts = url.Address.Split('?');
+            CountryCode = HttpUtility.ParseQueryString(urlParts[1]).Get("country_code");
+            if (String.IsNullOrEmpty(CountryCode))
+            {
+                CountryCode = "NL";
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionstring))
+                {
+                    connection.Open();
+
+                    string cmdText = "DELETE FROM EEK_DISTRIBUTION_DELIVERYDATES_AVAILABLE WHERE Carrier = '999068' AND CountryCode = '" + CountryCode + "'";
+                    SqlCommand command = new SqlCommand(cmdText, connection);
+                    command.ExecuteNonQuery();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         protected override void ExecutePost(Request request)
@@ -49,24 +77,13 @@ namespace APITaskManagement.Logic.Api
 
             try
             {
-                string connectionstring = ConfigurationManager.ConnectionStrings["default"].ConnectionString;
-
-                using (SqlConnection connection = new SqlConnection(connectionstring))
-                {
-                    connection.Open();
-
-                    string cmdText = "DELETE FROM EEK_DISTRIBUTION_DELIVERYDATES_AVAILABLE WHERE Carrier = '999068'";
-                    SqlCommand command = new SqlCommand(cmdText, connection);
-                    command.ExecuteNonQuery();
-                }
-
                 foreach (DutchNedAvailableDeliveryDateDto deliveryDate in availableDates)
                 {
                     DutchNedDeliveryDate date = new DutchNedDeliveryDate
                     {
                         DeliveryDate = DateTime.Parse(deliveryDate.Date),
                         Carrier = "999068",
-                        CountryCode = "NL",
+                        CountryCode = CountryCode,
                         Note = deliveryDate.Note
                     };
 

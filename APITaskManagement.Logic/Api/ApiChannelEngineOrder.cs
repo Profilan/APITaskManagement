@@ -24,7 +24,7 @@ namespace APITaskManagement.Logic.Api
 
         protected override bool ExecuteBefore(HttpClient client, Request request, Url url)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         protected override void ExecutePost(Request request)

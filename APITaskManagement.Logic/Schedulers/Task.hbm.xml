@@ -69,6 +69,17 @@
       <property name="MailRecipient"/>
     </subclass>
 
+    <subclass name="ReceiveSendTask" discriminator-value="RECEIVESEND">
+      <one-to-one name="Receiver" class="TaskAction"
+                  cascade="save-update"
+                  foreign-key="ActionId"
+                  />
+      <one-to-one name="Sender" class="TaskAction"
+                  cascade="save-update"
+                  foreign-key="ActionId"
+                  />
+      
+    </subclass>
 
   </class>
 </hibernate-mapping>

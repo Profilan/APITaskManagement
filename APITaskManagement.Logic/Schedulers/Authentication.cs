@@ -15,6 +15,7 @@ namespace APITaskManagement.Logic.Schedulers
         public string Scope { get; set; }
         public string GrantType { get; set; }
         public string OAuthUrl { get; set; }
+        public string OAuthAudience { get; set; }
         public string ApiKey { get; set; }
 
         protected Authentication()
@@ -27,7 +28,8 @@ namespace APITaskManagement.Logic.Schedulers
             AuthenticationType authenticationType,
             string scope = null,
             string grantType = null,
-            string oAuthUrl = null) : this()
+            string oAuthUrl = null,
+            string oAuthAudience = null) : this()
         {
             Username = username;
             Password = password;
@@ -35,6 +37,7 @@ namespace APITaskManagement.Logic.Schedulers
             Scope = scope;
             GrantType = grantType;
             OAuthUrl = oAuthUrl;
+            OAuthAudience = oAuthAudience;
         }
 
         protected override bool EqualsCore(Authentication other)

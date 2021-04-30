@@ -11,6 +11,7 @@
     <property name="Value"/>
 
     <many-to-one not-null="true" name="Task" column="TaskId"/>
+    <many-to-one not-null="true" name="TaskAction" column="ActionId"/>
   </class>
 
 </hibernate-mapping>

@@ -17,6 +17,26 @@
         Generic = 6
     }
 
+    public enum GraphQLMethod
+    {
+        Query = 1,
+        Mutation = 2
+    }
+    public enum ApiType
+    {
+        Rest = 1,
+        GraphQL = 2
+    }
+
+    public enum ActionType
+    {
+        API = 1,
+        FTP = 2,
+        FILE = 3,
+        MAIL = 4,
+        SQL = 5
+    }
+
     public enum AccessType
     {
         Inbound = 1,
@@ -52,7 +72,8 @@
         API = 1,
         FTP = 2,
         FILE = 3,
-        MAIL = 4
+        MAIL = 4,
+        RECEIVESEND = 5
     }
 
     public enum FtpSyncMethod
