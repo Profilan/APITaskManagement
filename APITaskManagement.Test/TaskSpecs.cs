@@ -11,7 +11,6 @@ using System.Linq;
 using APITaskManagement.Logic.Api;
 using APITaskManagement.Logic.Management;
 using APITaskManagement.Logic.Schedulers.Interfaces;
-using HibernatingRhinos.Profiler.Appender.NHibernate;
 using StructureMap;
 using APITaskManagement.Test.DependencyResolution;
 
@@ -55,7 +54,8 @@ namespace APITaskManagement.Test
         [TestMethod]
         public void TaskShouldRun()
         {
-            var task = _taskRepository.GetById(new Guid("9d0a1064-3a5c-40e5-b6f1-ad1000d50c6e"));
+            // var task = _taskRepository.GetById(new Guid("e7145a24-82fb-4768-a405-ad10007bfc11")); // WayfairLabels
+            var task = _taskRepository.GetById(new Guid("E7AD55D3-A613-4A4C-BEC1-AD2E00F109E0")); // Wayfair ASN
 
             task.Start();
 
@@ -87,7 +87,7 @@ namespace APITaskManagement.Test
         {
             // DutchNed e2f93b02-97fd-4124-8286-a87200c08f40
             // Zwaluw d0c86125-588e-46c0-8721-d49612af219f
-            var task = _taskRepository.GetById(new Guid("ae03f9c6-5a66-497d-885d-aca7009e05c5"));
+            var task = _taskRepository.GetById(new Guid("c0e753e4-1ccc-4c23-9587-acb400ee00ad")); // Dutchned Salesorders
 
             task.Start();
         }

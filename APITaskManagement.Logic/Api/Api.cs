@@ -208,7 +208,7 @@ namespace APITaskManagement.Logic.Api
                     case AuthenticationType.OAuth2:
                         // Create JSON body
                         var jsonString = "{\"grant_type\":\"" + authentication.GrantType + "\","
-                            + "\"scope\":\"" + authentication.Scope + "\","
+                            + "\"audience\":\"" + authentication.OAuthAudience + "\","
                             + "\"client_id\":\"" + authentication.Username + "\","
                             + "\"client_secret\":\"" + authentication.Password + "\"}";
                         responseMessage = client.PostAsync(authentication.OAuthUrl, new StringContent(jsonString, Encoding.UTF8, "application/json")).Result;

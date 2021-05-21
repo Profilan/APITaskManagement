@@ -17,10 +17,5 @@
     <property name="SysCreator"/>
     <property name="SysModified"/>
     <property name="SysModifier"/>
-
-    <set name="Roles" table="EEK_API_USER_ROLES">
-      <key column="user_id" />
-      <many-to-many class="Role" column="role_id"/>
-    </set>
   </class>
 </hibernate-mapping>

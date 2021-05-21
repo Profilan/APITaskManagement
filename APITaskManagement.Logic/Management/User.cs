@@ -62,13 +62,9 @@ namespace APITaskManagement.Logic.Management
          * @var integer
          */
         public virtual int SysModifier { get; set; }
-    
-        public virtual ISet<Role> Roles { get; set; }
 
         protected User()
         {
-            
-            Roles = new HashSet<Role>();
         }
 
         public User(string username,

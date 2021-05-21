@@ -1,11 +1,12 @@
 ﻿using ApiTaskManagement.Logic.Models;
 using APITaskManagement.Logic.Api.Interfaces;
+using APITaskManagement.Logic.Common;
 using APITaskManagement.Logic.Logging;
+using APITaskManagement.Logic.ReceiveSend.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace APITaskManagement.Logic.Schedulers
 {
@@ -42,7 +43,7 @@ namespace APITaskManagement.Logic.Schedulers
             {
                 api.SendRequestsToTarget(HttpMethod, Url, Authentication, this);
             }
-            
+
             LatestResponse = api.GetLatestResponse();
         }
     }

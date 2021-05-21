@@ -1,22 +1,25 @@
 ﻿
 using APITaskManagement.Logic.Common;
+using APITaskManagement.Logic.Schedulers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace APITaskManagement.Logic.ReceiveSend.ValueObjects
 {
     public class DataBuffer : ValueObject<DataBuffer>
     {
-        public string Data { get; set; }
+        public IList<Request> Data { get; set; }
 
         protected DataBuffer() { }
 
-        public DataBuffer(string data)
+        public DataBuffer(IList<Request> data)
         {
             Data = data;
         }
 
         protected override bool EqualsCore(DataBuffer other)
         {
-            return (Data == other.Data);
+            return (Data.SequenceEqual(other.Data));
         }
     }
 }

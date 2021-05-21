@@ -20,6 +20,7 @@ namespace APITaskManagement.Logic.Schedulers
     {
         [Required]
         public virtual string Title { get; set; }
+        public virtual TaskType TaskType { get; set; }
         public virtual int ScheduleId { get; set; }
 
         public virtual Status Status { get; protected set; }
@@ -30,7 +31,9 @@ namespace APITaskManagement.Logic.Schedulers
         public virtual bool Enabled { get; set; }
         public virtual string QueueName { get; set; }
         public virtual HttpMethod HttpMethod { get; set; }
-        public virtual TaskType TaskType { get; set; }
+
+        public virtual ApiType ApiType { get; set; }
+        public virtual GraphQLMethod GraphQLMethod { get; set; }
 
         public virtual string ContentFormats { get; set; }
         public virtual string Classname { get; set; }

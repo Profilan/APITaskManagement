@@ -70,7 +70,7 @@ namespace APITaskManagement.Logic.Api
         protected override IList<Request> GetRequestsForTask(Guid taskId)
         {
             var requests = new List<Request>();
-            var items = _queueRepository.ListByTask(taskId, TotalItems);
+            var items = _queueRepository.ListByTask(taskId, 10);
 
             var formatter = new DNSalesOrderFormatter();
 
