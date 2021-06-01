@@ -23,6 +23,43 @@
     <property name="PlanFromDate"/>
     <property name="PickedUpDate" column="picked_up_date"/>
     <property name="Type"/>
+    <property name="OrderLineDescription"/>
+    <property name="SalesOrderHeaderId"/>
+    <property name="MainItemQuantity"/>
+    <property name="Quantity"/>
+    <property name="SalesUnit" column="salesUnit"/>
+    <property name="ColliUnit" column="colliUnit"/>
   </class>
+
+  <sql-query name="GetLinesBySalesOrderHeaderId">
+    <query-param name="SalesOrderHeaderId" type="int"/>
+    <return class="DutchNedSalesOrderLine">
+      <return-property name="Id" column="Id"/>
+      <return-property name="CollectionDate" column="CollectionDate"/>
+      <return-property name="Description" column="Description"/>
+      <return-property name="EANCode" column="EANCode"/>
+      <return-property name="Identifier" column="Identifier"/>
+      <return-property name="MainPackageIdentifier" column="MainPackageIdentifier"/>
+      <return-property name="Volume" column="Volume"/>
+      <return-property name="Warehouse" column="Warehouse"/>
+      <return-property name="CashOnDelivery" column="CashOnDelivery"/>
+      <return-property name="IsReturn" column="IsReturn"/>
+      <return-property name="SalesOrderHeaderId" column="SalesOrderHeaderId"/>
+      <return-property name="OrderLineDescription" column="orderLineDescription"/>
+      <return-property name="MainItemQuantity" column="MainItemQuantity"/>
+      <return-property name="Quantity" column="Quantity"/>
+      <return-property name="SalesUnit" column="salesUnit"/>
+      <return-property name="ColliUnit" column="colliUnit"/>
+      <return-property name="Weight" column="weight"/>
+      <return-property name="Height" column="height"/>
+      <return-property name="Length" column="length"/>
+      <return-property name="Width" column="width"/>
+      <return-property name="PlanFromDate" column="PlanFromDate"/>
+      <return-property name="PickedUpDate" column="picked_up_date"/>
+      <return-property name="Type" column="Type"/>
+    </return>
+    SET NOCOUNT ON;EXEC EEK_sp_DISTRIBUTION_DUTCHNED_SALESORDERLINES @SalesOrderHeaderId=:SalesOrderHeaderId
+  </sql-query>
+  
 
 </hibernate-mapping>

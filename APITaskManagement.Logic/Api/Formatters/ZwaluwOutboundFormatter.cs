@@ -25,7 +25,7 @@ namespace APITaskManagement.Logic.Api.Formatters
 
             try
             {
-                var item = zwaluwOutboundRepository.GetById(key);
+                var item = zwaluwOutboundRepository.GetByIdAndDeliveryDate(key, deliveryDate);
 
                 if (item != null)
                 {

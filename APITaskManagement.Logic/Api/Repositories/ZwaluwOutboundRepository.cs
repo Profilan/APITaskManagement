@@ -42,6 +42,30 @@ namespace APITaskManagement.Logic.Api.Repositories
             throw new NotImplementedException();
         }
 
+        public ZwaluwOutboundHeader GetByIdAndDeliveryDate(int key, DateTime deliveryDate)
+        {
+            using (ISession session = SessionFactory.GetNewSession("mvw"))
+            {
+                var query = session.Query<ZwaluwOutboundHeader>();
+
+                query = query.Where(x => x.SalesOrderHeaderId == key && x.DeliveryDate == deliveryDate);
+
+                var items = query.ToList();
+
+                if (items.Count > 0)
+                {
+                    var item = items[0];
+                    NHibernateUtil.Initialize(item.Lines);
+
+                    return (item);
+                }
+                else
+                {
+                    return null;
+                }
+             }
+        }
+
         public IEnumerable<ZwaluwOutboundHeader> List()
         {
             using (ISession session = SessionFactory.GetNewSession("mvw"))

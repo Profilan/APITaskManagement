@@ -16,13 +16,19 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
         public virtual int Weight { get; set; }
-        public virtual DateTime PlanFromDate { get; set; }
-        public virtual DateTime PickedUpDate { get; set; }
         public virtual string Warehouse { get; set; }
         public virtual int CashOnDelivery { get; set; }
         public virtual bool IsReturn { get; set; }
+        public virtual DateTime PlanFromDate { get; set; }
+        public virtual DateTime PickedUpDate { get; set; }
         public virtual string Type { get; set; }
+        public virtual string OrderLineDescription { get; set; }
+        public virtual int SalesOrderHeaderId { get; set; }
+        public virtual int MainItemQuantity { get; set; }
+        public virtual int Quantity { get; set; }
+        public virtual string SalesUnit { get; set; }
+        public virtual string ColliUnit { get; set; }
 
-        public virtual DutchNedSalesOrder SalesOrder { get; set; }
+        // public virtual DutchNedSalesOrder SalesOrder { get; set; }
     }
 }

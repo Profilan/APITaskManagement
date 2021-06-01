@@ -106,6 +106,9 @@ namespace APITaskManagement.Logic.ReceiveSend
                         {
                             File.WriteAllBytes(share.UNCPath + "\\" + body.DebtorNumber + "_" + body.PurchaseOrderNumber + "_UNKNOWN.pdf", labelResponse.RawBytes);
                         }
+                        Response response = new Response(200, "OK", body.DebtorNumber + "_" + body.PurchaseOrderNumber + "_UNKNOWN.pdf");
+                        request.SetResponse(response);
+                        LogResponse(request);
                     }
                     else
                     {

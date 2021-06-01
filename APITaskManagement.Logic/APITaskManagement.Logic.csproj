@@ -162,6 +162,7 @@
     <Compile Include="Api\Repositories\DHLDeliveryRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedDeliveryDateRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedInsertedOrderlinestatusRepository.cs" />
+    <Compile Include="Api\Repositories\DutchNedSalesOrderLineRepository.cs" />
     <Compile Include="Api\Repositories\DutchNedSalesOrderRepository.cs" />
     <Compile Include="Api\Repositories\FonQOfferFeedDSRepository.cs" />
     <Compile Include="Api\Repositories\FonQOfferFeedB2BRepository.cs" />

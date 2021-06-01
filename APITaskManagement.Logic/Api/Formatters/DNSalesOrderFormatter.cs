@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using APITaskManagement.Logic.Api.Interfaces;
 using APITaskManagement.Logic.Api.Models;
 using APITaskManagement.Logic.Api.Repositories;
@@ -10,6 +11,7 @@ namespace APITaskManagement.Logic.Api.Formatters
     public class DNSalesOrderFormatter : IContentFormatter
     {
         private readonly DutchNedSalesOrderRepository _salesOrderRepository = new DutchNedSalesOrderRepository();
+        private readonly DutchNedSalesOrderLineRepository _salesOrderLineRepository = new DutchNedSalesOrderLineRepository();
 
         public string GetJsonContent(int key, IDictionary<string, string> properties)
         {
@@ -17,7 +19,9 @@ namespace APITaskManagement.Logic.Api.Formatters
             {
                 var salesOrder = _salesOrderRepository.GetById(key);
 
-                if (salesOrder != null && salesOrder.Lines.Count > 0)
+                var salesOrderLines = _salesOrderLineRepository.GetLinesBySalesOrderHeaderId(salesOrder.Id);
+
+                if (salesOrder != null)
                 {
                     var deliveryDate = salesOrder.DeliveryDate.ToString("yyyy-MM-dd");
                     var salesOrderView = new DutchNedSalesOrderDto()
@@ -48,9 +52,7 @@ namespace APITaskManagement.Logic.Api.Formatters
                         },
                     };
 
-
-
-                    foreach (var line in salesOrder.Lines)
+                    foreach (var line in salesOrderLines)
                     {
                         if (line.PickedUpDate != DateTime.MinValue)
                         {
@@ -105,7 +107,7 @@ namespace APITaskManagement.Logic.Api.Formatters
             }
             catch (Exception e)
             {
-                return "[Error]:[" + e.Message + "]";
+                throw new Exception( "[Error]:[" + e.Message + "]");
             }
 
             return null;

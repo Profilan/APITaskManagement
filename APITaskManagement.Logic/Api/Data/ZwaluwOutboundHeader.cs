@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 namespace APITaskManagement.Logic.Api.Data
@@ -26,6 +27,8 @@ namespace APITaskManagement.Logic.Api.Data
         public virtual string DeliveryNote { get; set; }
 
         public virtual string Carrier { get; set; }
+
+        public virtual DateTime DeliveryDate { get; set; }
 
         public virtual ISet<ZwaluwOutboundLine> Lines { get; set; }
 

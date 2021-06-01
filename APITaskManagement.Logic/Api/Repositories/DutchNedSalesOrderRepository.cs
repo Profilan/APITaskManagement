@@ -21,10 +21,12 @@ namespace APITaskManagement.Logic.Api.Repositories
             using (ISession session = SessionFactory.GetNewSession())
             {
                 var item = session.Get<DutchNedSalesOrder>(id);
+                /*
                 if (item != null)
                 {
                     NHibernateUtil.Initialize(item.Lines);
                 }
+                */
 
                 return item;
             }
@@ -44,8 +46,7 @@ namespace APITaskManagement.Logic.Api.Repositories
         {
             using (ISession session = SessionFactory.GetNewSession())
             {
-                var query = session.Query<DutchNedSalesOrder>()
-                    .FetchMany(x => x.Lines);
+                var query = session.Query<DutchNedSalesOrder>();
 
                 return query.ToList();
             }

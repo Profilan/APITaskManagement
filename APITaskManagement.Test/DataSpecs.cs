@@ -97,7 +97,11 @@ namespace APITaskManagement.Test
         {
             var rep = new DutchNedSalesOrderRepository();
 
-            var item = rep.GetById(1);
+            var item = rep.GetById(258086);
+
+            DutchNedSalesOrderLineRepository _salesOrderLineRepository = new DutchNedSalesOrderLineRepository();
+
+            var items = _salesOrderLineRepository.GetLinesBySalesOrderHeaderId(258086);
         }
 
         [TestMethod]

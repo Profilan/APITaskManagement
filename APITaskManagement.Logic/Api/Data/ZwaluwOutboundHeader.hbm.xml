@@ -17,6 +17,7 @@
     <property name="DeliveryCountryCode"/>
     <property name="DeliveryNote"/>
     <property name="Carrier"/>
+    <property name="DeliveryDate"/>
 
     <set name="Lines" table="vwDistribution_Zwaluw_OrderLines" cascade="all-delete-orphan" inverse="true" lazy="false">
       <key column="SalesOrderHeaderId" not-null="true"/>

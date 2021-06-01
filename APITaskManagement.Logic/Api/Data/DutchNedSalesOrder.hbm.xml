@@ -32,11 +32,6 @@
       <property name="LogoUrl" column="SenderLogoUrl"/>
       <property name="CCMailAddress" column="CCMailaddress"/>
     </component>
-
-    <set name="Lines" table="EEK_vw_DISTRIBUTION_DUTCHNED_SALESORDERLINES" cascade="all-delete-orphan" inverse="true" lazy="false">
-      <key column="SalesOrderHeaderId" not-null="true"/>
-      <one-to-many class="DutchNedSalesOrderLine"/>
-    </set>
   </class>
 
 </hibernate-mapping>
